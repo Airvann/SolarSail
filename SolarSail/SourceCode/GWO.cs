@@ -23,7 +23,7 @@ namespace SolarSail.SourceCode
         private Params param;       //Параметр изменения функции a
         private Random rand = new Random();
 
-        private double bottomBorderControl;
+        private double bottomBorderSectionLength;
         private double topBorderControl;
 
         private double bottomBorderFuncCoeff;
@@ -61,16 +61,19 @@ namespace SolarSail.SourceCode
         /// Выполнение алгоритма
         /// </summary>
         /// <param name="populationNumber">Размер популяции</param>
-        /// <param name="list">PARAMS: MaxIteration, A_Param, bottomBorderControl, topBorderControl, bottomBorderFuncCoeff, topBorderFuncCoeff</param>
+        /// <param name="list">PARAMS: MaxIteration, A_Param, bottomBorderSectionLength, topBorderControl, bottomBorderFuncCoeff, topBorderFuncCoeff, K, P</param>
         /// <returns></returns>
         public override Agent CalculateResult(int populationNumber, params object[] list) 
         {
             maxIterationCount =             (int)list[0];
             param =                         (Params)list[1];
-            bottomBorderControl =           (double)list[2];
+            bottomBorderSectionLength =     (double)list[2];
             topBorderControl =              (double)list[3];
             bottomBorderFuncCoeff =         (double)list[4];
             topBorderFuncCoeff =            (double)list[5];
+            K =                             (int)list[6];
+            P =                             (int)list[7];
+          
             this.populationNumber = populationNumber;
 
             alfa = new Agent(K, P);
@@ -85,7 +88,6 @@ namespace SolarSail.SourceCode
                 NewPackGeneration();
                 currentIteration++;
             }
-
             return alfa;
         }
 
@@ -99,7 +101,7 @@ namespace SolarSail.SourceCode
                 Agent agent = new Agent(K,P);
                 for (int j = 0; j < P; j++)
                 {
-                    nextRandomControl = (Math.Abs(bottomBorderControl) + Math.Abs(topBorderControl)) * rand.NextDouble() - Math.Abs(bottomBorderControl);
+                    nextRandomControl = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderControl)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
                     agent.SectionLength[i] = nextRandomControl;  
                 }
                 for (int j = 0; j < K; j++)
@@ -134,7 +136,6 @@ namespace SolarSail.SourceCode
             beta.Fitness = individuals[1].Fitness;   
             delta.Fitness = individuals[2].Fitness;
         }
-
         private void NewPackGeneration()
         {
             double a;
@@ -191,6 +192,20 @@ namespace SolarSail.SourceCode
                 individuals[k].FuncCoeffs = ((alfa.FuncCoeffs - D_alfa_P * A_alfa_P) +
                                 (beta.FuncCoeffs - D_beta_P * A_beta_P) +
                                 (delta.FuncCoeffs - D_delta_P * A_delta_P)) / 3.0;
+
+                for (int i = 0; i < K; i++)
+                {
+                    if (individuals[k].SectionLength[i] < bottomBorderSectionLength)
+                        individuals[k].SectionLength[i] = bottomBorderSectionLength;
+                    else if(individuals[k].SectionLength[i] > topBorderControl)
+                        individuals[k].SectionLength[i] = topBorderControl;
+
+                    if (individuals[k].FuncCoeffs[i] < bottomBorderFuncCoeff)
+                        individuals[k].FuncCoeffs[i] = bottomBorderFuncCoeff;
+                    else if (individuals[k].FuncCoeffs[i] > topBorderFuncCoeff)
+                        individuals[k].FuncCoeffs[i] = topBorderFuncCoeff;
+                }
+                individuals[k].Fitness = 0; //TODO: change it! (I());
             }
         }
 
