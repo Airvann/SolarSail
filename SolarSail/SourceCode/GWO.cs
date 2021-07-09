@@ -137,7 +137,61 @@ namespace SolarSail.SourceCode
 
         private void NewPackGeneration()
         {
-        
+            double a;
+            //Выбор функции изменения параметра а
+            if (param == Params.Quadratic)
+                a = 2 * (1 - ((currentIteration * currentIteration) / ((double)maxIterationCount * maxIterationCount)));
+            else
+                a = 2 * (1 - currentIteration / (double)(maxIterationCount));
+
+            Vector A_alfa_K = new Vector(K);            Vector C_alfa_K = new Vector(K);          Vector D_alfa_K = new Vector(K);
+            Vector A_alfa_P = new Vector(P);            Vector C_alfa_P = new Vector(P);          Vector D_alfa_P = new Vector(P);  
+
+            Vector A_beta_K = new Vector(K);            Vector C_beta_K = new Vector(K);          Vector D_beta_K = new Vector(K);
+            Vector A_beta_P = new Vector(P);            Vector C_beta_P = new Vector(P);          Vector D_beta_P = new Vector(P);
+
+            Vector A_delta_K = new Vector(K);           Vector C_delta_K = new Vector(K);         Vector D_delta_K = new Vector(K);
+            Vector A_delta_P = new Vector(P);           Vector C_delta_P = new Vector(P);         Vector D_delta_P = new Vector(P);
+
+            for (int k = 0; k < populationNumber; k++)
+            {
+                for (int m = 0; m < K; m++)
+                {
+                    A_alfa_K[m] = 2 * a * rand.NextDouble() - a;
+                    A_beta_K[m] = 2 * a * rand.NextDouble() - a;
+                    A_delta_K[m] = 2 * a * rand.NextDouble() - a;
+
+                    C_alfa_K[m] = 2 * rand.NextDouble();
+                    C_beta_K[m] = 2 * rand.NextDouble();
+                    C_delta_K[m] = 2 * rand.NextDouble();
+                }
+
+                for (int m = 0; m < P; m++)
+                {
+                    A_alfa_P[m] = 2 * a * rand.NextDouble() - a;
+                    A_beta_P[m] = 2 * a * rand.NextDouble() - a;
+                    A_delta_P[m] = 2 * a * rand.NextDouble() - a;
+
+                    C_alfa_P[m] = 2 * rand.NextDouble();
+                    C_beta_P[m] = 2 * rand.NextDouble();
+                    C_delta_P[m] = 2 * rand.NextDouble();
+                }
+                D_alfa_K = Vector.Abs(C_alfa_K * alfa.SectionLength - individuals[k].SectionLength);
+                D_beta_K = Vector.Abs(C_beta_K * beta.SectionLength - individuals[k].SectionLength);
+                D_delta_K = Vector.Abs(C_beta_K * delta.SectionLength - individuals[k].SectionLength);
+
+                D_alfa_P = Vector.Abs(C_alfa_P * alfa.FuncCoeffs - individuals[k].FuncCoeffs);
+                D_beta_P = Vector.Abs(C_beta_P * beta.FuncCoeffs - individuals[k].FuncCoeffs);
+                D_delta_P = Vector.Abs(C_delta_P * delta.FuncCoeffs - individuals[k].FuncCoeffs);
+
+                individuals[k].SectionLength = ((alfa.SectionLength - D_alfa_K * A_alfa_K) +
+                                                (beta.SectionLength - D_beta_K * A_beta_K) +
+                                                (delta.SectionLength - D_delta_K * A_delta_K)) / 3.0;
+
+                individuals[k].FuncCoeffs = ((alfa.FuncCoeffs - D_alfa_P * A_alfa_P) +
+                                (beta.FuncCoeffs - D_beta_P * A_beta_P) +
+                                (delta.FuncCoeffs - D_delta_P * A_delta_P)) / 3.0;
+            }
         }
 
         private double Tf(Agent agent) 

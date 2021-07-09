@@ -2,7 +2,7 @@
 /obj/*
 *.suo
 *.pdb
-.vs/SolarSail/v16/.suo
+.vs/*
 
 ## Internet
 ## Ignore Visual Studio temporary files, build results, and
@@ -136,3 +136,4 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+.vs/SolarSail/v16/.suo
