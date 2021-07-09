@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace SolarSail
 {
-    public abstract class IAgent 
-    {
-    }
-
     abstract public class IMetaAlgorithm
     {
-        UInt64 populationNumber = 0;
-        public abstract IAgent CalculateResult(UInt64 populationNumber, params object[] list);
+        protected int populationNumber = 0;
+        public abstract Agent CalculateResult(int populationNumber, params object[] list);
     }
 }
