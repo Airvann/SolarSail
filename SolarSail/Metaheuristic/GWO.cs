@@ -22,10 +22,7 @@ namespace SolarSail.SourceCode
         private Agent delta;
         private List<Agent> individuals = new List<Agent>();
 
-        public GWO() 
-        {
-            
-        }
+        public GWO() {}
 
         public static Dictionary<string, object> PAR()
         {
@@ -74,21 +71,21 @@ namespace SolarSail.SourceCode
 
         private void FormingPopulation()
         {
-            double nextRandomControl;
-            double nextRandomCoeff;
+            double nextRandomSectionLength;
+            double nextRandomFuncCoeff;
 
             for (int i = 0; i < populationNumber; i++)
             {
                 Agent agent = new Agent(K,P);
                 for (int j = 0; j < K; j++)
                 {
-                    nextRandomControl = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderSectionLength)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
-                    agent.Coords[i] = nextRandomControl;    //TODO: Fix names
+                    nextRandomSectionLength = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderSectionLength)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
+                    agent.Coords[i] = nextRandomSectionLength;
                 }
                 for (int j = K; j < Dim; j++)
                 {
-                    nextRandomCoeff = (Math.Abs(bottomBorderFuncCoeff) + Math.Abs(topBorderFuncCoeff)) * rand.NextDouble() - Math.Abs(bottomBorderFuncCoeff);
-                    agent.Coords[i] = nextRandomCoeff;
+                    nextRandomFuncCoeff = (Math.Abs(bottomBorderFuncCoeff) + Math.Abs(topBorderFuncCoeff)) * rand.NextDouble() - Math.Abs(bottomBorderFuncCoeff);
+                    agent.Coords[i] = nextRandomFuncCoeff;
                 }
                 agent.Fitness = 0;          //TODO: добавить вычисление ДУ и функции приспособленности
                 individuals.Add(agent);
@@ -100,7 +97,7 @@ namespace SolarSail.SourceCode
 
             //Выбираем наиболее приспосоленных волков (сделано так, чтобы была передача значений, а не ссылки) 
                
-            for (int i = 0; i < Dim; i++) 
+            for (int i = 0; i < populationNumber; i++) 
             {
                 alfa.Coords[i] = individuals[0].Coords[i];
                 beta.Coords[i] = individuals[1].Coords[i];
@@ -148,12 +145,20 @@ namespace SolarSail.SourceCode
                                                 (beta.Coords - D_beta * A_beta) +
                                                 (delta.Coords - D_delta * A_delta)) / 3.0;
 
-                for (int i = 0; i < Dim; i++)
+                for (int i = 0; i < K; i++)
                 {
                     if (individuals[k].Coords[i] < bottomBorderSectionLength)
-                        individuals[k].Coords[i] = bottomBorderSectionLength;           //TODO: Пеыреписать, лажа
-                    else if(individuals[k].Coords[i] > topBorderSectionLength)
+                        individuals[k].Coords[i] = bottomBorderSectionLength;
+                    else if (individuals[k].Coords[i] > topBorderSectionLength)
                         individuals[k].Coords[i] = topBorderSectionLength;
+                }
+
+                for (int i = K; i < Dim; i++)
+                {
+                    if (individuals[k].Coords[i] < bottomBorderFuncCoeff)
+                        individuals[k].Coords[i] = bottomBorderFuncCoeff;          
+                    else if (individuals[k].Coords[i] > topBorderFuncCoeff)
+                        individuals[k].Coords[i] = topBorderFuncCoeff;
                 }
                 individuals[k].Fitness = 0; //TODO: change it! (I());
             }

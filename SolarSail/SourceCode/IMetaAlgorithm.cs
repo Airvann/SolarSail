@@ -13,7 +13,7 @@ namespace SolarSail
             double r_tf_Error = r_tf - const_r_tf;
             double u_tf_Error = u_tf - const_u_tf;
             double v_tf_Error = v_tf - const_v_tf;
-            return -1;
+            return -1;  
             return (tf / 86400) * lambda1 * Math.Pow(r_tf_Error, 2) + lambda2 * Math.Pow(u_tf_Error, 2) + lambda3 * Math.Pow(v_tf_Error, 2);
         }
 
