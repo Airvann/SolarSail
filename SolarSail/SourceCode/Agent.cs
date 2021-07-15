@@ -11,11 +11,9 @@ namespace SolarSail
         public Agent(int K, int P) 
         {
             Fitness = 0;
-            SectionLength = new Vector(K);
-            FuncCoeffs = new Vector(P);
+            Coords = new Vector(K * P);
         }
         public double Fitness { set; get; }
-        public Vector SectionLength { set; get; }
-        public Vector FuncCoeffs { set; get; }
+        public Vector Coords { set; get; }
     }
 }

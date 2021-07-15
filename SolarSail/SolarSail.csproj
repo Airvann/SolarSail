@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,11 +54,13 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="SourceCode\Agent.cs" />
-    <Compile Include="SourceCode\GWO.cs" />
+    <Compile Include="Metaheuristic\GWO.cs" />
     <Compile Include="SourceCode\IMetaAlgorithm.cs" />
     <Compile Include="SourceCode\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceCode\RungeKutta.cs" />
     <Compile Include="SourceCode\Vector.cs" />
+    <Compile Include="Metaheuristic\WOA.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
