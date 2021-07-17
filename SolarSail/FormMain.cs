@@ -8,6 +8,7 @@ namespace SolarSail
 {
     public partial class FormMain : Form
     {
+        Result result = Result.getInstance();
         public FormMain()
         {
             InitializeComponent();
@@ -21,43 +22,14 @@ namespace SolarSail
             chartXt.ChartAreas[0].AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            RungeKutta a = new RungeKutta();
-            a.RungeKuttaCaculate(F);
-        }
-
-       public double F(double t, double x) 
-       {
-            return x;
-       }
-
         private void buttonResult_Click(object sender, EventArgs e)
         {
-            RungeKutta rungeKutta = new RungeKutta();
-            List<double> h = new List<double>();
-            h.Add(1);
-            h.Add(1);
+            GWO alg = new GWO();
+           // alg.CalculateResult(100, 0, 100, -3.1415f / 2, 3.1415926f / 2, 100, Params.Linear, 10, 5);
 
-            Dictionary<double, double> res1 =  rungeKutta.RungeKuttaCaculate(h, F);          //!!!
-
-            foreach(var item in res1) 
-            {
-                chartXt.Series[0].Points.AddXY(item.Key, item.Value);
-            }
-
-            Dictionary<double, double> res2 = rungeKutta.RungeKuttaCaculate(F);
-            
-            chartXt.Series.Add("exact");
-            chartXt.Series[1].BorderWidth = 3;
-            chartXt.Series[1].Color = System.Drawing.Color.Red;
-            chartXt.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            foreach (var item in res2)
-            {
-                chartXt.Series[1].Points.AddXY(item.Key, item.Value);
-            }
-
+            FillResultTable();
         }
+
         private void FillParamTable(Dictionary<string, object> list) 
         {
             if (dataGridViewParam.Rows.Count != 0)
@@ -69,11 +41,22 @@ namespace SolarSail
             }
         }
 
-        private void FillResultTable(Dictionary<string, object> list)
+        private void FillResultTable()
         {
+            result.resultTable = new Dictionary<string, List<double>>();
+            result.Clear();
+            dataGridViewTableRes.Rows.Clear();
 
+            result.resultTable.TryGetValue("t",        out List<double> t);
+            result.resultTable.TryGetValue("r",        out List<double> r);
+            result.resultTable.TryGetValue("u",        out List<double> u);
+            result.resultTable.TryGetValue("v",        out List<double> v);
+            result.resultTable.TryGetValue("thetta",   out List<double> thetta);
+            result.resultTable.TryGetValue("alpha",    out List<double> alpha);
 
-
+            if (t != null && r != null && u != null && v != null && thetta != null &&  alpha != null)
+                for (int i = 0; i < t.Count; i++)
+                    dataGridViewTableRes.Rows.Add(t[i], r[i], thetta[i], u[i], v[i], alpha);
         }
 
         private void comboBoxSelectAlg_SelectedIndexChanged(object sender, EventArgs e)

@@ -37,7 +37,7 @@ namespace SolarSail.SourceCode
         /// Выполнение алгоритма
         /// </summary>
         /// <param name="populationNumber">Размер популяции</param>
-        /// <param name="list">PARAMS: MaxIteration, A_Param, bottomBorderSectionLength, topBorderControl, bottomBorderFuncCoeff, topBorderFuncCoeff, K, P</param>
+        /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
         public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, params object[] list) 
         {
@@ -80,13 +80,25 @@ namespace SolarSail.SourceCode
                 for (int j = 0; j < K; j++)
                 {
                     nextRandomSectionLength = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderSectionLength)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
-                    agent.Coords[i] = nextRandomSectionLength;
+                    agent.Coords[j] = nextRandomSectionLength;
                 }
                 for (int j = K; j < Dim; j++)
                 {
                     nextRandomFuncCoeff = (Math.Abs(bottomBorderFuncCoeff) + Math.Abs(topBorderFuncCoeff)) * rand.NextDouble() - Math.Abs(bottomBorderFuncCoeff);
-                    agent.Coords[i] = nextRandomFuncCoeff;
+                    agent.Coords[j] = nextRandomFuncCoeff;
                 }
+
+                List<double> h = new List<double>();
+                for (int j = 0; j < K; j++)
+                    h.Add(agent.Coords[j]);
+
+                List<double> a = new List<double>();
+                for (int j = K; j < Dim; j++)
+                    a.Add(agent.Coords[j]);
+
+                RungeKutta rk = new RungeKutta();
+                Dictionary<string, Dictionary<double, double>> res = rk.RungeKuttaCaculate(h, a);
+
                 agent.Fitness = 0;          //TODO: добавить вычисление ДУ и функции приспособленности
                 individuals.Add(agent);
             }

@@ -58,6 +58,7 @@
     <Compile Include="SourceCode\IMetaAlgorithm.cs" />
     <Compile Include="SourceCode\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceCode\Result.cs" />
     <Compile Include="SourceCode\RungeKutta.cs" />
     <Compile Include="SourceCode\Vector.cs" />
     <Compile Include="Metaheuristic\WOA.cs" />
