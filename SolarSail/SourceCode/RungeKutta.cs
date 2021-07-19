@@ -138,9 +138,9 @@ namespace SolarSail.SourceCode
             List<double> tau = new List<double>();
 
             double step = 1f / P;
-            for (double m = 0; m <= 1; m += step)
+            for (double m = 0; m <= 1 + 0.00001f; m += step)
                 tau.Add(m);
-            double h_step = (tau[1] - tau[0]) / 20f;
+            double h_step = 0.01;//(tau[1] - tau[0]) / 20f;
             double start;       double stop;
             double currStart_r_0 = r_0;         double currStart_thetta_0 = thetta_0;
             double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
