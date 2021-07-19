@@ -1,6 +1,11 @@
 ﻿using System;
 namespace SolarSail
 {
+    public enum Mode 
+    {
+        SkipParams,
+        SaveParams
+    }
     abstract public class IMetaAlgorithm
     {
         protected void I(Agent agent)

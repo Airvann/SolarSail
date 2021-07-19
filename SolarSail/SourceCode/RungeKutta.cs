@@ -124,7 +124,7 @@ namespace SolarSail.SourceCode
             return res;
         }
 
-        public void RungeKuttaCaculate(Agent agent)
+        public void RungeKuttaCaculate(Agent agent, Mode mode = Mode.SkipParams)
         {
             List<double> h = agent.GetH();
             List<double> c = agent.GetC();
@@ -224,6 +224,15 @@ namespace SolarSail.SourceCode
             agent.r_tf = r[r.Count - 1];
             agent.u_tf = u[u.Count - 1];
             agent.v_tf = v[v.Count - 1];
+
+
+            if (mode == Mode.SaveParams) 
+            {
+                Result res = Result.getInstance();
+                res.resultTable.Add("t", t);
+                res.resultTable.Add("alpha", alfa);
+                res.resultTable.Add("r", r);
+            }
         }
 
         double T_tau(double sum, double tau, double H_k_1, int P, int k) 

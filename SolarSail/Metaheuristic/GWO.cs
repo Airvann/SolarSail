@@ -12,7 +12,6 @@ namespace SolarSail.SourceCode
 
     public class GWO : IMetaAlgorithm
     {
-
         private Params param;       //Параметр изменения функции a
 
         private int maxIterationCount;
@@ -65,6 +64,11 @@ namespace SolarSail.SourceCode
                 NewPackGeneration();
                 currentIteration++;
             }
+            Selection();
+
+            RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
+            rk.RungeKuttaCaculate(alfa, Mode.SaveParams);
+
             return alfa;
         }
 
