@@ -6,8 +6,6 @@ using System.Text;
 
 namespace SolarSail.SourceCode
 {
-
-
     public class WOA : IMetaAlgorithm
     {
         private int maxIterationCount;
@@ -19,10 +17,10 @@ namespace SolarSail.SourceCode
         public static Dictionary<string, object> PAR()
         {
             Dictionary<string, object> par = new Dictionary<string, object>();
-            par.Add("Максимальное число итераций", 100);
-            par.Add("Размер популяции", 100);
-            par.Add("Параметр логарифмической спирали b", 2);
-            par.Add("Число разбиений отрезка времени", 30);
+            par.Add("Максимальное число итераций",           100);
+            par.Add("Размер популяции",                      100);
+            par.Add("Параметр логарифмической спирали b",    2);
+            par.Add("Число разбиений",                       10);
             return par;
         }
 
@@ -35,13 +33,12 @@ namespace SolarSail.SourceCode
 
             maxIterationCount = (int)list[0];
             param = (Params)list[1];
-            K = (int)list[2];
-            P = (int)list[3];
+            P = (int)list[2];            
             b = (double)list[4];
 
-            Dim = K * P;
+            Dim = 2 * P;
 
-            best = new Agent(K, P);
+            best = new Agent(2 * P);
             FormingPopulation();
             for (int k = 1; k < maxIterationCount; k++)
             {
@@ -60,19 +57,19 @@ namespace SolarSail.SourceCode
 
             for (int i = 0; i < populationNumber; i++)
             {
-                Agent agent = new Agent(K, P);
-                for (int j = 0; j < K; j++)
+                Agent agent = new Agent(2*P);
+                for (int j = 0; j < P; j++)
                 {
                     nextRandomLength = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderSectionLength)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
                     agent.Coords[i] = nextRandomLength;
                 }
-                for (int j = K; j < Dim; j++)
+                for (int j = P; j < Dim; j++)
                 {
                     nextRandomFuncCoeff = (Math.Abs(bottomBorderFuncCoeff) + Math.Abs(topBorderFuncCoeff)) * rand.NextDouble() - Math.Abs(bottomBorderFuncCoeff);
                     agent.Coords[i] = nextRandomFuncCoeff;
                 }
                 //TODO: тут должно быть вычисление через Рунге-Кутта
-                agent.Fitness = I(1,1,1,1);          //TODO: сделать подсчет функции приспособленности
+                I(agent);          //TODO: сделать подсчет функции приспособленности
                 individuals.Add(agent);
             }
         }
@@ -100,19 +97,19 @@ namespace SolarSail.SourceCode
             Vector l = new Vector();
             Vector D = new Vector();
                     
-            Vector A = new Vector(K);
-            Vector C = new Vector(K);
+            Vector A = new Vector(P);
+            Vector C = new Vector(P);
 
             for (int k = 0; k < populationNumber; k++)
             {
                 if (rand.NextDouble() < 0.5f)
                 {
-                    for (int i = 0; i < K; i++)
+                    for (int i = 0; i < P; i++)
                     {
                         A[i] = 2 * a * rand.NextDouble() - a;
                         C[i] = 2 * rand.NextDouble();
                     }
-                    for (int i = K; i < Dim; i++)
+                    for (int i = P; i < Dim; i++)
                     {
                         A[i] = 2 * a * rand.NextDouble() - a;
                         C[i] = 2 * rand.NextDouble();
@@ -147,7 +144,7 @@ namespace SolarSail.SourceCode
 
                     D = Vector.Abs(best.Coords - individuals[k].Coords);
 
-                    for (int i = 0; i < K; i++)
+                    for (int i = 0; i < P; i++)
                     {
                         l[i] = 2 * rand.NextDouble() - 1;
                         tmp[i] = Math.Cos(2 * Math.PI * l[i]) * Math.Exp(b * l[i]);
@@ -155,7 +152,7 @@ namespace SolarSail.SourceCode
                     individuals[k].Coords = D * tmp + best.Coords;  //TODO:?
                 }
 
-                for (int i = 0; i < K; i++)
+                for (int i = 0; i < P; i++)
                 {
                     if (individuals[k].Coords[i] < bottomBorderSectionLength)
                         individuals[k].Coords[i] = bottomBorderSectionLength;
@@ -163,7 +160,7 @@ namespace SolarSail.SourceCode
                         individuals[k].Coords[i] = topBorderSectionLength;
                 }
 
-                for (int i = K; i < Dim; i++)
+                for (int i = P; i < Dim; i++)
                 {
                     if (individuals[k].Coords[i] < bottomBorderFuncCoeff)
                         individuals[k].Coords[i] = bottomBorderFuncCoeff;
@@ -171,7 +168,7 @@ namespace SolarSail.SourceCode
                         individuals[k].Coords[i] = topBorderFuncCoeff;
                 }
 
-                individuals[k].Fitness = I(1,1,1,1); //TODO: Рунге-Кутта
+                I(individuals[k]); //TODO: Рунге-Кутта
             }
         }
     }

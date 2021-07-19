@@ -10,18 +10,14 @@ namespace SolarSail.SourceCode
 {
     public class Result
     {
-        private static Result instance;
-        private Result() { }
-        public static Result getInstance() 
+        public Result() 
         {
-            if (instance == null)
-                instance = new Result();
-            return instance;
+            resultTable = new Dictionary<string, List<double>>();
         }
 
         public Dictionary<string, List<double>> resultTable;
         
-        public double tf;
+        private double tf;
         public double r_tf;
         public double u_tf;
         public double v_tf;

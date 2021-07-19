@@ -9,24 +9,29 @@ namespace SolarSail
     public class Vector
     {
         public double[] vector;
-        public static int dim;
+        public int dim;
 
-        public Vector(params double[] list)
-        {
-            dim = list.Length;
-            vector = new double[dim];
-            for (int i = 0; i < dim; ++i)
-                vector[i] = list[i];
-        }
+        //public Vector(params double[] list)
+        //{
+        //    dim = list.Length;
+        //    vector = new double[dim];
+        //    for (int i = 0; i < dim; ++i)
+        //        vector[i] = list[i];
+        //}
         public Vector(int dim)
         {
             vector = new double[dim];
+            this.dim = dim;
+        }
+
+        public Vector() 
+        {
         }
 
         public static Vector operator*(Vector vector, double value)
         {
-            Vector tmp = new Vector();
-            for (int i = 0; i < dim; i++)
+            Vector tmp = new Vector(vector.dim);
+            for (int i = 0; i < vector.dim; i++)
                 tmp[i] = vector[i] * value;
             return tmp;
         }
@@ -37,16 +42,16 @@ namespace SolarSail
 
         public static Vector operator *(Vector vector1, Vector vector2)
         {
-            Vector tmp = new Vector();
-            for (int i = 0; i < dim; i++)
+            Vector tmp = new Vector(vector1.dim);
+            for (int i = 0; i < vector1.dim; i++)
                 tmp[i] = vector1[i] * vector2[i];
             return tmp;
         }
 
         public static Vector Abs(Vector vector)
         {
-            Vector tmp = new Vector();
-            for (int i = 0; i < dim; i++)
+            Vector tmp = new Vector(vector.dim);
+            for (int i = 0; i < vector.dim; i++)
                 tmp[i] = Math.Abs(vector[i]);
             return tmp;
         }
@@ -58,16 +63,16 @@ namespace SolarSail
 
         public static Vector operator +(Vector vec1, Vector vec2)
         {
-            Vector tmp = new Vector();
-            for (int i = 0; i < dim; i++)
+            Vector tmp = new Vector(vec1.dim);
+            for (int i = 0; i < vec1.dim; i++)
                 tmp[i] = vec1[i] + vec2[i];
             return tmp;
         }
 
         public static Vector operator +(Vector vec, double val)
         {
-            Vector tmp = new Vector();
-            for (int i = 0; i < dim; i++)
+            Vector tmp = new Vector(vec.dim);
+            for (int i = 0; i < vec.dim; i++)
                 tmp[i] = vec[i] + val;
             return tmp;
         }

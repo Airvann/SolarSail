@@ -38,7 +38,6 @@ namespace SolarSail
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.chartUt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartXt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonResult = new System.Windows.Forms.Button();
@@ -60,13 +59,13 @@ namespace SolarSail
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridViewTableRes = new System.Windows.Forms.DataGridView();
-            this.label5 = new System.Windows.Forms.Label();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartUt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartXt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).BeginInit();
@@ -84,7 +83,9 @@ namespace SolarSail
             this.chartUt.ChartAreas.Add(chartArea1);
             this.chartUt.Location = new System.Drawing.Point(663, 6);
             this.chartUt.Name = "chartUt";
+            series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Name = "Series1";
             this.chartUt.Series.Add(series1);
             this.chartUt.Size = new System.Drawing.Size(673, 427);
@@ -112,9 +113,9 @@ namespace SolarSail
             // buttonResult
             // 
             this.buttonResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonResult.Location = new System.Drawing.Point(284, 39);
+            this.buttonResult.Location = new System.Drawing.Point(284, 42);
             this.buttonResult.Name = "buttonResult";
-            this.buttonResult.Size = new System.Drawing.Size(106, 31);
+            this.buttonResult.Size = new System.Drawing.Size(106, 29);
             this.buttonResult.TabIndex = 2;
             this.buttonResult.Text = "Рассчет";
             this.buttonResult.UseVisualStyleBackColor = true;
@@ -339,14 +340,6 @@ namespace SolarSail
             // 
             // dataGridViewTableRes
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTableRes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTableRes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTableRes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column3,
@@ -359,15 +352,6 @@ namespace SolarSail
             this.dataGridViewTableRes.Name = "dataGridViewTableRes";
             this.dataGridViewTableRes.Size = new System.Drawing.Size(1326, 446);
             this.dataGridViewTableRes.TabIndex = 0;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 805);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "V 0.2";
             // 
             // Column3
             // 
@@ -404,6 +388,15 @@ namespace SolarSail
             this.Column8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column8.HeaderText = "α(t)";
             this.Column8.Name = "Column8";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 805);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(32, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "V 0.5";
             // 
             // FormMain
             // 
