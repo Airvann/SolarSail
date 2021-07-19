@@ -152,22 +152,7 @@ namespace SolarSail.SourceCode
                     individuals[k].Coords = D * tmp + best.Coords;  //TODO:?
                 }
 
-                for (int i = 0; i < P; i++)
-                {
-                    if (individuals[k].Coords[i] < bottomBorderSectionLength)
-                        individuals[k].Coords[i] = bottomBorderSectionLength;
-                    else if (individuals[k].Coords[i] > topBorderSectionLength)
-                        individuals[k].Coords[i] = topBorderSectionLength;
-                }
-
-                for (int i = P; i < Dim; i++)
-                {
-                    if (individuals[k].Coords[i] < bottomBorderFuncCoeff)
-                        individuals[k].Coords[i] = bottomBorderFuncCoeff;
-                    else if (individuals[k].Coords[i] > topBorderFuncCoeff)
-                        individuals[k].Coords[i] = topBorderFuncCoeff;
-                }
-
+                CheckBorders(individuals[k]);
                 I(individuals[k]); //TODO: Рунге-Кутта
             }
         }

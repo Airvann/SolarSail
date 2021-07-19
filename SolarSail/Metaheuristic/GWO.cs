@@ -87,14 +87,7 @@ namespace SolarSail.SourceCode
                     agent.Coords[j] = nextRandomFuncCoeff;
                 }
 
-                List<double> h = new List<double>();
-                for (int j = 0; j < P; j++)
-                    h.Add(agent.Coords[j]);
-
-                List<double> a = new List<double>();
-                for (int j = P; j < Dim; j++)
-                    a.Add(agent.Coords[j]);
-
+                CheckBorders(agent);
                 RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
                 rk.RungeKuttaCaculate(agent);
 
@@ -134,8 +127,6 @@ namespace SolarSail.SourceCode
             delta.u_tf = individuals[2].u_tf;
             delta.v_tf = individuals[2].v_tf;
             delta.tf   = individuals[2].tf;
-
-
         }
         private void NewPackGeneration()
         {
@@ -147,49 +138,31 @@ namespace SolarSail.SourceCode
                 a = 2 * (1 - currentIteration / (double)(maxIterationCount));
 
             Vector A_alfa = new Vector(Dim);            Vector C_alfa = new Vector(Dim);          Vector D_alfa = new Vector(Dim); 
-                        
             Vector A_beta = new Vector(Dim);            Vector C_beta = new Vector(Dim);          Vector D_beta = new Vector(Dim);
-
             Vector A_delta = new Vector(Dim);           Vector C_delta = new Vector(Dim);         Vector D_delta = new Vector(Dim);
 
             for (int k = 0; k < populationNumber; k++)
             {
                 for (int m = 0; m < Dim; m++)
                 {
-                    A_alfa[m] = 2 * a * rand.NextDouble() - a;
-                    A_beta[m] = 2 * a * rand.NextDouble() - a;
-                    A_delta[m] = 2 * a * rand.NextDouble() - a;
+                    A_alfa[m]   = 2 * a * rand.NextDouble() - a;
+                    A_beta[m]   = 2 * a * rand.NextDouble() - a;
+                    A_delta[m]  = 2 * a * rand.NextDouble() - a;
 
-                    C_alfa[m] = 2 * rand.NextDouble();
-                    C_beta[m] = 2 * rand.NextDouble();
-                    C_delta[m] = 2 * rand.NextDouble();
+                    C_alfa[m]   = 2 * rand.NextDouble();
+                    C_beta[m]   = 2 * rand.NextDouble();
+                    C_delta[m]  = 2 * rand.NextDouble();
                 }
 
                 D_alfa = Vector.Abs(C_alfa * alfa.Coords - individuals[k].Coords);
                 D_beta = Vector.Abs(C_beta * beta.Coords - individuals[k].Coords);
                 D_delta = Vector.Abs(C_beta * delta.Coords - individuals[k].Coords);
 
-
                 individuals[k].Coords = ((alfa.Coords - D_alfa * A_alfa) +
                                                 (beta.Coords - D_beta * A_beta) +
                                                 (delta.Coords - D_delta * A_delta)) / 3.0;
 
-                for (int i = 0; i < P; i++)
-                {
-                    if (individuals[k].Coords[i] < bottomBorderSectionLength)
-                        individuals[k].Coords[i] = bottomBorderSectionLength;
-                    else if (individuals[k].Coords[i] > topBorderSectionLength)
-                        individuals[k].Coords[i] = topBorderSectionLength;
-                }
-
-                for (int i = P; i < Dim; i++)
-                {
-                    if (individuals[k].Coords[i] < bottomBorderFuncCoeff)
-                        individuals[k].Coords[i] = bottomBorderFuncCoeff;          
-                    else if (individuals[k].Coords[i] > topBorderFuncCoeff)
-                        individuals[k].Coords[i] = topBorderFuncCoeff;
-                }
-
+                CheckBorders(individuals[k]);
                 RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
                 rk.RungeKuttaCaculate(individuals[k]);
                 I(individuals[k]);

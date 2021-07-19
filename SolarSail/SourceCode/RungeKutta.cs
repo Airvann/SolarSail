@@ -23,6 +23,7 @@ namespace SolarSail.SourceCode
         List<double> u_tmp = new List<double>();
         List<double> v_tmp = new List<double>();
 
+        //Параметр базисной функции
         int p = 3;
         //Начальное условие
         double r_0 = 1.496f * Math.Pow(10, 11);
