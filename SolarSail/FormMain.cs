@@ -29,7 +29,6 @@ namespace SolarSail
             int partsCount        = 0;
             int b                 = 0;
             
-            
             IMetaAlgorithm alg;
             object[] param;
             switch (comboBoxSelectAlg.SelectedIndex)
@@ -56,8 +55,8 @@ namespace SolarSail
             
             best = alg.CalculateResult(populationCount, 0, 10, -Math.PI / 2f, Math.PI / 2f, param);
             
-            dataGridViewResult.Rows[0].Cells[1].Value = best.tf;
-            FillResultTable();
+            
+            FillResultTable(best);
         }
 
         private void FillParamTable(Dictionary<string, object> list) 
@@ -71,18 +70,24 @@ namespace SolarSail
             }
         }
 
-        private void FillResultTable()
+        private void FillResultTable(Agent best)
         {
             Result res = Result.getInstance();
-            chartXt.Series[0].Points.Clear();
-            chartUt.Series[0].Points.Clear();
+            chartRt.Series[0].Points.Clear();
+            chartAlfat.Series[0].Points.Clear();
+
+            dataGridViewResult.Rows[0].Cells[1].Value = best.tf;
 
             for (int i = 0; i < res.resultTable["r"].Count - 1 ; i++)
             {
                 dataGridViewTableRes.Rows.Add(res.resultTable["t"][i], res.resultTable["r"][i], res.resultTable["thetta"][i], res.resultTable["u"][i], res.resultTable["v"][i], res.resultTable["alpha"][i]);
                 
-                chartXt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["r"][i]);
-                chartUt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["alpha"][i]);
+                chartAlfat.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["alpha"][i]);
+                
+                chartRt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["r"][i]);
+                chartTt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["thetta"][i]);
+                chartUt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["u"][i]);
+                chartVt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["v"][i]);
             }
         }
 
