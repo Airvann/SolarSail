@@ -50,7 +50,7 @@ namespace SolarSail
                         break;
                 }
 
-                best = alg.CalculateResult(populationCount, 800, 1000, -Math.PI / 2f, Math.PI / 2f, param);
+                best = alg.CalculateResult(populationCount, 0, 20, -Math.PI / 2f, Math.PI / 2f, param);
                 FillResultTable();
         }
 
@@ -71,8 +71,9 @@ namespace SolarSail
 
             for (int i = 0; i < res.resultTable["r"].Count - 1 ; i++)
             {
+                dataGridViewResult.Rows.Add(res.resultTable["t"], res.resultTable["r"], res.resultTable["thetta"], res.resultTable["u"], res.resultTable["v"], res.resultTable["alpha"]);
+                
                 chartXt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["r"][i]);
-
                 chartUt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["alpha"][i]);
             }
         }

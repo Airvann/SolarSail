@@ -24,7 +24,7 @@ namespace SolarSail.SourceCode
         List<double> v_tmp = new List<double>();
 
         //Параметр базисной функции
-        int p = 3;
+        int p = 5;
         //Начальное условие
         double r_0 = 1.496f * Math.Pow(10, 11);
         double thetta_0 = 0;
@@ -229,9 +229,11 @@ namespace SolarSail.SourceCode
             if (mode == Mode.SaveParams) 
             {
                 Result res = Result.getInstance();
-                res.resultTable.Add("t", t);
+                res.resultTable.Add("t",     t);
                 res.resultTable.Add("alpha", alfa);
-                res.resultTable.Add("r", r);
+                res.resultTable.Add("r",     r);
+                res.resultTable.Add("u",     u);
+                res.resultTable.Add("v",     v);
             }
         }
 

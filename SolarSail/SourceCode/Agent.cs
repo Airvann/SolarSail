@@ -23,7 +23,7 @@ namespace SolarSail
         public List<double> GetC()
         {
             List<double> res = new List<double>(P);
-            for (int i = P; i < res.Count; i++)
+            for (int i = P; i < Coords.dim; i++)
                 res.Add(Coords[i]);
             return res;
         }
