@@ -21,37 +21,43 @@ namespace SolarSail
 
         private void buttonResult_Click(object sender, EventArgs e)
         {
-                int maxIterationCount = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
-                int populationCount   = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
-                int partsCount        = 0;
-                int b                 = 0;
+            Result res = Result.getInstance();
+            res.Clear();
 
-                IMetaAlgorithm alg;
-                object[] param;
-                switch (comboBoxSelectAlg.SelectedIndex)
-                {
-                    case 0:
-                        alg = new GWO();
-                        partsCount           = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                        object[] paramGWO    = { maxIterationCount, Params.Linear, partsCount };
-                        param                = paramGWO;
-                        break;
-                    case 1:
-                        alg = new WOA();
-                        b                    = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                        partsCount           = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
-                        object[] paramWOA    = { maxIterationCount, Params.Linear, partsCount, b};
-                        param = paramWOA;
-                        break;
-                    default:
-                        alg = new GWO();
-                        object[] paramDefault = { maxIterationCount, Params.Linear, partsCount };
-                        param = paramDefault;
-                        break;
-                }
-
-                best = alg.CalculateResult(populationCount, 0, 20, -Math.PI / 2f, Math.PI / 2f, param);
-                FillResultTable();
+            int maxIterationCount = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
+            int populationCount   = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
+            int partsCount        = 0;
+            int b                 = 0;
+            
+            
+            IMetaAlgorithm alg;
+            object[] param;
+            switch (comboBoxSelectAlg.SelectedIndex)
+            {
+                case 0:
+                    alg = new GWO();
+                    partsCount           = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                    object[] paramGWO    = { maxIterationCount, Params.Linear, partsCount };
+                    param                = paramGWO;
+                    break;
+                case 1:
+                    alg = new WOA();
+                    b                    = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                    partsCount           = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
+                    object[] paramWOA    = { maxIterationCount, Params.Linear, partsCount, b};
+                    param = paramWOA;
+                    break;
+                default:
+                    alg = new GWO();
+                    object[] paramDefault = { maxIterationCount, Params.Linear, partsCount };
+                    param = paramDefault;
+                    break;
+            }
+            
+            best = alg.CalculateResult(populationCount, 0, 10, -Math.PI / 2f, Math.PI / 2f, param);
+            
+            dataGridViewResult.Rows[0].Cells[1].Value = best.tf;
+            FillResultTable();
         }
 
         private void FillParamTable(Dictionary<string, object> list) 
@@ -68,10 +74,12 @@ namespace SolarSail
         private void FillResultTable()
         {
             Result res = Result.getInstance();
+            chartXt.Series[0].Points.Clear();
+            chartUt.Series[0].Points.Clear();
 
             for (int i = 0; i < res.resultTable["r"].Count - 1 ; i++)
             {
-                dataGridViewResult.Rows.Add(res.resultTable["t"], res.resultTable["r"], res.resultTable["thetta"], res.resultTable["u"], res.resultTable["v"], res.resultTable["alpha"]);
+                dataGridViewTableRes.Rows.Add(res.resultTable["t"][i], res.resultTable["r"][i], res.resultTable["thetta"][i], res.resultTable["u"][i], res.resultTable["v"][i], res.resultTable["alpha"][i]);
                 
                 chartXt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["r"][i]);
                 chartUt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["alpha"][i]);
