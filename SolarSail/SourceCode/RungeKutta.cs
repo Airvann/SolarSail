@@ -55,27 +55,40 @@ namespace SolarSail.SourceCode
        
        double F3(double r, double thetta, double u, double v, double alfa)
        {
-          return (v * v) / r - (mu / (r * r)) * (1 - beta * Math.Pow(Math.Cos(alfa), 3));
+            double tmp = Math.Cos(alfa);
+            return (v * v) / r - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
        }
        
        double F4(double r, double thetta, double u, double v, double alfa)
        {
-          return -u * v / r + mu * beta * ((Math.Sin(alfa)*Math.Pow(Math.Cos(alfa),2)) / (r*r));
+            double tmp = Math.Cos(alfa);
+            return -u * v / r + mu * beta * ((Math.Sin(alfa) * tmp * tmp) / (r * r));
        }
 
        double BasisFunction(double t)
-       {
+       {//p = 3;
            if ((t >= -1) && (t <= -0.5))
-               return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
+               return 2 * 2 * (1 + t) * (1 + t) * (1 + t);
            else if ((t >= -0.5) && (t <= 0.5))
-               return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
+           {
+               double tmp = Math.Abs(t);
+               return 1 - 2 * 2 * tmp * tmp * tmp;
+           }
            else if ((t >= 0.5) && (t <= 1))
-               return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
+               return 2 * 2 * (1 - t) * (1 - t) * (1 - t);
            else
                return 0;
-       }
+           //if ((t >= -1) && (t <= -0.5))
+           //    return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
+           //else if ((t >= -0.5) && (t <= 0.5))
+           //    return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
+           //else if ((t >= 0.5) && (t <= 1))
+           //    return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
+           //else
+           //    return 0;
+        }
 
-       double Alfa(double t, List<double> c) 
+        double Alfa(double t, List<double> c) 
        {
            int P = c.Count;
            double res = 0;
@@ -129,6 +142,7 @@ namespace SolarSail.SourceCode
             List<double> h = agent.GetH();
             List<double> c = agent.GetC();
             //Инициализация начальными условиями
+            t.Add(0);
             r.Add(r_0);
             thetta.Add(thetta_0);
             u.Add(u_0);
@@ -205,7 +219,6 @@ namespace SolarSail.SourceCode
                 for (int j = 0; j < k; j++)
                     sum += h[j];
 
-                t.Add(T_tau(sum, tauPart[0], h[0], P, k));
                 for (int i = 1; i < tauPart.Count; i++)
                 {
                     alfa.Add(Alfa(tauPart[i], c));
