@@ -43,26 +43,26 @@ namespace SolarSail.SourceCode
        u'(t)=F3,
        v'(t)=F4.
        */
-       double F1(double r, double thetta, double u, double v, double alfa) 
+       double F1(double u) 
        {
           return u;
        }
        
-       double F2(double r, double thetta, double u, double v, double alfa)
+       double F2(double r, double v)
        {
           return v / r;
        }
        
-       double F3(double r, double thetta, double u, double v, double alfa)
+       double F3(double r, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return (v * v) / r - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
+            return ((v * v) / r) - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
        }
        
-       double F4(double r, double thetta, double u, double v, double alfa)
+       double F4(double r, double u, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return -u * v / r + mu * beta * ((Math.Sin(alfa) * tmp * tmp) / (r * r));
+            return ((-u * v) / r) + mu * beta * ((Math.Sin(alfa) * tmp * tmp) / (r * r));
        }
 
        double BasisFunction(double t)
@@ -154,7 +154,7 @@ namespace SolarSail.SourceCode
             double step = 1f / P;
             for (double m = 0; m <= 1 + 0.00001f; m += step)
                 tau.Add(m);
-            double h_step = 0.01;//(tau[1] - tau[0]) / 20f;
+            double h_step = (tau[1] - tau[0]) / 10f;
             double start;       double stop;
             double currStart_r_0 = r_0;         double currStart_thetta_0 = thetta_0;
             double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
@@ -184,30 +184,35 @@ namespace SolarSail.SourceCode
                 //Рунге-Кутта
                 for (int i = 0; i < tauPart.Count - 1; ++i)
                 {
-                   double K1 = F1(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double L1 = F2(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double M1 = F3(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double N1 = F4(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                 
-                   double K2 = F1(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double L2 = F2(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double M2 = F3(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double N2 = F4(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    // double K1 = F1(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
+                    // double L1 = F2(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
+                    // double M1 = F3(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
+                    // double N1 = F4(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
+                    //
+                    // double K2 = F1(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    // double L2 = F2(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    // double M2 = F3(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    // double N2 = F4(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    //
+                    // double K3 = F1(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
+                    // double L3 = F2(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
+                    // double M3 = F3(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
+                    // double N3 = F4(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
+                    //
+                    // double K4 = F1(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
+                    // double L4 = F2(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
+                    // double M4 = F3(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
+                    // double N4 = F4(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
+                    //
+                    // double next_r        = r_tmp[i]      + (h_step / 6) * (K1 + 2 * K2 + 2 * K3 + K4);
+                    // double next_thetta   = thetta_tmp[i] + (h_step / 6) * (L1 + 2 * L2 + 2 * L3 + L4);
+                    // double next_v        = v_tmp[i]      + (h_step / 6) * (N1 + 2 * N2 + 2 * N3 + N4);
+                    // double next_u        = u_tmp[i]      + (h_step / 6) * (M1 + 2 * M2 + 2 * M3 + M4);
 
-                   double K3 = F1(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double L3 = F2(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double M3 = F3(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double N3 = F4(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-
-                   double K4 = F1(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double L4 = F2(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double M4 = F3(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double N4 = F4(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                 
-                   double next_r        = r_tmp[i]      + (h_step / 6) * (K1 + 2 * K2 + 2 * K3 + K4);
-                   double next_thetta   = thetta_tmp[i] + (h_step / 6) * (L1 + 2 * L2 + 2 * L3 + L4);
-                   double next_v        = v_tmp[i]      + (h_step / 6) * (N1 + 2 * N2 + 2 * N3 + N4);
-                   double next_u        = u_tmp[i]      + (h_step / 6) * (M1 + 2 * M2 + 2 * M3 + M4);
+                    double next_r           = r_tmp[i]      + F1(u_tmp[i]) * h_step  * P;
+                    double next_thetta      = thetta_tmp[i] + F2(r_tmp[i], v_tmp[i]) * h_step  * P;
+                    double next_v           = v_tmp[i]      + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P;
+                    double next_u           = u_tmp[i]      + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P;
 
                    r_tmp.Add(next_r);
                    thetta_tmp.Add(next_thetta);

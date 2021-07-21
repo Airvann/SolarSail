@@ -53,7 +53,7 @@ namespace SolarSail
                     break;
             }
             
-            best = alg.CalculateResult(populationCount, 0, 10, -Math.PI / 2f, Math.PI / 2f, param);
+            best = alg.CalculateResult(populationCount, 0, 100, -Math.PI / 2f, Math.PI / 2f, param);
             
             
             FillResultTable(best);
@@ -74,6 +74,9 @@ namespace SolarSail
         {
             Result res = Result.getInstance();
             chartRt.Series[0].Points.Clear();
+            chartTt.Series[0].Points.Clear();
+            chartUt.Series[0].Points.Clear();
+            chartVt.Series[0].Points.Clear();
             chartAlfat.Series[0].Points.Clear();
 
             dataGridViewResult.Rows[0].Cells[1].Value = best.tf;

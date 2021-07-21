@@ -102,7 +102,7 @@ namespace SolarSail.SourceCode
 
         private void Selection()
         {
-            individuals = individuals.OrderByDescending(s => s.Fitness).ToList();
+            individuals = individuals.OrderBy(s => s.Fitness).ToList();
 
             //Выбираем наиболее приспосоленных волков (сделано так, чтобы была передача значений, а не ссылки) 
                
