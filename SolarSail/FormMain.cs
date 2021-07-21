@@ -53,7 +53,7 @@ namespace SolarSail
                     break;
             }
             
-            best = alg.CalculateResult(populationCount, 0, 100, -Math.PI / 2f, Math.PI / 2f, param);
+            best = alg.CalculateResult(populationCount, 0, 100, -100, 100, param);
             
             
             FillResultTable(best);
