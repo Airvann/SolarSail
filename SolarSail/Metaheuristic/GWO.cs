@@ -26,7 +26,7 @@ namespace SolarSail.SourceCode
         public static Dictionary<string, object> PAR()
         {
             Dictionary<string, object> par = new Dictionary<string, object>();
-            par.Add("Максимальное число итераций",          500);
+            par.Add("Максимальное число итераций",          100);
             par.Add("Размер популяции",                     100);
             par.Add("Число разбиений",                       10);
             return par;

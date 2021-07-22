@@ -160,7 +160,7 @@ namespace SolarSail.SourceCode
             List<double> tauPart = new List<double>();
             double tf = 2 * 42000000;
 
-            double h_step = 0.001;                   //(tau[1] - tau[0]) / 20f;
+            double h_step = (tau[1] - tau[0])/1000;                   //(tau[1] - tau[0]) / 20f;
             double h_step_step = tf / P;
             double start; double stop;
 
@@ -187,12 +187,12 @@ namespace SolarSail.SourceCode
                     tauPart.Add(gap);
 
                 
-                for (int i = 0; i < tauPart.Count - 1; ++i)
+                for (int i = 0; i < tauPart.Count; ++i)
                 {
                     double next_r      = r_tmp[i]            + F1(u_tmp[i])                                   * h_step  * P * h_step_step;
                     double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                         * h_step  * P * h_step_step;
-                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], -Math.PI / 6)           * h_step  * P * h_step_step;
-                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], -Math.PI / 6) * h_step  * P * h_step_step;
+                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h_step  * P * h_step_step;
+                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P * h_step_step;
 
                     thetta_tmp.Add(next_thetta);
                     r_tmp.Add(next_r);
