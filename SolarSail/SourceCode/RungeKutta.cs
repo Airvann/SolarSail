@@ -26,13 +26,13 @@ namespace SolarSail.SourceCode
         //Параметр базисной функции
         int p = 3;
         //Начальное условие
-        double r_0 = 1.496f * Math.Pow(10, 11);
+        double r_0 = 1.49597870691 * Math.Pow(10, 11);
         double thetta_0 = 0;
         double u_0 = 0;
-        double v_0 = 2.98 * Math.Pow(10,4);
+        double v_0 = 2.9783 * Math.Pow(10,4);
         
-        double mu = 1.327474512f * Math.Pow(10, 20);
-        double beta = 0.042f;
+        double mu = 1.327474512 * Math.Pow(10, 20);
+        double beta = 0.042;
 
         double topAlfaBorder;
         double bottomAlfaBorder;
@@ -43,26 +43,26 @@ namespace SolarSail.SourceCode
        u'(t)=F3,
        v'(t)=F4.
        */
-       double F1(double r, double thetta, double u, double v, double alfa) 
+       double F1(double u) 
        {
           return u;
        }
        
-       double F2(double r, double thetta, double u, double v, double alfa)
+       double F2(double r, double v)
        {
           return v / r;
        }
        
-       double F3(double r, double thetta, double u, double v, double alfa)
+       double F3(double r, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return (v * v) / r - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
+            return ((v * v) / r) - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
        }
        
-       double F4(double r, double thetta, double u, double v, double alfa)
+       double F4(double r, double u, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return -u * v / r + mu * beta * ((Math.Sin(alfa) * tmp * tmp) / (r * r));
+            return (-u * v / r) + (mu * beta * ((Math.Sin(alfa) * tmp * tmp))/ (r * r));
        }
 
        double BasisFunction(double t)
@@ -141,7 +141,7 @@ namespace SolarSail.SourceCode
         {
             List<double> h = agent.GetH();
             List<double> c = agent.GetC();
-            //Инициализация начальными условиями
+
             t.Add(0);
             r.Add(r_0);
             thetta.Add(thetta_0);
@@ -150,17 +150,23 @@ namespace SolarSail.SourceCode
 
             int P = agent.P;
             List<double> tau = new List<double>();
-
+            
             double step = 1f / P;
             for (double m = 0; m <= 1 + 0.00001f; m += step)
                 tau.Add(m);
-            double h_step = 0.01;//(tau[1] - tau[0]) / 20f;
-            double start;       double stop;
             double currStart_r_0 = r_0;         double currStart_thetta_0 = thetta_0;
             double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
 
-            List<double> tauPart = new List<double>();            
+            List<double> tauPart = new List<double>();
+            double tf = 2 * 42000000;
+
+            double h_step = 0.001;                   //(tau[1] - tau[0]) / 20f;
+            double h_step_step = tf / P;
+            double start; double stop;
+
+            //Инициализация начальными условиями
             
+
             for (int k = 0; k < P; k++)
             {
                 tauPart.Clear();
@@ -177,68 +183,47 @@ namespace SolarSail.SourceCode
                 u_tmp.Add(currStart_u_0);
                 v_tmp.Add(currStart_v_0);
 
-                //Формируем отрезок разибений, на котором происходит решение ДУ 
-                for (double gap = start;  gap <= stop + 0.00001f; gap+=h_step)
+                for (double gap = start; gap <= stop + 0.00001f; gap += h_step)
                     tauPart.Add(gap);
 
-                //Рунге-Кутта
+                
                 for (int i = 0; i < tauPart.Count - 1; ++i)
                 {
-                   double K1 = F1(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double L1 = F2(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double M1 = F3(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                   double N1 = F4(r_tmp[i], thetta_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))          * P * h[k];
-                 
-                   double K2 = F1(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double L2 = F2(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double M2 = F3(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
-                   double N2 = F4(r_tmp[i] + (h_step / 2) * K1, thetta_tmp[i] + (h_step / 2) * L1, u_tmp[i] + (h_step / 2) * M1, v_tmp[i] + (h_step / 2) * N1, Alfa(tauPart[i], c))       * P * h[k];
+                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                   * h_step  * P * h_step_step;
+                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                         * h_step  * P * h_step_step;
+                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], -Math.PI / 6)           * h_step  * P * h_step_step;
+                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], -Math.PI / 6) * h_step  * P * h_step_step;
 
-                   double K3 = F1(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double L3 = F2(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double M3 = F3(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-                   double N3 = F4(r_tmp[i] + (h_step / 2) * K2, thetta_tmp[i] + (h_step / 2) * L2, u_tmp[i] + (h_step / 2) * M2, v_tmp[i] + (h_step / 2) * N2, Alfa(tauPart[i], c))       * P * h[k];
-
-                   double K4 = F1(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double L4 = F2(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double M4 = F3(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                   double N4 = F4(r_tmp[i] + (h_step / 2) * K3, thetta_tmp[i] + (h_step / 2) * L3, u_tmp[i] + (h_step / 2) * M3, v_tmp[i] + (h_step / 2) * N3, Alfa(tauPart[i], c))       * P * h[k];
-                 
-                   double next_r        = r_tmp[i]      + (h_step / 6) * (K1 + 2 * K2 + 2 * K3 + K4);
-                   double next_thetta   = thetta_tmp[i] + (h_step / 6) * (L1 + 2 * L2 + 2 * L3 + L4);
-                   double next_v        = v_tmp[i]      + (h_step / 6) * (N1 + 2 * N2 + 2 * N3 + N4);
-                   double next_u        = u_tmp[i]      + (h_step / 6) * (M1 + 2 * M2 + 2 * M3 + M4);
-
-                   r_tmp.Add(next_r);
-                   thetta_tmp.Add(next_thetta);
-                   u_tmp.Add(next_u);
-                   v_tmp.Add(next_v);
+                    thetta_tmp.Add(next_thetta);
+                    r_tmp.Add(next_r);
+                    u_tmp.Add(next_u);
+                    v_tmp.Add(next_v);
                 }
 
                 double sum = 0;
                 for (int j = 0; j < k; j++)
-                    sum += h[j];
+                    sum += h_step_step;
 
                 for (int i = 1; i < tauPart.Count; i++)
                 {
                     alfa.Add(Alfa(tauPart[i], c));
-                    t.Add(T_tau(sum, tauPart[i], h[k], P, k));
+                    t.Add(T_tau(sum, tauPart[i], h_step_step, P, k));
                     r.Add(r_tmp[i]);
                     thetta.Add(thetta_tmp[i]);
                     u.Add(u_tmp[i]);
-                    v.Add(v_tmp[i]);  
+                    v.Add(v_tmp[i]);
                 }
-                currStart_r_0       = r[r.Count - 1];
-                currStart_thetta_0  = thetta[thetta.Count - 1];
-                currStart_u_0       = u[u.Count - 1];
-                currStart_v_0       = v[v.Count - 1];
+
+                currStart_r_0 = r[r.Count - 1];
+                currStart_thetta_0 = thetta[thetta.Count - 1];
+                currStart_u_0 = u[u.Count - 1];
+                currStart_v_0 = v[v.Count - 1];
             }
 
             agent.SetTf();
             agent.r_tf = r[r.Count - 1];
             agent.u_tf = u[u.Count - 1];
             agent.v_tf = v[v.Count - 1];
-
 
             if (mode == Mode.SaveParams) 
             {

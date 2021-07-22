@@ -44,9 +44,9 @@ namespace SolarSail
             }
         }
 
-        protected const double const_r_tf = 5.8344f * 10000000000;
+        protected const double const_r_tf = 5.8344 * 10000000000;
         protected const double const_u_tf = 0;
-        protected const double const_v_tf = 4.79f * 10000;
+        protected const double const_v_tf = 4.79 * 10000;
 
         protected double lambda1 = Math.Pow(10, 5);
         protected double lambda3 = Math.Pow(10, 5);
