@@ -68,6 +68,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormVisualization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormVisualization.Designer.cs">
+      <DependentUpon>FormVisualization.cs</DependentUpon>
+    </Compile>
     <Compile Include="SourceCode\Agent.cs" />
     <Compile Include="Metaheuristic\GWO.cs" />
     <Compile Include="SourceCode\IMetaAlgorithm.cs" />
@@ -79,6 +85,9 @@
     <Compile Include="Metaheuristic\WOA.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormVisualization.resx">
+      <DependentUpon>FormVisualization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -80,6 +80,7 @@ namespace SolarSail
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
+            this.buttonVisual = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartAlfat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartRt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).BeginInit();
@@ -135,11 +136,11 @@ namespace SolarSail
             // buttonResult
             // 
             this.buttonResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonResult.Location = new System.Drawing.Point(284, 42);
+            this.buttonResult.Location = new System.Drawing.Point(329, 42);
             this.buttonResult.Name = "buttonResult";
-            this.buttonResult.Size = new System.Drawing.Size(106, 29);
+            this.buttonResult.Size = new System.Drawing.Size(133, 29);
             this.buttonResult.TabIndex = 2;
-            this.buttonResult.Text = "Рассчет";
+            this.buttonResult.Text = "Расчет";
             this.buttonResult.UseVisualStyleBackColor = true;
             this.buttonResult.Click += new System.EventHandler(this.buttonResult_Click);
             // 
@@ -153,7 +154,7 @@ namespace SolarSail
             "Метод горбатых китов"});
             this.comboBoxSelectAlg.Location = new System.Drawing.Point(12, 42);
             this.comboBoxSelectAlg.Name = "comboBoxSelectAlg";
-            this.comboBoxSelectAlg.Size = new System.Drawing.Size(266, 28);
+            this.comboBoxSelectAlg.Size = new System.Drawing.Size(311, 28);
             this.comboBoxSelectAlg.TabIndex = 3;
             this.comboBoxSelectAlg.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectAlg_SelectedIndexChanged);
             // 
@@ -529,13 +530,27 @@ namespace SolarSail
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 17;
-            this.label5.Text = "V 1.0";
+            this.label5.Text = "V 1.1";
+            // 
+            // buttonVisual
+            // 
+            this.buttonVisual.Enabled = false;
+            this.buttonVisual.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonVisual.Location = new System.Drawing.Point(578, 790);
+            this.buttonVisual.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonVisual.Name = "buttonVisual";
+            this.buttonVisual.Size = new System.Drawing.Size(326, 40);
+            this.buttonVisual.TabIndex = 18;
+            this.buttonVisual.Text = "Визуализация";
+            this.buttonVisual.UseVisualStyleBackColor = true;
+            this.buttonVisual.Click += new System.EventHandler(this.buttonVisual_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1373, 839);
+            this.Controls.Add(this.buttonVisual);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.pictureBox1);
@@ -610,6 +625,7 @@ namespace SolarSail
         private System.Windows.Forms.DataVisualization.Charting.Chart chartUt;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartVt;
+        private System.Windows.Forms.Button buttonVisual;
     }
 }
 

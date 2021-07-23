@@ -139,7 +139,6 @@ namespace SolarSail.SourceCode
 
         public void RungeKuttaCaculate(Agent agent, Mode mode = Mode.SkipParams)
         {
-            List<double> h = agent.GetH();
             List<double> c = agent.GetC();
 
             t.Add(0);
