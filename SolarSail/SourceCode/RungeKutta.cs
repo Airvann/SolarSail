@@ -24,12 +24,12 @@ namespace SolarSail.SourceCode
         List<double> v_tmp = new List<double>();
 
         //Параметр базисной функции
-        int p = 3;
+        int p = 2;
         //Начальное условие
         double r_0 = 1.49597870691 * Math.Pow(10, 11);
         double thetta_0 = 0;
         double u_0 = 0;
-        double v_0 = 2.9783 * Math.Pow(10,4);
+        double v_0 = 2.98 * Math.Pow(10,4);
         
         double mu = 1.327474512 * Math.Pow(10, 20);
         double beta = 0.042;
@@ -56,7 +56,7 @@ namespace SolarSail.SourceCode
        double F3(double r, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return ((v * v) / r) - (mu / (r * r)) * (1 - beta * tmp * tmp * tmp);
+            return ((v * v) / r) - (mu / (r * r)) +  (beta * tmp * tmp * tmp)/(r*r);
        }
        
        double F4(double r, double u, double v, double alfa)
@@ -67,25 +67,25 @@ namespace SolarSail.SourceCode
 
        double BasisFunction(double t)
        {//p = 3;
-           if ((t >= -1) && (t <= -0.5))
-               return 2 * 2 * (1 + t) * (1 + t) * (1 + t);
-           else if ((t >= -0.5) && (t <= 0.5))
-           {
-               double tmp = Math.Abs(t);
-               return 1 - 2 * 2 * tmp * tmp * tmp;
-           }
-           else if ((t >= 0.5) && (t <= 1))
-               return 2 * 2 * (1 - t) * (1 - t) * (1 - t);
-           else
-               return 0;
            //if ((t >= -1) && (t <= -0.5))
-           //    return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
+           //    return 2 * 2 * (1 + t) * (1 + t) * (1 + t);
            //else if ((t >= -0.5) && (t <= 0.5))
-           //    return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
+           //{
+           //    double tmp = Math.Abs(t);
+           //    return 1 - 2 * 2 * tmp * tmp * tmp;
+           //}
            //else if ((t >= 0.5) && (t <= 1))
-           //    return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
+           //    return 2 * 2 * (1 - t) * (1 - t) * (1 - t);
            //else
            //    return 0;
+           if ((t >= -1) && (t <= -0.5))
+               return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
+           else if ((t >= -0.5) && (t <= 0.5))
+               return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
+           else if ((t >= 0.5) && (t <= 1))
+               return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
+           else
+               return 0;
         }
 
         double Alfa(double t, List<double> c) 
