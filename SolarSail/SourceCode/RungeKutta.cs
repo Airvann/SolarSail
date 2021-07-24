@@ -140,6 +140,7 @@ namespace SolarSail.SourceCode
         public void RungeKuttaCaculate(Agent agent, Mode mode = Mode.SkipParams)
         {
             List<double> c = agent.GetC();
+            List<double> h = agent.GetH();
 
             t.Add(0);
             r.Add(r_0);
@@ -157,15 +158,14 @@ namespace SolarSail.SourceCode
             double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
 
             List<double> tauPart = new List<double>();
-            double tf = 2 * 42000000;
+//            double tf = 2 * 42000000;
 
             double h_step = (tau[1] - tau[0])/1000;                   //(tau[1] - tau[0]) / 20f;
-            double h_step_step = tf / P;
+            //double h_step_step = tf / P;
             double start; double stop;
 
             //Инициализация начальными условиями
             
-
             for (int k = 0; k < P; k++)
             {
                 tauPart.Clear();
@@ -188,10 +188,10 @@ namespace SolarSail.SourceCode
                 
                 for (int i = 0; i < tauPart.Count; ++i)
                 {
-                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                   * h_step  * P * h_step_step;
-                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                         * h_step  * P * h_step_step;
-                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h_step  * P * h_step_step;
-                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P * h_step_step;
+                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                   * h_step  * P * h[k];
+                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                         * h_step  * P * h[k];
+                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h_step  * P * h[k];
+                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P * h[k];
 
                     thetta_tmp.Add(next_thetta);
                     r_tmp.Add(next_r);
@@ -201,12 +201,12 @@ namespace SolarSail.SourceCode
 
                 double sum = 0;
                 for (int j = 0; j < k; j++)
-                    sum += h_step_step;
+                    sum += h[j];
 
                 for (int i = 1; i < tauPart.Count; i++)
                 {
                     alfa.Add(Alfa(tauPart[i], c));
-                    t.Add(T_tau(sum, tauPart[i], h_step_step, P, k));
+                    t.Add(T_tau(sum, tauPart[i], h[k], P, k));
                     r.Add(r_tmp[i]);
                     thetta.Add(thetta_tmp[i]);
                     u.Add(u_tmp[i]);

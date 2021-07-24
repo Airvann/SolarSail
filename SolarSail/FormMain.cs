@@ -53,7 +53,7 @@ namespace SolarSail
                     break;
             }
 
-            best = alg.CalculateResult(populationCount, 0, 30000, -Math.PI / 2f, Math.PI / 2f, param);
+            best = alg.CalculateResult(populationCount, 20000, 30000, -Math.PI / 2f, Math.PI / 2f, param);
             FillResultTable(best);
             buttonVisual.Enabled = true;
         }
@@ -78,7 +78,8 @@ namespace SolarSail
             chartVt.Series[0].Points.Clear();
             chartAlfat.Series[0].Points.Clear();
 
-            dataGridViewResult.Rows[0].Cells[1].Value = best.tf;
+            dataGridViewResult.Rows[0].Cells[1].Value = best.tf/60f/60f/24f;
+            dataGridViewResult.Rows[1].Cells[1].Value = best.Fitness;
 
             for (int i = 0; i < res.resultTable["r"].Count - 1; i++)
             {

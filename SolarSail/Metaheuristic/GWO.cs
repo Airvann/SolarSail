@@ -40,8 +40,8 @@ namespace SolarSail.SourceCode
         /// <returns></returns>
         public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, params object[] list) 
         {
-            bottomBorderSectionLength = bottomBSL;
-            topBorderSectionLength = topBSL;
+            bottomBorderSectionLength = bottomBSL * 1000;
+            topBorderSectionLength = topBSL * 1000;
             bottomBorderFuncCoeff = bottomBFC;
             topBorderFuncCoeff = topBFC;
 

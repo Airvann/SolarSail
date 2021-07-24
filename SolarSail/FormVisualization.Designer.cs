@@ -38,7 +38,7 @@ namespace SolarSail
             this.BackColor = System.Drawing.Color.Linen;
             this.ClientSize = new System.Drawing.Size(1527, 806);
             this.Name = "FormVisualization";
-            this.Text = "FormVisualization";
+            this.Text = "Визуализация результата работы алгоритма";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormVisualization_Paint);
             this.ResumeLayout(false);
 
