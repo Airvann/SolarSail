@@ -93,7 +93,7 @@ namespace SolarSail.SourceCode
            int P = c.Count;
            double res = 0;
            for (int i = 0; i < P; i++)
-               res += c[i] * BasisFunction(t * P - i);
+               res += c[i] * BasisFunction(t * P - i - 1);      //TODO:!!!
            if (res < bottomAlfaBorder)
                res = bottomAlfaBorder;
            else if (res > topAlfaBorder)
@@ -188,8 +188,8 @@ namespace SolarSail.SourceCode
                 
                 for (int i = 0; i < tauPart.Count; ++i)
                 {
-                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                   * h_step  * P * h[k];
-                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                         * h_step  * P * h[k];
+                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                          * h_step  * P * h[k];
+                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                                * h_step  * P * h[k];
                     double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h_step  * P * h[k];
                     double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P * h[k];
 
