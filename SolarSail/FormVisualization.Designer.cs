@@ -36,7 +36,7 @@ namespace SolarSail
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Linen;
-            this.ClientSize = new System.Drawing.Size(1527, 806);
+            this.ClientSize = new System.Drawing.Size(1016, 840);
             this.Name = "FormVisualization";
             this.Text = "Визуализация результата работы алгоритма";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormVisualization_Paint);

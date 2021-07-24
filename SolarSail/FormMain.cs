@@ -14,9 +14,19 @@ namespace SolarSail
             InitializeComponent();
             comboBoxSelectAlg.SelectedIndex = 0;
 
+            dataGridViewMainParams.RowCount = 6;
+            
+            dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 2000);
+            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 3000);
+
+            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 2);
+            dataGridViewMainParams.Rows[3].SetValues ("λ1", 100000);
+            dataGridViewMainParams.Rows[4].SetValues("λ2", 100000);
+            dataGridViewMainParams.Rows[5].SetValues("λ3", 100000);
+
             dataGridViewResult.RowCount = 2;
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
-            dataGridViewResult.Rows[1].Cells[0].Value = "Попадание в эпсилон-окрестность: ";
+            dataGridViewResult.Rows[1].Cells[0].Value = "Значение качества управления решения: ";
         }
 
         private void buttonResult_Click(object sender, EventArgs e)
@@ -28,6 +38,13 @@ namespace SolarSail
             int populationCount = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
             int partsCount = 0;
             int b = 0;
+
+            int bottomBorderSection = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
+            int topBorderSection = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
+            int p = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
+            int lambda1 = Convert.ToInt32(dataGridViewMainParams.Rows[3].Cells[1].Value);
+            int lambda2 = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
+            int lambda3 = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
 
             IMetaAlgorithm alg;
             object[] param;
@@ -53,7 +70,7 @@ namespace SolarSail
                     break;
             }
 
-            best = alg.CalculateResult(populationCount, 40000, 50000, -Math.PI / 2f, Math.PI / 2f, param);
+            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI / 2f, Math.PI / 2f, lambda1, lambda2, lambda3, p, param);
             FillResultTable(best);
             buttonVisual.Enabled = true;
         }

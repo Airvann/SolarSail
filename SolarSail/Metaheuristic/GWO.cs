@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SolarSail.SourceCode
@@ -21,6 +20,8 @@ namespace SolarSail.SourceCode
         private Agent delta;
         private List<Agent> individuals = new List<Agent>();
 
+        private int p;
+
         public GWO() {}
 
         public static Dictionary<string, object> PAR()
@@ -38,13 +39,16 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, params object[] list) 
+        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, int lambda1, int lambda2, int lambda3, int p, params object[] list) 
         {
             bottomBorderSectionLength = bottomBSL * 1000;
             topBorderSectionLength = topBSL * 1000;
             bottomBorderFuncCoeff = bottomBFC;
             topBorderFuncCoeff = topBFC;
-
+            this.lambda1 = lambda1;
+            this.lambda2 = lambda2;
+            this.lambda3 = lambda3;
+            this.p = p;
             maxIterationCount = (int)list[0];
             param = (Params)list[1];
             P = (int)list[2];
@@ -66,7 +70,7 @@ namespace SolarSail.SourceCode
             }
             Selection();
 
-            RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
+            RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
             rk.RungeKuttaCaculate(alfa, Mode.SaveParams);
 
             return alfa;
@@ -92,7 +96,7 @@ namespace SolarSail.SourceCode
                 }
 
                 CheckBorders(agent);
-                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
+                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
                 rk.RungeKuttaCaculate(agent);
 
                 I(agent);
@@ -167,7 +171,7 @@ namespace SolarSail.SourceCode
                                                 (delta.Coords - D_delta * A_delta)) / 3.0;
 
                 CheckBorders(individuals[k]);
-                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff);
+                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
                 rk.RungeKuttaCaculate(individuals[k]);
                 I(individuals[k]);
             }

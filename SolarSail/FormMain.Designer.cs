@@ -29,28 +29,28 @@ namespace SolarSail
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.chartAlfat = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chartRt = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buttonResult = new System.Windows.Forms.Button();
             this.comboBoxSelectAlg = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.dataGridViewParam = new System.Windows.Forms.DataGridView();
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,9 +60,9 @@ namespace SolarSail
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonVisual = new System.Windows.Forms.Button();
+            this.chartRt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -71,23 +71,13 @@ namespace SolarSail
             this.chartUt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.chartVt = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridViewTableRes = new System.Windows.Forms.DataGridView();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.buttonVisual = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.chartAlfat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartRt)).BeginInit();
+            this.chartAlfat = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dataGridViewMainParams = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartRt)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -96,47 +86,14 @@ namespace SolarSail
             ((System.ComponentModel.ISupportInitialize)(this.chartUt)).BeginInit();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartVt)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTableRes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAlfat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMainParams)).BeginInit();
             this.SuspendLayout();
-            // 
-            // chartAlfat
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chartAlfat.ChartAreas.Add(chartArea1);
-            this.chartAlfat.Location = new System.Drawing.Point(696, 4);
-            this.chartAlfat.Name = "chartAlfat";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Name = "Series1";
-            this.chartAlfat.Series.Add(series1);
-            this.chartAlfat.Size = new System.Drawing.Size(645, 398);
-            this.chartAlfat.TabIndex = 0;
-            this.chartAlfat.Text = "chart1";
-            // 
-            // chartRt
-            // 
-            chartArea2.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea2.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea2.Name = "ChartArea1";
-            this.chartRt.ChartAreas.Add(chartArea2);
-            this.chartRt.Location = new System.Drawing.Point(-1, 0);
-            this.chartRt.Name = "chartRt";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.MarkerSize = 12;
-            series2.Name = "Series1";
-            this.chartRt.Series.Add(series2);
-            this.chartRt.Size = new System.Drawing.Size(693, 398);
-            this.chartRt.TabIndex = 1;
-            this.chartRt.Text = "chart2";
             // 
             // buttonResult
             // 
             this.buttonResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonResult.Location = new System.Drawing.Point(329, 42);
+            this.buttonResult.Location = new System.Drawing.Point(329, 12);
             this.buttonResult.Name = "buttonResult";
             this.buttonResult.Size = new System.Drawing.Size(133, 29);
             this.buttonResult.TabIndex = 2;
@@ -152,41 +109,11 @@ namespace SolarSail
             this.comboBoxSelectAlg.Items.AddRange(new object[] {
             "Метод серых волков",
             "Метод горбатых китов"});
-            this.comboBoxSelectAlg.Location = new System.Drawing.Point(12, 42);
+            this.comboBoxSelectAlg.Location = new System.Drawing.Point(12, 12);
             this.comboBoxSelectAlg.Name = "comboBoxSelectAlg";
             this.comboBoxSelectAlg.Size = new System.Drawing.Size(311, 28);
             this.comboBoxSelectAlg.TabIndex = 3;
             this.comboBoxSelectAlg.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectAlg_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(240, 20);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Метаэвристический алгоритм";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(194, 433);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(287, 16);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "График движения солнечного паруса";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(843, 433);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(415, 16);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "График зависимости функции управления от времени";
             // 
             // dataGridViewParam
             // 
@@ -203,7 +130,7 @@ namespace SolarSail
             this.dataGridViewParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnValue});
-            this.dataGridViewParam.Location = new System.Drawing.Point(12, 84);
+            this.dataGridViewParam.Location = new System.Drawing.Point(12, 54);
             this.dataGridViewParam.MultiSelect = false;
             this.dataGridViewParam.Name = "dataGridViewParam";
             this.dataGridViewParam.RowHeadersVisible = false;
@@ -251,11 +178,11 @@ namespace SolarSail
             this.dataGridViewResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.dataGridViewResult.Location = new System.Drawing.Point(980, 85);
+            this.dataGridViewResult.Location = new System.Drawing.Point(931, 55);
             this.dataGridViewResult.Name = "dataGridViewResult";
             this.dataGridViewResult.RowHeadersVisible = false;
             this.dataGridViewResult.RowHeadersWidth = 51;
-            this.dataGridViewResult.Size = new System.Drawing.Size(380, 215);
+            this.dataGridViewResult.Size = new System.Drawing.Size(429, 215);
             this.dataGridViewResult.TabIndex = 8;
             // 
             // Column1
@@ -280,7 +207,7 @@ namespace SolarSail
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(1208, 790);
+            this.button2.Location = new System.Drawing.Point(1204, 752);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(154, 40);
@@ -292,7 +219,7 @@ namespace SolarSail
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(1041, 790);
+            this.button3.Location = new System.Drawing.Point(1046, 752);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(154, 40);
@@ -305,48 +232,59 @@ namespace SolarSail
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(976, 60);
+            this.label4.Location = new System.Drawing.Point(927, 32);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(235, 20);
             this.label4.TabIndex = 14;
             this.label4.Text = "Результат работы алгоритма";
             // 
-            // pictureBox1
+            // label5
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(467, 85);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(508, 215);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 779);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(32, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "V 1.3";
             // 
-            // tabControl
+            // buttonVisual
             // 
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl.Location = new System.Drawing.Point(11, 304);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(2);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1349, 482);
-            this.tabControl.TabIndex = 16;
+            this.buttonVisual.Enabled = false;
+            this.buttonVisual.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonVisual.Location = new System.Drawing.Point(713, 752);
+            this.buttonVisual.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonVisual.Name = "buttonVisual";
+            this.buttonVisual.Size = new System.Drawing.Size(329, 40);
+            this.buttonVisual.TabIndex = 18;
+            this.buttonVisual.Text = "Визуализация";
+            this.buttonVisual.UseVisualStyleBackColor = true;
+            this.buttonVisual.Click += new System.EventHandler(this.buttonVisual_Click);
             // 
-            // tabPage1
+            // chartRt
             // 
-            this.tabPage1.Controls.Add(this.tabControl1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.chartAlfat);
-            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(1341, 453);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Графики";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            chartArea1.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea1.AxisX.Title = "t";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea1.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea1.AxisY.Title = "r";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea1.Name = "ChartArea1";
+            this.chartRt.ChartAreas.Add(chartArea1);
+            this.chartRt.Location = new System.Drawing.Point(-1, 1);
+            this.chartRt.Name = "chartRt";
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.MarkerSize = 12;
+            series1.Name = "Series1";
+            this.chartRt.Series.Add(series1);
+            this.chartRt.Size = new System.Drawing.Size(693, 461);
+            this.chartRt.TabIndex = 1;
+            this.chartRt.Text = "chart2";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title1.Name = "Title1";
+            title1.Text = "Расстояние до Солнца во времени";
+            this.chartRt.Titles.Add(title1);
             // 
             // tabControl1
             // 
@@ -356,12 +294,12 @@ namespace SolarSail
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl1.Location = new System.Drawing.Point(-3, 3);
+            this.tabControl1.Location = new System.Drawing.Point(11, 275);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(700, 427);
-            this.tabControl1.TabIndex = 7;
+            this.tabControl1.Size = new System.Drawing.Size(700, 496);
+            this.tabControl1.TabIndex = 22;
             // 
             // tabPage3
             // 
@@ -369,7 +307,7 @@ namespace SolarSail
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(692, 399);
+            this.tabPage3.Size = new System.Drawing.Size(692, 468);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "r(t)";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -380,25 +318,25 @@ namespace SolarSail
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(692, 399);
+            this.tabPage4.Size = new System.Drawing.Size(692, 438);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Θ(t)";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // chartTt
             // 
-            chartArea3.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea3.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea3.Name = "ChartArea1";
-            this.chartTt.ChartAreas.Add(chartArea3);
+            chartArea2.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea2.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea2.Name = "ChartArea1";
+            this.chartTt.ChartAreas.Add(chartArea2);
             this.chartTt.Location = new System.Drawing.Point(-1, 0);
             this.chartTt.Name = "chartTt";
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.MarkerSize = 12;
-            series3.Name = "Series1";
-            this.chartTt.Series.Add(series3);
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.MarkerSize = 12;
+            series2.Name = "Series1";
+            this.chartTt.Series.Add(series2);
             this.chartTt.Size = new System.Drawing.Size(693, 398);
             this.chartTt.TabIndex = 2;
             this.chartTt.Text = "chart2";
@@ -408,25 +346,25 @@ namespace SolarSail
             this.tabPage5.Controls.Add(this.chartUt);
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(692, 399);
+            this.tabPage5.Size = new System.Drawing.Size(692, 438);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "u(t)";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // chartUt
             // 
-            chartArea4.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea4.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea4.Name = "ChartArea1";
-            this.chartUt.ChartAreas.Add(chartArea4);
+            chartArea3.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea3.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea3.Name = "ChartArea1";
+            this.chartUt.ChartAreas.Add(chartArea3);
             this.chartUt.Location = new System.Drawing.Point(-1, 0);
             this.chartUt.Name = "chartUt";
-            series4.BorderWidth = 3;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.MarkerSize = 12;
-            series4.Name = "Series1";
-            this.chartUt.Series.Add(series4);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.MarkerSize = 12;
+            series3.Name = "Series1";
+            this.chartUt.Series.Add(series3);
             this.chartUt.Size = new System.Drawing.Size(693, 398);
             this.chartUt.TabIndex = 2;
             this.chartUt.Text = "chart2";
@@ -436,142 +374,118 @@ namespace SolarSail
             this.tabPage6.Controls.Add(this.chartVt);
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(692, 399);
+            this.tabPage6.Size = new System.Drawing.Size(692, 438);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "v(t)";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // chartVt
             // 
-            chartArea5.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea5.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
-            chartArea5.Name = "ChartArea1";
-            this.chartVt.ChartAreas.Add(chartArea5);
+            chartArea4.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea4.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Triangle;
+            chartArea4.Name = "ChartArea1";
+            this.chartVt.ChartAreas.Add(chartArea4);
             this.chartVt.Location = new System.Drawing.Point(-1, 0);
             this.chartVt.Name = "chartVt";
-            series5.BorderWidth = 3;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.MarkerSize = 12;
-            series5.Name = "Series1";
-            this.chartVt.Series.Add(series5);
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.MarkerSize = 12;
+            series4.Name = "Series1";
+            this.chartVt.Series.Add(series4);
             this.chartVt.Size = new System.Drawing.Size(693, 398);
             this.chartVt.TabIndex = 2;
             this.chartVt.Text = "chartVt";
             // 
-            // tabPage2
+            // chartAlfat
             // 
-            this.tabPage2.Controls.Add(this.dataGridViewTableRes);
-            this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(1341, 453);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Таблицы";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            chartArea5.Name = "ChartArea1";
+            this.chartAlfat.ChartAreas.Add(chartArea5);
+            this.chartAlfat.Location = new System.Drawing.Point(713, 275);
+            this.chartAlfat.Name = "chartAlfat";
+            series5.BorderWidth = 3;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Name = "Series1";
+            this.chartAlfat.Series.Add(series5);
+            this.chartAlfat.Size = new System.Drawing.Size(645, 472);
+            this.chartAlfat.TabIndex = 19;
+            this.chartAlfat.Text = "chart1";
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title2.Name = "Title1";
+            title2.Text = "Зависимость функции управления от времени";
+            this.chartAlfat.Titles.Add(title2);
             // 
-            // dataGridViewTableRes
+            // dataGridViewMainParams
             // 
-            this.dataGridViewTableRes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTableRes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Column8});
-            this.dataGridViewTableRes.Location = new System.Drawing.Point(5, 5);
-            this.dataGridViewTableRes.Name = "dataGridViewTableRes";
-            this.dataGridViewTableRes.Size = new System.Drawing.Size(1326, 446);
-            this.dataGridViewTableRes.TabIndex = 0;
+            this.dataGridViewMainParams.AllowUserToAddRows = false;
+            this.dataGridViewMainParams.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataGridViewMainParams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridViewMainParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMainParams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridViewMainParams.Location = new System.Drawing.Point(468, 54);
+            this.dataGridViewMainParams.MultiSelect = false;
+            this.dataGridViewMainParams.Name = "dataGridViewMainParams";
+            this.dataGridViewMainParams.RowHeadersVisible = false;
+            this.dataGridViewMainParams.RowHeadersWidth = 51;
+            this.dataGridViewMainParams.Size = new System.Drawing.Size(450, 215);
+            this.dataGridViewMainParams.TabIndex = 23;
             // 
-            // Column3
+            // dataGridViewTextBoxColumn1
             // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.HeaderText = "t";
-            this.Column3.Name = "Column3";
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Название параметра";
+            this.dataGridViewTextBoxColumn1.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Column4
+            // dataGridViewTextBoxColumn2
             // 
-            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column4.HeaderText = "r(t)";
-            this.Column4.Name = "Column4";
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column5.HeaderText = "Θ(t)";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column6.HeaderText = "u(t)";
-            this.Column6.Name = "Column6";
-            // 
-            // Column7
-            // 
-            this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column7.HeaderText = "v(t)";
-            this.Column7.Name = "Column7";
-            // 
-            // Column8
-            // 
-            this.Column8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column8.HeaderText = "α(t)";
-            this.Column8.Name = "Column8";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 805);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "V 1.1";
-            // 
-            // buttonVisual
-            // 
-            this.buttonVisual.Enabled = false;
-            this.buttonVisual.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonVisual.Location = new System.Drawing.Point(578, 790);
-            this.buttonVisual.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonVisual.Name = "buttonVisual";
-            this.buttonVisual.Size = new System.Drawing.Size(326, 40);
-            this.buttonVisual.TabIndex = 18;
-            this.buttonVisual.Text = "Визуализация";
-            this.buttonVisual.UseVisualStyleBackColor = true;
-            this.buttonVisual.Click += new System.EventHandler(this.buttonVisual_Click);
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Значение параметра";
+            this.dataGridViewTextBoxColumn2.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1373, 839);
+            this.ClientSize = new System.Drawing.Size(1373, 802);
+            this.Controls.Add(this.dataGridViewMainParams);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.chartAlfat);
             this.Controls.Add(this.buttonVisual);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.dataGridViewResult);
             this.Controls.Add(this.dataGridViewParam);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxSelectAlg);
             this.Controls.Add(this.buttonResult);
             this.Name = "FormMain";
             this.Text = "Задача солнечного паруса";
-            ((System.ComponentModel.ISupportInitialize)(this.chartAlfat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartRt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartRt)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
@@ -580,43 +494,28 @@ namespace SolarSail
             ((System.ComponentModel.ISupportInitialize)(this.chartUt)).EndInit();
             this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartVt)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTableRes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAlfat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMainParams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartAlfat;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartRt;
         private System.Windows.Forms.Button buttonResult;
         private System.Windows.Forms.ComboBox comboBoxSelectAlg;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridViewParam;
         private System.Windows.Forms.DataGridView dataGridViewResult;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView dataGridViewTableRes;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.Button buttonVisual;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartRt;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -625,7 +524,10 @@ namespace SolarSail
         private System.Windows.Forms.DataVisualization.Charting.Chart chartUt;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartVt;
-        private System.Windows.Forms.Button buttonVisual;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartAlfat;
+        private System.Windows.Forms.DataGridView dataGridViewMainParams;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
 

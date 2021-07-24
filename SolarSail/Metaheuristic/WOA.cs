@@ -24,7 +24,7 @@ namespace SolarSail.SourceCode
             return par;
         }
 
-        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, params object[] list) 
+        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, int lambda1, int lambda2, int lambda3, int p, params object[] list)
         {
             bottomBorderSectionLength = bottomBSL;
             topBorderSectionLength = topBSL;

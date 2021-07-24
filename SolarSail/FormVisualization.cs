@@ -45,7 +45,6 @@ namespace SolarSail
             e.Graphics.DrawEllipse(p1, centerX - r_mercury/2, centerY - r_mercury/2, r_mercury, r_mercury);
             e.Graphics.DrawEllipse(p2, centerX - r_earth/2, centerY - r_earth/2, r_earth, r_earth);
 
-
 #if DEBUG
             e.Graphics.DrawLine(Pens.Red, 0, centerY, Width, centerY);
             e.Graphics.DrawLine(Pens.Red, centerX, 0, centerX, Height);

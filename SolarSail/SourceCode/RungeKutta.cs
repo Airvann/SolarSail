@@ -5,8 +5,9 @@ namespace SolarSail.SourceCode
 {
     public class RungeKutta
     {
-        public RungeKutta(double bottomAlfaBorder, double topAlfaBorder) 
+        public RungeKutta(double bottomAlfaBorder, double topAlfaBorder, int p) 
         {
+            this.p = p;
             this.topAlfaBorder = topAlfaBorder;
             this.bottomAlfaBorder = bottomAlfaBorder;
         }

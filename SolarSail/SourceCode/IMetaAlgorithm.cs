@@ -23,7 +23,7 @@ namespace SolarSail
         protected double topBorderFuncCoeff = 0;
 
         protected int populationNumber = 0;
-        public abstract Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC,double topBFC, params object[] list);
+        public abstract Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC,double topBFC,int lambda1, int lambda2, int lambda3, int p,  params object[] list);
 
         public void CheckBorders(Agent agent) 
         {
