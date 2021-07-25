@@ -13,7 +13,7 @@ namespace SolarSail.SourceCode
         private List<Agent> individuals = new List<Agent>();
         private Agent best;
 
-        public static Dictionary<string, object> PAR()
+        public static Dictionary<string, object> AlgParams()
         {
             Dictionary<string, object> par = new Dictionary<string, object>();
             par.Add("Максимальное число итераций",           100);

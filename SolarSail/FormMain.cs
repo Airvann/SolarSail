@@ -13,14 +13,16 @@ namespace SolarSail
         {
             InitializeComponent();
             comboBoxSelectAlg.SelectedIndex = 0;
+            InitilizeTableValues();
+        }
 
+        private void InitilizeTableValues() 
+        {
             dataGridViewMainParams.RowCount = 6;
-            
             dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 2000);
             dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 3000);
-
             dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 2);
-            dataGridViewMainParams.Rows[3].SetValues ("λ1", 100000);
+            dataGridViewMainParams.Rows[3].SetValues("λ1", 100000);
             dataGridViewMainParams.Rows[4].SetValues("λ2", 100000);
             dataGridViewMainParams.Rows[5].SetValues("λ3", 100000);
 
@@ -28,9 +30,9 @@ namespace SolarSail
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
             dataGridViewResult.Rows[1].Cells[0].Value = "Значение качества управления решения: ";
         }
-
         private void buttonResult_Click(object sender, EventArgs e)
         {
+            IMetaAlgorithm alg;
             Result res = Result.getInstance();
             res.Clear();
 
@@ -46,7 +48,6 @@ namespace SolarSail
             int lambda2 = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
             int lambda3 = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
 
-            IMetaAlgorithm alg;
             object[] param;
             switch (comboBoxSelectAlg.SelectedIndex)
             {
@@ -95,7 +96,7 @@ namespace SolarSail
             chartVt.Series[0].Points.Clear();
             chartAlfat.Series[0].Points.Clear();
 
-            dataGridViewResult.Rows[0].Cells[1].Value = best.tf/60f/60f/24f;
+            dataGridViewResult.Rows[0].Cells[1].Value = ConvertFromSecToDays(best.tf);
             dataGridViewResult.Rows[1].Cells[1].Value = best.Fitness;
 
             for (int i = 0; i < res.resultTable["r"].Count - 1; i++)
@@ -109,18 +110,30 @@ namespace SolarSail
             }
         }
 
+        private double ConvertFromSecToDays(double t) 
+        {
+            return (t/ 60f / 60f / 24f);
+        }
+
         private void comboBoxSelectAlg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxSelectAlg.SelectedIndex)
+            try 
             {
-                case 0:
-                    FillParamTable(GWO.PAR());
-                    break;
-                case 1:
-                    FillParamTable(WOA.PAR());
-                    break;
-                default:
-                    break;
+                switch (comboBoxSelectAlg.SelectedIndex)
+                {
+                    case 0:
+                        FillParamTable(GWO.AlgParams());
+                        break;
+                    case 1:
+                        FillParamTable(WOA.AlgParams());
+                        break;
+                    default:
+                        throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Выберите корректные варианты из предлеженных","Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -5,9 +5,10 @@ namespace SolarSail.SourceCode
 {
     public class ODESolver
     {
-        public ODESolver(double bottomAlfaBorder, double topAlfaBorder, int p) 
+        public ODESolver(double bottomAlfaBorder, double topAlfaBorder, int p, int P) 
         {
             this.p = p;
+            this.P = P;
             this.topAlfaBorder = topAlfaBorder;
             this.bottomAlfaBorder = bottomAlfaBorder;
         }
@@ -19,13 +20,17 @@ namespace SolarSail.SourceCode
         List<double> v =      new List<double>();
         List<double> alfa =   new List<double>();
 
-        List<double> r_tmp = new List<double>();
-        List<double> thetta_tmp = new List<double>();
-        List<double> u_tmp = new List<double>();
-        List<double> v_tmp = new List<double>();
+        List<double> tau =    new List<double>();
+        List<double> tauPart = new List<double>();
+
+        List<double> r_tmp =        new List<double>();
+        List<double> thetta_tmp =   new List<double>();
+        List<double> u_tmp =        new List<double>();
+        List<double> v_tmp =        new List<double>();
 
         //Параметр базисной функции
-        int p = 2;
+        int p = 0;
+        int P = 0;
         //Начальное условие
         double r_0 = 1.49597870691 * Math.Pow(10, 11);
         double thetta_0 = 0;
@@ -38,12 +43,6 @@ namespace SolarSail.SourceCode
         double topAlfaBorder;
         double bottomAlfaBorder;
       
-       /*
-       r'(t)=F1,
-       O'(t)=F2,
-       u'(t)=F3,
-       v'(t)=F4.
-       */
        double F1(double u) 
        {
           return u;
@@ -79,7 +78,7 @@ namespace SolarSail.SourceCode
         }
 
         double Alfa(double t, List<double> c) 
-       {
+        {
            int P = c.Count;
            double res = 0;
            for (int i = 0; i < P; i++)
@@ -89,7 +88,7 @@ namespace SolarSail.SourceCode
            else if (res > topAlfaBorder)
                res = topAlfaBorder;
            return res;
-       }
+        }
 
         /// <summary>
         /// Метод Рунге-Кутта для решения задачи с изначально известным временем окончания работы
@@ -127,35 +126,21 @@ namespace SolarSail.SourceCode
             return res;
         }
 
-        public void RungeKuttaCaculate(Agent agent, Mode mode = Mode.SkipParams)
+        public void EulerMethod(Agent agent, Mode mode = Mode.SkipParams)
         {
+            ResetToDefault();
+
             List<double> c = agent.GetC();
             List<double> h = agent.GetH();
-
-            t.Add(0);
-            r.Add(r_0);
-            thetta.Add(thetta_0);
-            u.Add(u_0);
-            v.Add(v_0);
-
-            int P = agent.P;
-            List<double> tau = new List<double>();
             
             double step = 1f / P;
             for (double m = 0; m <= 1 + 0.00001f; m += step)
                 tau.Add(m);
             double currStart_r_0 = r_0;         double currStart_thetta_0 = thetta_0;
             double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
-
-            List<double> tauPart = new List<double>();
-//            double tf = 2 * 42000000;
-
-            double h_step = (tau[1] - tau[0])/1000;                   //(tau[1] - tau[0]) / 20f;
-            //double h_step_step = tf / P;
+            double h_step = (tau[1] - tau[0])/1000;
             double start; double stop;
 
-            //Инициализация начальными условиями
-            
             for (int k = 0; k < P; k++)
             {
                 tauPart.Clear();
@@ -174,13 +159,12 @@ namespace SolarSail.SourceCode
 
                 for (double gap = start; gap <= stop + 0.00001f; gap += h_step)
                     tauPart.Add(gap);
-
                 
                 for (int i = 0; i < tauPart.Count; ++i)
                 {
-                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                          * h_step  * P * h[k];
-                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                                * h_step  * P * h[k];
-                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))                    * h_step  * P * h[k];
+                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                                  * h_step  * P * h[k];
+                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                                        * h_step  * P * h[k];
+                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))                   * h_step  * P * h[k];
                     double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))         * h_step  * P * h[k];
 
                     thetta_tmp.Add(next_thetta);
@@ -214,7 +198,7 @@ namespace SolarSail.SourceCode
             agent.u_tf = u[u.Count - 1];
             agent.v_tf = v[v.Count - 1];
 
-            if (mode == Mode.SaveParams) 
+            if (mode == Mode.SaveResults) 
             {
                 Result res = Result.getInstance();
                 res.resultTable.Add("t",      t);
@@ -226,9 +210,20 @@ namespace SolarSail.SourceCode
             }
         }
 
-        double T_tau(double sum, double tau, double H_k_1, int P, int k) 
+        private double T_tau(double sum, double tau, double H_k_1, int P, int k) 
         {
             return sum + H_k_1 * P * (tau - (double)(k) / P);
+        }
+
+        private void ResetToDefault() 
+        {
+            t.Clear();          t.Add(0);
+            r.Clear();          r.Add(r_0);
+            thetta.Clear();     thetta.Add(thetta_0);
+            u.Clear();          u.Add(u_0);
+            v.Clear();          v.Add(v_0);
+            alfa.Clear();
+            tau.Clear();
         }
     } 
 }

@@ -12,11 +12,13 @@ namespace SolarSail.SourceCode
         private Agent delta;
         private List<Agent> individuals = new List<Agent>();
 
+        private ODESolver solver;
+
         private int p;
 
         public GWO() {}
 
-        public static Dictionary<string, object> PAR()
+        public static Dictionary<string, object> AlgParams()
         {
             Dictionary<string, object> par = new Dictionary<string, object>();
             par.Add("Максимальное число итераций",          100);
@@ -47,6 +49,7 @@ namespace SolarSail.SourceCode
 
             this.populationNumber = populationNumber;
 
+            solver = new ODESolver(bottomBFC, topBFC, p, P);
             alfa  = new Agent(2 * P);
             beta  = new Agent(2 * P);
             delta = new Agent(2 * P);
@@ -61,9 +64,7 @@ namespace SolarSail.SourceCode
             }
             Selection();
 
-            ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
-            rk.RungeKuttaCaculate(alfa, Mode.SaveParams);
-
+            solver.EulerMethod(alfa, Mode.SaveResults);
             return alfa;
         }
 
@@ -87,8 +88,7 @@ namespace SolarSail.SourceCode
                 }
 
                 CheckBorders(agent);
-                ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
-                rk.RungeKuttaCaculate(agent);
+                solver.EulerMethod(agent);
 
                 I(agent);
                 individuals.Add(agent);
@@ -156,10 +156,8 @@ namespace SolarSail.SourceCode
                 individuals[k].Coords = ((alfa.Coords - D_alfa * A_alfa) +
                                                 (beta.Coords - D_beta * A_beta) +
                                                 (delta.Coords - D_delta * A_delta)) / 3.0;
-
                 CheckBorders(individuals[k]);
-                ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
-                rk.RungeKuttaCaculate(individuals[k]);
+                solver.EulerMethod(individuals[k]);
                 I(individuals[k]);
             }
         }
