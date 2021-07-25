@@ -53,24 +53,24 @@ namespace SolarSail
                 case 0:
                     alg = new GWO();
                     partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                    object[] paramGWO = { maxIterationCount, Params.Linear, partsCount };
+                    object[] paramGWO = { maxIterationCount, partsCount };
                     param = paramGWO;
                     break;
                 case 1:
                     alg = new WOA();
                     b = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
                     partsCount = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
-                    object[] paramWOA = { maxIterationCount, Params.Linear, partsCount, b };
+                    object[] paramWOA = { maxIterationCount, partsCount, b };
                     param = paramWOA;
                     break;
                 default:
                     alg = new GWO();
-                    object[] paramDefault = { maxIterationCount, Params.Linear, partsCount };
+                    object[] paramDefault = { maxIterationCount, partsCount };
                     param = paramDefault;
                     break;
             }
 
-            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI / 2f, Math.PI / 2f, lambda1, lambda2, lambda3, p, param);
+            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI/2, Math.PI / 2, lambda1, lambda2, lambda3, p, param);
             FillResultTable(best);
             buttonVisual.Enabled = true;
         }

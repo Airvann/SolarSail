@@ -10,7 +10,6 @@ namespace SolarSail.SourceCode
     {
         private int maxIterationCount;
         private double b;
-        private Params param;
         private List<Agent> individuals = new List<Agent>();
         private Agent best;
 
@@ -32,9 +31,8 @@ namespace SolarSail.SourceCode
             topBorderFuncCoeff = topBFC;
 
             maxIterationCount = (int)list[0];
-            param = (Params)list[1];
-            P = (int)list[2];            
-            b = (double)list[4];
+            P = (int)list[1];            
+            b = (double)list[2];
 
             Dim = 2 * P;
 
@@ -87,12 +85,7 @@ namespace SolarSail.SourceCode
 
         private void NewPackGeneration() 
         {
-            double a;
-            //Выбор функции изменения параметра а
-            if (param == Params.Quadratic)
-                a = 2 * (1 - ((currentIteration * currentIteration) / ((double)maxIterationCount * maxIterationCount)));
-            else
-                a = 2 * (1 - currentIteration / (double)(maxIterationCount));
+            double a = 2 * (1 - currentIteration / (double)(maxIterationCount));
 
             Vector l = new Vector();
             Vector D = new Vector();

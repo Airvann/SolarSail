@@ -3,16 +3,8 @@ using System.Linq;
 
 namespace SolarSail.SourceCode
 {
-    public enum Params 
-    {
-        Linear,
-        Quadratic
-    }
-
     public class GWO : IMetaAlgorithm
     {
-        private Params param;       //Параметр изменения функции a
-
         private int maxIterationCount;
 
         private Agent alfa;
@@ -50,8 +42,7 @@ namespace SolarSail.SourceCode
             this.lambda3 = lambda3;
             this.p = p;
             maxIterationCount = (int)list[0];
-            param = (Params)list[1];
-            P = (int)list[2];
+            P = (int)list[1];
             Dim = 2 * P;
 
             this.populationNumber = populationNumber;
@@ -70,7 +61,7 @@ namespace SolarSail.SourceCode
             }
             Selection();
 
-            RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
+            ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
             rk.RungeKuttaCaculate(alfa, Mode.SaveParams);
 
             return alfa;
@@ -96,7 +87,7 @@ namespace SolarSail.SourceCode
                 }
 
                 CheckBorders(agent);
-                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
+                ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
                 rk.RungeKuttaCaculate(agent);
 
                 I(agent);
@@ -138,12 +129,8 @@ namespace SolarSail.SourceCode
         }
         private void NewPackGeneration()
         {
-            double a;
+            double a = 2 * (1 - currentIteration / (double)(maxIterationCount));
             //Выбор функции изменения параметра а
-            if (param == Params.Quadratic)
-                a = 2 * (1 - ((currentIteration * currentIteration) / ((double)maxIterationCount * maxIterationCount)));
-            else
-                a = 2 * (1 - currentIteration / (double)(maxIterationCount));
 
             Vector A_alfa = new Vector(Dim);            Vector C_alfa = new Vector(Dim);          Vector D_alfa = new Vector(Dim); 
             Vector A_beta = new Vector(Dim);            Vector C_beta = new Vector(Dim);          Vector D_beta = new Vector(Dim);
@@ -171,7 +158,7 @@ namespace SolarSail.SourceCode
                                                 (delta.Coords - D_delta * A_delta)) / 3.0;
 
                 CheckBorders(individuals[k]);
-                RungeKutta rk = new RungeKutta(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
+                ODESolver rk = new ODESolver(bottomBorderFuncCoeff, topBorderFuncCoeff, p);
                 rk.RungeKuttaCaculate(individuals[k]);
                 I(individuals[k]);
             }

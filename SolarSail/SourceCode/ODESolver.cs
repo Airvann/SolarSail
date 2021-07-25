@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace SolarSail.SourceCode
 {
-    public class RungeKutta
+    public class ODESolver
     {
-        public RungeKutta(double bottomAlfaBorder, double topAlfaBorder, int p) 
+        public ODESolver(double bottomAlfaBorder, double topAlfaBorder, int p) 
         {
             this.p = p;
             this.topAlfaBorder = topAlfaBorder;
@@ -67,18 +67,7 @@ namespace SolarSail.SourceCode
        }
 
        double BasisFunction(double t)
-       {//p = 3;
-           //if ((t >= -1) && (t <= -0.5))
-           //    return 2 * 2 * (1 + t) * (1 + t) * (1 + t);
-           //else if ((t >= -0.5) && (t <= 0.5))
-           //{
-           //    double tmp = Math.Abs(t);
-           //    return 1 - 2 * 2 * tmp * tmp * tmp;
-           //}
-           //else if ((t >= 0.5) && (t <= 1))
-           //    return 2 * 2 * (1 - t) * (1 - t) * (1 - t);
-           //else
-           //    return 0;
+       {
            if ((t >= -1) && (t <= -0.5))
                return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
            else if ((t >= -0.5) && (t <= 0.5))
@@ -191,8 +180,8 @@ namespace SolarSail.SourceCode
                 {
                     double next_r      = r_tmp[i]            + F1(u_tmp[i])                                          * h_step  * P * h[k];
                     double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                                * h_step  * P * h[k];
-                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h_step  * P * h[k];
-                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step  * P * h[k];
+                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))                    * h_step  * P * h[k];
+                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))         * h_step  * P * h[k];
 
                     thetta_tmp.Add(next_thetta);
                     r_tmp.Add(next_r);
