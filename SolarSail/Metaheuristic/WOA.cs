@@ -46,7 +46,7 @@ namespace SolarSail.SourceCode
             this.populationNumber = populationNumber;
 
             solver = new ODESolver(bottomBFC, topBFC, p, P);
-            best = new Agent(2 * P);
+            best = new Agent(Dim);
                       
             FormingPopulation();
 
@@ -69,7 +69,7 @@ namespace SolarSail.SourceCode
 
             for (int i = 0; i < populationNumber; i++)
             {
-                Agent agent = new Agent(2 * P);
+                Agent agent = new Agent(Dim);
                 for (int j = 0; j < P; j++)
                 {
                     nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
@@ -81,7 +81,6 @@ namespace SolarSail.SourceCode
                     agent.Coords[j] = nextRandomFuncCoeff;
                 }
 
-                CheckBorders(agent);
                 solver.EulerMethod(agent);
 
                 I(agent);
@@ -105,12 +104,20 @@ namespace SolarSail.SourceCode
             best.tf   = individuals[0].tf;
         }
 
+        private bool IsLowerThan1(Vector vec) 
+        {
+            for (int i = 0; i < Dim; i++)
+                if (Math.Abs(vec[i]) >= 1)
+                    return false;
+            return true;
+        }
+
         private void NewPackGeneration() 
         {
             double a = 2 * (1 - currentIteration / (double)(maxIterationCount));
 
             Vector l = new Vector(Dim);
-            Vector D = new Vector(Dim);
+            Vector D;
                     
             Vector A = new Vector(Dim);
             Vector C = new Vector(Dim);
@@ -123,43 +130,31 @@ namespace SolarSail.SourceCode
                     {
                         A[i] = 2 * a * rand.NextDouble() - a;
                         C[i] = 2 * rand.NextDouble();
-                    }
+                    }          
 
-                    bool lowerThan1 = true;           
-                    for (int i = 0; i < Dim; i++)     
-                    {                                 
-                        if (Math.Abs(A[i]) >= 1)      
-                        {                             
-                            lowerThan1 = false;       
-                            break;                    
-                        }                             
-                    }                                 
-
-                    if (lowerThan1)
+                    if (IsLowerThan1(A))
                     {
                         D = Vector.Abs(C * best.Coords - individuals[k].Coords);
-                        individuals[k].Coords = best.Coords - D * A;
+                        individuals[k].Coords = best.Coords - (D * A);
                     }
                     else
                     {
                         Agent WhaleRand = individuals[rand.Next(0, populationNumber - 1)];
 
                         D = Vector.Abs(C * WhaleRand.Coords - individuals[k].Coords);
-                        individuals[k].Coords = WhaleRand.Coords - D * A;
+                        individuals[k].Coords = WhaleRand.Coords - (D * A);
                     }
                 }
                 else 
                 {
                     Vector tmp = new Vector(Dim);
-
                     D = Vector.Abs(best.Coords - individuals[k].Coords);
-
-                    for (int i = 0; i < P; i++)
+                    for (int i = 0; i < Dim; i++)
                     {
                         l[i] = 2 * rand.NextDouble() - 1;
                         tmp[i] = Math.Cos(2 * Math.PI * l[i]) * Math.Exp(b * l[i]);
                     }
-                    individuals[k].Coords = D * tmp + best.Coords;
+                    individuals[k].Coords = (D * tmp) + best.Coords;
                 }
 
                 CheckBorders(individuals[k]);

@@ -45,9 +45,9 @@ namespace SolarSail.SourceCode
             this.populationNumber = populationNumber;
 
             solver = new ODESolver(bottomBFC, topBFC, p, P);
-            alfa  = new Agent(2 * P);
-            beta  = new Agent(2 * P);
-            delta = new Agent(2 * P);
+            alfa  = new Agent(Dim);
+            beta  = new Agent(Dim);
+            delta = new Agent(Dim);
 
             FormingPopulation();
 
@@ -126,9 +126,9 @@ namespace SolarSail.SourceCode
             double a = 2 * (1 - currentIteration / (double)(maxIterationCount));
             //Выбор функции изменения параметра а
 
-            Vector A_alfa = new Vector(Dim);            Vector C_alfa = new Vector(Dim);          Vector D_alfa = new Vector(Dim); 
-            Vector A_beta = new Vector(Dim);            Vector C_beta = new Vector(Dim);          Vector D_beta = new Vector(Dim);
-            Vector A_delta = new Vector(Dim);           Vector C_delta = new Vector(Dim);         Vector D_delta = new Vector(Dim);
+            Vector A_alfa = new Vector(Dim);            Vector C_alfa = new Vector(Dim);          Vector D_alfa;
+            Vector A_beta = new Vector(Dim);            Vector C_beta = new Vector(Dim);          Vector D_beta;
+            Vector A_delta = new Vector(Dim);           Vector C_delta = new Vector(Dim);         Vector D_delta;
 
             for (int k = 0; k < populationNumber; k++)
             {
@@ -147,9 +147,9 @@ namespace SolarSail.SourceCode
                 D_beta = Vector.Abs(C_beta * beta.Coords - individuals[k].Coords);
                 D_delta = Vector.Abs(C_beta * delta.Coords - individuals[k].Coords);
 
-                individuals[k].Coords = ((alfa.Coords - D_alfa * A_alfa) +
-                                         (beta.Coords - D_beta * A_beta) +
-                                         (delta.Coords - D_delta * A_delta)) / 3.0;
+                individuals[k].Coords = ((alfa.Coords - (D_alfa * A_alfa)) +
+                                         (beta.Coords - (D_beta * A_beta)) +
+                                         (delta.Coords - (D_delta * A_delta))) / 3.0;
                 CheckBorders(individuals[k]);
                 solver.EulerMethod(individuals[k]);
                 I(individuals[k]);

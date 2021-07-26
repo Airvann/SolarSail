@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarSail
 {
@@ -11,22 +7,13 @@ namespace SolarSail
         public double[] vector;
         public int dim;
 
-        //public Vector(params double[] list)
-        //{
-        //    dim = list.Length;
-        //    vector = new double[dim];
-        //    for (int i = 0; i < dim; ++i)
-        //        vector[i] = list[i];
-        //}
         public Vector(int dim)
         {
             vector = new double[dim];
             this.dim = dim;
         }
 
-        public Vector() 
-        {
-        }
+        public Vector() {}
 
         public static Vector operator*(Vector vector, double value)
         {
@@ -58,7 +45,7 @@ namespace SolarSail
 
         public static Vector operator -(Vector vec1, Vector vec2)
         {
-            return vec1 + (-1 * vec2);
+            return vec1 + (vec2 * -1);
         }
 
         public static Vector operator +(Vector vec1, Vector vec2)
@@ -83,7 +70,7 @@ namespace SolarSail
         }
         public static Vector operator /(Vector vec, double val)
         {
-            return vec * (1.0 / val);
+            return vec * (1f / val);
         }
 
         public double this[int index]
