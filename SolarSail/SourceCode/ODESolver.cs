@@ -83,10 +83,10 @@ namespace SolarSail.SourceCode
            double res = 0;
            for (int i = 0; i < P; i++)
                res += c[i] * BasisFunction(t * P - i - 1);      //TODO:!!!
-           if (res < bottomAlfaBorder)
-               res = bottomAlfaBorder;
-           else if (res > topAlfaBorder)
-               res = topAlfaBorder;
+           if (res < -Math.PI/2)
+               res = -Math.PI/2;
+           else if (res > Math.PI / 2)
+               res = Math.PI/2;
            return res;
         }
 

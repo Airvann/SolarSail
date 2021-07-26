@@ -18,13 +18,15 @@ namespace SolarSail
 
         private void InitilizeTableValues() 
         {
-            dataGridViewMainParams.RowCount = 6;
+            dataGridViewMainParams.RowCount = 8;
             dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 2000);
             dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 3000);
             dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 2);
             dataGridViewMainParams.Rows[3].SetValues("λ1", 100000);
             dataGridViewMainParams.Rows[4].SetValues("λ2", 100000);
             dataGridViewMainParams.Rows[5].SetValues("λ3", 100000);
+            dataGridViewMainParams.Rows[6].SetValues("Нижняя грань коэффициентов", -1.56);
+            dataGridViewMainParams.Rows[7].SetValues("Верхняя грань коэффициентов", 1.56);
 
             dataGridViewResult.RowCount = 2;
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
@@ -41,9 +43,13 @@ namespace SolarSail
             int lambda2;
             int lambda1;
             int p;
-            int topBorderSection;
 
+            int topBorderSection;
             int bottomBorderSection;
+
+            double topBorderFunc;
+            double bottomBorderFunc;
+
             int populationCount;
             try
             {
@@ -56,6 +62,9 @@ namespace SolarSail
                 lambda1                      = Convert.ToInt32(dataGridViewMainParams.Rows[3].Cells[1].Value);
                 lambda2                      = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
                 lambda3                      = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
+
+                bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[6].Cells[1].Value);
+                topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
 
                 switch (comboBoxSelectAlg.SelectedIndex)
                 {
@@ -84,7 +93,7 @@ namespace SolarSail
                 MessageBox.Show("Были введены некорретные параметры", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI / 2, Math.PI / 2, lambda1, lambda2, lambda3, p, param);
+            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, p, param);
             FillResultTable(best);
             buttonVisual.Enabled = true;
         }
