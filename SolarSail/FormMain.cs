@@ -12,8 +12,8 @@ namespace SolarSail
         public FormMain()
         {
             InitializeComponent();
-            comboBoxSelectAlg.SelectedIndex = 0;
             InitilizeTableValues();
+            comboBoxSelectAlg.SelectedIndex = 0;
         }
 
         private void InitilizeTableValues() 
@@ -35,43 +35,56 @@ namespace SolarSail
             IMetaAlgorithm alg;
             Result res = Result.getInstance();
             res.Clear();
-
-            int maxIterationCount = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
-            int populationCount = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
-            int partsCount = 0;
-            int b = 0;
-
-            int bottomBorderSection = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
-            int topBorderSection = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
-            int p = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
-            int lambda1 = Convert.ToInt32(dataGridViewMainParams.Rows[3].Cells[1].Value);
-            int lambda2 = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
-            int lambda3 = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
-
+            int partsCount;
             object[] param;
-            switch (comboBoxSelectAlg.SelectedIndex)
-            {
-                case 0:
-                    alg = new GWO();
-                    partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                    object[] paramGWO = { maxIterationCount, partsCount };
-                    param = paramGWO;
-                    break;
-                case 1:
-                    alg = new WOA();
-                    b = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                    partsCount = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
-                    object[] paramWOA = { maxIterationCount, partsCount, b };
-                    param = paramWOA;
-                    break;
-                default:
-                    alg = new GWO();
-                    object[] paramDefault = { maxIterationCount, partsCount };
-                    param = paramDefault;
-                    break;
-            }
+            int lambda3;
+            int lambda2;
+            int lambda1;
+            int p;
+            int topBorderSection;
 
-            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI/2, Math.PI / 2, lambda1, lambda2, lambda3, p, param);
+            int bottomBorderSection;
+            int populationCount;
+            try
+            {
+                int maxIterationCount        = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
+                populationCount              = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
+
+                bottomBorderSection          = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
+                topBorderSection             = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
+                p                            = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
+                lambda1                      = Convert.ToInt32(dataGridViewMainParams.Rows[3].Cells[1].Value);
+                lambda2                      = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
+                lambda3                      = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
+
+                switch (comboBoxSelectAlg.SelectedIndex)
+                {
+                    case 0:
+                        alg = new GWO();
+                        partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                        object[] paramGWO = { maxIterationCount, partsCount };
+                        param = paramGWO;
+                        break;
+                    case 1:
+                        alg = new WOA();
+                        int b = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                        partsCount = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
+                        object[] paramWOA = { maxIterationCount, partsCount, b };
+                        param = paramWOA;
+                        break;
+                    default:
+                        alg = new GWO();
+                        object[] paramDefault = { maxIterationCount, 0 };
+                        param = paramDefault;
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Были введены некорретные параметры", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, -Math.PI / 2, Math.PI / 2, lambda1, lambda2, lambda3, p, param);
             FillResultTable(best);
             buttonVisual.Enabled = true;
         }
@@ -87,32 +100,37 @@ namespace SolarSail
             }
         }
 
-        private void FillResultTable(Agent best)
+        private void ClearAllGraphs() 
         {
-            Result res = Result.getInstance();
             chartRt.Series[0].Points.Clear();
             chartTt.Series[0].Points.Clear();
             chartUt.Series[0].Points.Clear();
             chartVt.Series[0].Points.Clear();
             chartAlfat.Series[0].Points.Clear();
+        }
+
+        private void FillResultTable(Agent best)
+        {
+            Result res = Result.getInstance();
+            ClearAllGraphs();
 
             dataGridViewResult.Rows[0].Cells[1].Value = ConvertFromSecToDays(best.tf);
             dataGridViewResult.Rows[1].Cells[1].Value = best.Fitness;
 
             for (int i = 0; i < res.resultTable["r"].Count - 1; i++)
             {
-                chartAlfat.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["alpha"][i]);
+                chartAlfat.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["alpha"][i]);
 
-                chartRt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["r"][i]);
-                chartTt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["thetta"][i]);
-                chartUt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["u"][i]);
-                chartVt.Series[0].Points.AddXY(res.resultTable["t"][i], res.resultTable["v"][i]);
+                chartRt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["r"][i]);
+                chartTt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["thetta"][i]);
+                chartUt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["u"][i]);
+                chartVt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["v"][i]);
             }
         }
 
         private double ConvertFromSecToDays(double t) 
         {
-            return (t/ 60f / 60f / 24f);
+            return (t / 60f / 60f / 24f);
         }
 
         private void comboBoxSelectAlg_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 
 
 namespace SolarSail.SourceCode
 {
+    //Singletone class
     public class Result
     {
-        static Result instance;
+        private static Result instance;
         private Result() 
         {
             resultTable = new Dictionary<string, List<double>>();
