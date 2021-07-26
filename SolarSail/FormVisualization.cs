@@ -19,7 +19,7 @@ namespace SolarSail
             if (res.resultTable.Count == 0)
                 throw new MemberAccessException();
 #endif
-            float width = Size.Width;
+            float width  = Size.Width;
             float height = Size.Height;
 
             centerX = width / 2f;

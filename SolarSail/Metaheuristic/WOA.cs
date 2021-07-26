@@ -45,7 +45,7 @@ namespace SolarSail.SourceCode
 
             this.populationNumber = populationNumber;
 
-            solver = new ODESolver(bottomBFC, topBFC, p, P);
+            solver = new ODESolver(p, P);
             best = new Agent(Dim);
                       
             FormingPopulation();

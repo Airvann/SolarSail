@@ -5,12 +5,10 @@ namespace SolarSail.SourceCode
 {
     public class ODESolver
     {
-        public ODESolver(double bottomAlfaBorder, double topAlfaBorder, int p, int P) 
+        public ODESolver(int p, int P) 
         {
             this.p = p;
             this.P = P;
-            this.topAlfaBorder = topAlfaBorder;
-            this.bottomAlfaBorder = bottomAlfaBorder;
         }
 
         List<double> t =      new List<double>();
@@ -30,6 +28,7 @@ namespace SolarSail.SourceCode
 
         //Параметр базисной функции
         int p = 0;
+        //Число разбиений отрезка времени
         int P = 0;
         //Начальное условие
         double r_0 = 1.49597870691 * Math.Pow(10, 11);
@@ -39,9 +38,6 @@ namespace SolarSail.SourceCode
         
         double mu = 1.327474512 * Math.Pow(10, 20);
         double beta = 0.042;
-
-        double topAlfaBorder;
-        double bottomAlfaBorder;
       
        double F1(double u) 
        {
@@ -56,7 +52,7 @@ namespace SolarSail.SourceCode
        double F3(double r, double v, double alfa)
        {
             double tmp = Math.Cos(alfa);
-            return ((v * v) / r) - (mu / (r * r)) +  (beta * tmp * tmp * tmp)/(r*r);
+            return ((v * v) / r) - (mu / (r * r)) + (beta * tmp * tmp * tmp) / (r * r);
        }
        
        double F4(double r, double u, double v, double alfa)
@@ -79,10 +75,10 @@ namespace SolarSail.SourceCode
 
         double Alfa(double t, List<double> c) 
         {
-           int P = c.Count;
+           int P = c.Count - 1;
            double res = 0;
-           for (int i = 0; i < P; i++)
-               res += c[i] * BasisFunction(t * P - i - 1);      //TODO:!!!
+           for (int i = 0; i <= P; i++)
+               res += c[i] * BasisFunction(t * P - i);
            if (res < -Math.PI/2)
                res = -Math.PI/2;
            else if (res > Math.PI / 2)
@@ -180,7 +176,7 @@ namespace SolarSail.SourceCode
                 for (int i = 1; i < tauPart.Count; i++)
                 {
                     alfa.Add(Alfa(tauPart[i], c));
-                    t.Add(T_tau(sum, tauPart[i], h[k], P, k));
+                    t.Add(T_tau(sum, tauPart[i], h[k], k));
                     r.Add(r_tmp[i]);
                     thetta.Add(thetta_tmp[i]);
                     u.Add(u_tmp[i]);
@@ -210,7 +206,7 @@ namespace SolarSail.SourceCode
             }
         }
 
-        private double T_tau(double sum, double tau, double H_k_1, int P, int k) 
+        private double T_tau(double sum, double tau, double H_k_1, int k) 
         {
             return sum + H_k_1 * P * (tau - (double)(k) / P);
         }

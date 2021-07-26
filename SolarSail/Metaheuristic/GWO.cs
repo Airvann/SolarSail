@@ -40,11 +40,11 @@ namespace SolarSail.SourceCode
             this.lambda3 = lambda3;
             maxIterationCount = (int)list[0];
             P = (int)list[1];
-            Dim = 2 * P;
+            Dim = 2 * P + 1;
 
             this.populationNumber = populationNumber;
 
-            solver = new ODESolver(bottomBFC, topBFC, p, P);
+            solver = new ODESolver(p, P);
             alfa  = new Agent(Dim);
             beta  = new Agent(Dim);
             delta = new Agent(Dim);
