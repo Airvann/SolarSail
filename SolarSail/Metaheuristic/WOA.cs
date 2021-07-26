@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
 
 namespace SolarSail.SourceCode
 {
     public class WOA : IMetaAlgorithm
     {
         private int maxIterationCount;
-        private double b;
-        private List<Agent> individuals = new List<Agent>();
-        private Agent best;
 
+        private double b;
+        private Agent best;
+        private List<Agent> individuals = new List<Agent>();
+        
+        private ODESolver solver;
+
+        private int p;
+
+        public WOA() {}
         public static Dictionary<string, object> AlgParams()
         {
             Dictionary<string, object> par = new Dictionary<string, object>();
@@ -23,21 +27,34 @@ namespace SolarSail.SourceCode
             return par;
         }
 
+        /// <summary>
+        /// Выполнение алгоритма
+        /// </summary>
+        /// <param name="populationNumber">Размер популяции</param>
+        /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
+        /// <returns></returns>
         public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, int lambda1, int lambda2, int lambda3, int p, params object[] list)
         {
-            bottomBorderSectionLength = bottomBSL;
-            topBorderSectionLength = topBSL;
+            bottomBorderSectionLength = bottomBSL * 1000;
+            topBorderSectionLength = topBSL * 1000;
             bottomBorderFuncCoeff = bottomBFC;
             topBorderFuncCoeff = topBFC;
-
+            this.lambda1 = lambda1;
+            this.lambda2 = lambda2;
+            this.lambda3 = lambda3;
+            this.p = p;
             maxIterationCount = (int)list[0];
-            P = (int)list[1];            
-            b = (double)list[2];
-
+            P = (int)list[1];
+            b = (int)list[2];
             Dim = 2 * P;
 
+            this.populationNumber = populationNumber;
+
+            solver = new ODESolver(bottomBFC, topBFC, p, P);
             best = new Agent(2 * P);
+                      
             FormingPopulation();
+
             for (int k = 1; k < maxIterationCount; k++)
             {
                 Selection();
@@ -45,64 +62,69 @@ namespace SolarSail.SourceCode
                 currentIteration++;
             }
             Selection();
+
+            solver.EulerMethod(best, Mode.SaveResults);
             return best;
         }
 
         private void FormingPopulation()
         {
-            double nextRandomLength;
+            double nextRandomSectionLength;
             double nextRandomFuncCoeff;
 
             for (int i = 0; i < populationNumber; i++)
             {
-                Agent agent = new Agent(2*P);
+                Agent agent = new Agent(2 * P);
                 for (int j = 0; j < P; j++)
                 {
-                    nextRandomLength = (Math.Abs(bottomBorderSectionLength) + Math.Abs(topBorderSectionLength)) * rand.NextDouble() - Math.Abs(bottomBorderSectionLength);
-                    agent.Coords[i] = nextRandomLength;
+                    nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
+                    agent.Coords[j] = nextRandomSectionLength;
                 }
                 for (int j = P; j < Dim; j++)
                 {
-                    nextRandomFuncCoeff = (Math.Abs(bottomBorderFuncCoeff) + Math.Abs(topBorderFuncCoeff)) * rand.NextDouble() - Math.Abs(bottomBorderFuncCoeff);
-                    agent.Coords[i] = nextRandomFuncCoeff;
+                    nextRandomFuncCoeff = bottomBorderFuncCoeff + (topBorderFuncCoeff - bottomBorderFuncCoeff) * rand.NextDouble();
+                    agent.Coords[j] = nextRandomFuncCoeff;
                 }
-                //TODO: тут должно быть вычисление через Рунге-Кутта
-                I(agent);          //TODO: сделать подсчет функции приспособленности
+
+                CheckBorders(agent);
+                solver.EulerMethod(agent);
+
+                I(agent);
                 individuals.Add(agent);
             }
         }
 
         private void Selection() 
         {
-            individuals = individuals.OrderByDescending(s => s.Fitness).ToList();
+            individuals = individuals.OrderBy(s => s.Fitness).ToList();
 
             //Выбираем наиболее приспосоленных волков (сделано так, чтобы была передача значений, а не ссылки) 
             for (int i = 0; i < Dim; i++)
                 best.Coords[i] = individuals[0].Coords[i];
             
             best.Fitness = individuals[0].Fitness;
+
+            best.r_tf = individuals[0].r_tf;
+            best.u_tf = individuals[0].u_tf;
+            best.v_tf = individuals[0].v_tf;
+            best.tf   = individuals[0].tf;
         }
 
         private void NewPackGeneration() 
         {
             double a = 2 * (1 - currentIteration / (double)(maxIterationCount));
 
-            Vector l = new Vector();
-            Vector D = new Vector();
+            Vector l = new Vector(Dim);
+            Vector D = new Vector(Dim);
                     
-            Vector A = new Vector(P);
-            Vector C = new Vector(P);
+            Vector A = new Vector(Dim);
+            Vector C = new Vector(Dim);
 
             for (int k = 0; k < populationNumber; k++)
             {
                 if (rand.NextDouble() < 0.5f)
                 {
-                    for (int i = 0; i < P; i++)
-                    {
-                        A[i] = 2 * a * rand.NextDouble() - a;
-                        C[i] = 2 * rand.NextDouble();
-                    }
-                    for (int i = P; i < Dim; i++)
+                    for (int i = 0; i < Dim; i++)
                     {
                         A[i] = 2 * a * rand.NextDouble() - a;
                         C[i] = 2 * rand.NextDouble();
@@ -133,7 +155,7 @@ namespace SolarSail.SourceCode
                 }
                 else 
                 {
-                    Vector tmp = new Vector();
+                    Vector tmp = new Vector(Dim);
 
                     D = Vector.Abs(best.Coords - individuals[k].Coords);
 
@@ -142,11 +164,12 @@ namespace SolarSail.SourceCode
                         l[i] = 2 * rand.NextDouble() - 1;
                         tmp[i] = Math.Cos(2 * Math.PI * l[i]) * Math.Exp(b * l[i]);
                     }
-                    individuals[k].Coords = D * tmp + best.Coords;  //TODO:?
+                    individuals[k].Coords = D * tmp + best.Coords;
                 }
 
                 CheckBorders(individuals[k]);
-                I(individuals[k]); //TODO: Рунге-Кутта
+                solver.EulerMethod(individuals[k]);
+                I(individuals[k]);
             }
         }
     }
