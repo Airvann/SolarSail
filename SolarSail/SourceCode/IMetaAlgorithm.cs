@@ -28,7 +28,7 @@ namespace SolarSail
             double r_tf_Error = agent.r_tf - const_r_tf;
             double u_tf_Error = agent.u_tf - const_u_tf;
             double v_tf_Error = agent.v_tf - const_v_tf;
-            agent.Fitness = ((agent.tf) / 86400) * lambda1 * Math.Pow(r_tf_Error, 2) + lambda2 * Math.Pow(u_tf_Error, 2) + lambda3 * Math.Pow(v_tf_Error, 2);
+            agent.Fitness = ((agent.tf) / 86400) + lambda1 * Math.Pow(r_tf_Error, 2) + lambda2 * Math.Pow(u_tf_Error, 2) + lambda3 * Math.Pow(v_tf_Error, 2);
         }
 
         protected double bottomBorderSectionLength = 0;
