@@ -9,6 +9,7 @@ namespace SolarSail
     abstract public class IMetaAlgorithm
     {
         protected Random rand = new Random();
+        protected SourceCode.ODESolver solver;
 
         public int Dim = 0;
         public int P = 0;

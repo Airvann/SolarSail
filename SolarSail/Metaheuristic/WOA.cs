@@ -11,10 +11,6 @@ namespace SolarSail.SourceCode
         private double b;
         private Agent best;
         private List<Agent> individuals = new List<Agent>();
-        
-        private ODESolver solver;
-
-        private int p;
 
         public WOA() {}
         public static Dictionary<string, object> AlgParams()
@@ -42,7 +38,6 @@ namespace SolarSail.SourceCode
             this.lambda1 = lambda1;
             this.lambda2 = lambda2;
             this.lambda3 = lambda3;
-            this.p = p;
             maxIterationCount = (int)list[0];
             P = (int)list[1];
             b = (int)list[2];

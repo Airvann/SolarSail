@@ -12,10 +12,6 @@ namespace SolarSail.SourceCode
         private Agent delta;
         private List<Agent> individuals = new List<Agent>();
 
-        private ODESolver solver;
-
-        private int p;
-
         public GWO() {}
 
         public static Dictionary<string, object> AlgParams()
@@ -42,7 +38,6 @@ namespace SolarSail.SourceCode
             this.lambda1 = lambda1;
             this.lambda2 = lambda2;
             this.lambda3 = lambda3;
-            this.p = p;
             maxIterationCount = (int)list[0];
             P = (int)list[1];
             Dim = 2 * P;
@@ -75,7 +70,7 @@ namespace SolarSail.SourceCode
 
             for (int i = 0; i < populationNumber; i++)
             {
-                Agent agent = new Agent(2 * P);
+                Agent agent = new Agent(Dim);
                 for (int j = 0; j < P; j++)
                 {
                     nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
