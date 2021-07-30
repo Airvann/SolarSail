@@ -19,13 +19,13 @@ namespace SolarSail
 
         protected void Notify(Agent agent)
         {
-            string text = "Окрестность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString()        + '\n';
-            text += "Окрестность попадания по u: "        + Math.Abs(agent.u_tf - Result.const_uf).ToString()        + '\n';
-            text += "Окрестность попадания по v: "       + Math.Abs(agent.v_tf - Result.const_vf).ToString()        + '\n';
-            text += "-----------------------------------------------------------\n";
-            text += "Коэффициенты упраления: \n";
+            string text = "Окрестность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString("0.00")        + '\n';
+            text += "Окрестность попадания по u: "       + Math.Abs(agent.u_tf - Result.const_uf).ToString("0.00")        + '\n';
+            text += "Окрестность попадания по v: "       + Math.Abs(agent.v_tf - Result.const_vf).ToString("0.00")        + '\n';
+            text += "-----------------------------\n";
+            text += "Коэффициенты управления: \n";
             for (int i = P; i < 2 * agent.P + 1; i++) text += (agent.Coords[i].ToString() + '\n');
-            text += "-----------------------------------------------------------\n";
+            text += "-----------------------------\n";
             foreach (var sub in subs) sub.Update(text);
         }
 

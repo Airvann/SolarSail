@@ -250,7 +250,7 @@ namespace SolarSail
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 13);
             this.label5.TabIndex = 17;
-            this.label5.Text = "V 1.8 (debug)";
+            this.label5.Text = "V 1.9 (debug)";
             // 
             // buttonVisual
             // 
@@ -532,9 +532,10 @@ namespace SolarSail
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.richTextBox1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(1366, 55);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(303, 691);
             this.richTextBox1.TabIndex = 25;
             this.richTextBox1.Text = "";
