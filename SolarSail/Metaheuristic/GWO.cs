@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using System;
+//TODO: !!!! 1. Объединить вывод на консоль и вывод в файл и поместить их в richtextbox справа от программы в одном окне.
 namespace SolarSail.SourceCode
 {
     public class GWO : IMetaAlgorithm
@@ -29,7 +30,7 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, int lambda1, int lambda2, int lambda3, int p, params object[] list) 
+        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, int p, params object[] list) 
         {
             bottomBorderSectionLength = bottomBSL * 1000;
             topBorderSectionLength = topBSL * 1000;
@@ -44,6 +45,10 @@ namespace SolarSail.SourceCode
 
             this.populationNumber = populationNumber;
 
+#if DEBUG
+            Report("Начало работы алгоритма");
+            Console.WriteLine("-------------------------------------");
+#endif
             solver = new ODESolver(p, P);
             alfa  = new Agent(Dim);
             beta  = new Agent(Dim);
@@ -51,15 +56,18 @@ namespace SolarSail.SourceCode
 
             FormingPopulation();
 
-            for (int k = 1; k < maxIterationCount; k++)
+            for (int k = 1; k <= maxIterationCount; k++)
             {
                 Selection();
                 NewPackGeneration();
                 currentIteration++;
+#if DEBUG
+                Report("Итерация " + k + " из " + maxIterationCount);
+#endif
             }
             Selection();
-
             solver.EulerMethod(alfa, Mode.SaveResults);
+            Notify(alfa);
             return alfa;
         }
 
@@ -83,7 +91,6 @@ namespace SolarSail.SourceCode
                 }
 
                 solver.EulerMethod(agent);
-
                 I(agent);
                 individuals.Add(agent);
             }
@@ -94,7 +101,6 @@ namespace SolarSail.SourceCode
             individuals = individuals.OrderBy(s => s.Fitness).ToList();
 
             //Выбираем наиболее приспосоленных волков (сделано так, чтобы была передача значений, а не ссылки) 
-               
             for (int i = 0; i < Dim; i++) 
             {
                 alfa.Coords[i] = individuals[0].Coords[i];

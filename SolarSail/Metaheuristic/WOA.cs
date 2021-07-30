@@ -29,7 +29,7 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, int lambda1, int lambda2, int lambda3, int p, params object[] list)
+        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, int p, params object[] list)
         {
             bottomBorderSectionLength = bottomBSL * 1000;
             topBorderSectionLength = topBSL * 1000;
@@ -47,7 +47,12 @@ namespace SolarSail.SourceCode
 
             solver = new ODESolver(p, P);
             best = new Agent(Dim);
-                      
+
+#if DEBUG
+            Report("Начало работы алгоритма");
+            Console.WriteLine("-------------------------------------");
+#endif
+
             FormingPopulation();
 
             for (int k = 1; k < maxIterationCount; k++)
@@ -55,10 +60,13 @@ namespace SolarSail.SourceCode
                 Selection();
                 NewPackGeneration();
                 currentIteration++;
+#if DEBUG
+                Report("Итерация " + k + " из " + maxIterationCount);
+#endif
             }
             Selection();
-
             solver.EulerMethod(best, Mode.SaveResults);
+            Notify(best);
             return best;
         }
 

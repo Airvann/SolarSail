@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.IO;
 
 namespace SolarSail
 {
-    public partial class FormMain : Form
+    public partial class FormMain : Form, ISubscriber
     {
         Agent best;
         public FormMain()
@@ -37,11 +38,12 @@ namespace SolarSail
             IMetaAlgorithm alg;
             Result res = Result.getInstance();
             res.Clear();
+            richTextBox1.Clear();
             int partsCount;
             object[] param;
-            int lambda3;
-            int lambda2;
-            int lambda1;
+            long lambda3;
+            long lambda2;
+            long lambda1;
             int p;
 
             int topBorderSection;
@@ -59,9 +61,9 @@ namespace SolarSail
                 bottomBorderSection          = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
                 topBorderSection             = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
                 p                            = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
-                lambda1                      = Convert.ToInt32(dataGridViewMainParams.Rows[3].Cells[1].Value);
-                lambda2                      = Convert.ToInt32(dataGridViewMainParams.Rows[4].Cells[1].Value);
-                lambda3                      = Convert.ToInt32(dataGridViewMainParams.Rows[5].Cells[1].Value);
+                lambda1                      = Convert.ToInt64(dataGridViewMainParams.Rows[3].Cells[1].Value);
+                lambda2                      = Convert.ToInt64(dataGridViewMainParams.Rows[4].Cells[1].Value);
+                lambda3                      = Convert.ToInt64(dataGridViewMainParams.Rows[5].Cells[1].Value);
 
                 bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[6].Cells[1].Value);
                 topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
@@ -93,11 +95,12 @@ namespace SolarSail
                 MessageBox.Show("Были введены некорретные параметры", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            alg.AddSubs(this);
             best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, p, param);
             FillResultTable(best);
+                
             buttonVisual.Enabled = true;
         }
-
         private void FillParamTable(Dictionary<string, object> list)
         {
             if (dataGridViewParam.Rows.Count != 0)
@@ -185,6 +188,11 @@ namespace SolarSail
             {
                 MessageBox.Show("Отсутствуют данные для визуализации", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        void ISubscriber.Update(string text)
+        {
+            richTextBox1.Text += text + '\n';
         }
     }
 }
