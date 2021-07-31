@@ -19,9 +19,9 @@ namespace SolarSail
 
         protected void Notify(Agent agent)
         {
-            string text = "Окрестность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString("0.00")        + '\n';
-            text += "Окрестность попадания по u: "       + Math.Abs(agent.u_tf - Result.const_uf).ToString("0.00")        + '\n';
-            text += "Окрестность попадания по v: "       + Math.Abs(agent.v_tf - Result.const_vf).ToString("0.00")        + '\n';
+            string text = "Точность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString("0.00")        + '\n';
+            text += "Точность попадания по u: "       + Math.Abs(agent.u_tf - Result.const_uf).ToString("0.00")        + '\n';
+            text += "Точность попадания по v: " + Math.Abs(agent.v_tf - Result.const_vf).ToString("0.00")        + '\n';
             text += "-----------------------------\n";
             text += "Коэффициенты управления: \n";
             for (int i = P; i < 2 * agent.P + 1; i++) text += (agent.Coords[i].ToString() + '\n');
@@ -38,8 +38,9 @@ namespace SolarSail
         protected int currentIteration;
 
         protected double lambda1 = Math.Pow(10, 5);
-        protected double lambda3 = Math.Pow(10, 5);
         protected double lambda2 = Math.Pow(10, 5);
+        protected double lambda3 = Math.Pow(10, 5);
+        protected double lambda4 = Math.Pow(10, 5);
 
         protected void I(Agent agent)
         {
@@ -47,7 +48,7 @@ namespace SolarSail
             double u_tf_Error = agent.u_tf - SourceCode.Result.const_uf;
             double v_tf_Error = agent.v_tf - SourceCode.Result.const_vf;
 
-            agent.Fitness = ((agent.tf) / 86400) + lambda1 * Math.Pow(r_tf_Error, 2) + lambda2 * Math.Pow(u_tf_Error, 2) + lambda3 * Math.Pow(v_tf_Error, 2);
+            agent.Fitness = lambda1 * ((agent.tf) / 86400) + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
         }
 
         protected double bottomBorderSectionLength = 0;
@@ -58,7 +59,7 @@ namespace SolarSail
 
         protected int populationNumber = 0;
 
-        public abstract Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, int p, params object[] list);
+        public abstract Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list);
 
         public void CheckBorders(Agent agent) 
         {

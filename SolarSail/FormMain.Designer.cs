@@ -183,11 +183,11 @@ namespace SolarSail
             this.dataGridViewResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.dataGridViewResult.Location = new System.Drawing.Point(924, 55);
+            this.dataGridViewResult.Location = new System.Drawing.Point(922, 35);
             this.dataGridViewResult.Name = "dataGridViewResult";
             this.dataGridViewResult.RowHeadersVisible = false;
             this.dataGridViewResult.RowHeadersWidth = 51;
-            this.dataGridViewResult.Size = new System.Drawing.Size(436, 203);
+            this.dataGridViewResult.Size = new System.Drawing.Size(436, 223);
             this.dataGridViewResult.TabIndex = 8;
             // 
             // Column1
@@ -237,7 +237,7 @@ namespace SolarSail
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(920, 32);
+            this.label4.Location = new System.Drawing.Point(920, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(235, 20);
             this.label4.TabIndex = 14;
@@ -465,12 +465,12 @@ namespace SolarSail
             this.dataGridViewMainParams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            this.dataGridViewMainParams.Location = new System.Drawing.Point(468, 54);
+            this.dataGridViewMainParams.Location = new System.Drawing.Point(468, 27);
             this.dataGridViewMainParams.MultiSelect = false;
             this.dataGridViewMainParams.Name = "dataGridViewMainParams";
             this.dataGridViewMainParams.RowHeadersVisible = false;
             this.dataGridViewMainParams.RowHeadersWidth = 51;
-            this.dataGridViewMainParams.Size = new System.Drawing.Size(450, 204);
+            this.dataGridViewMainParams.Size = new System.Drawing.Size(450, 231);
             this.dataGridViewMainParams.TabIndex = 23;
             // 
             // dataGridViewTextBoxColumn1
@@ -533,10 +533,10 @@ namespace SolarSail
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(1366, 55);
+            this.richTextBox1.Location = new System.Drawing.Point(1366, 35);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(303, 691);
+            this.richTextBox1.Size = new System.Drawing.Size(303, 711);
             this.richTextBox1.TabIndex = 25;
             this.richTextBox1.Text = "";
             // 

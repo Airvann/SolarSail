@@ -19,15 +19,16 @@ namespace SolarSail
 
         private void InitilizeTableValues() 
         {
-            dataGridViewMainParams.RowCount = 8;
-            dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 2000);
-            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 3000);
+            dataGridViewMainParams.RowCount = 9;
+            dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 0);
+            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 15000);
             dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 2);
-            dataGridViewMainParams.Rows[3].SetValues("λ1", 100000);
-            dataGridViewMainParams.Rows[4].SetValues("λ2", 100000);
-            dataGridViewMainParams.Rows[5].SetValues("λ3", 100000);
-            dataGridViewMainParams.Rows[6].SetValues("Нижняя грань коэффициентов", -1.56);
-            dataGridViewMainParams.Rows[7].SetValues("Верхняя грань коэффициентов", 1.56);
+            dataGridViewMainParams.Rows[3].SetValues("λ1", 1000000000000000000);
+            dataGridViewMainParams.Rows[4].SetValues("λ2", 1);
+            dataGridViewMainParams.Rows[5].SetValues("λ3", 100000000000000);
+            dataGridViewMainParams.Rows[6].SetValues("λ4", 100000000000000);
+            dataGridViewMainParams.Rows[7].SetValues("Нижняя грань коэффициентов", -1.56);
+            dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 1.56);
 
             dataGridViewResult.RowCount = 2;
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
@@ -41,6 +42,7 @@ namespace SolarSail
             richTextBox1.Clear();
             int partsCount;
             object[] param;
+            long lambda4;
             long lambda3;
             long lambda2;
             long lambda1;
@@ -64,9 +66,10 @@ namespace SolarSail
                 lambda1                      = Convert.ToInt64(dataGridViewMainParams.Rows[3].Cells[1].Value);
                 lambda2                      = Convert.ToInt64(dataGridViewMainParams.Rows[4].Cells[1].Value);
                 lambda3                      = Convert.ToInt64(dataGridViewMainParams.Rows[5].Cells[1].Value);
+                lambda4                      = Convert.ToInt64(dataGridViewMainParams.Rows[6].Cells[1].Value);
 
-                bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[6].Cells[1].Value);
-                topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
+                bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
+                topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[8].Cells[1].Value);
 
                 switch (comboBoxSelectAlg.SelectedIndex)
                 {
@@ -96,7 +99,7 @@ namespace SolarSail
                 return;
             }
             alg.AddSubs(this);
-            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, p, param);
+            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, param);
             FillResultTable(best);
                 
             buttonVisual.Enabled = true;
