@@ -197,12 +197,18 @@ namespace SolarSail.SourceCode
             if (mode == Mode.SaveResults) 
             {
                 Result res = Result.getInstance();
-                res.resultTable.Add("t",      t);
-                res.resultTable.Add("alpha",  alfa);
-                res.resultTable.Add("r",      r);
-                res.resultTable.Add("thetta", thetta);
-                res.resultTable.Add("u",      u);
-                res.resultTable.Add("v",      v);
+                res.Add("t",      t);
+                res.Add("alpha",  alfa);
+                res.Add("r",      r);
+                res.Add("thetta", thetta);
+                res.Add("u",      u);
+                res.Add("v",      v);
+
+                res.rf      = agent.r_tf;
+                res.uf      = agent.u_tf;
+                res.vf      = agent.v_tf;
+                res.tf      = agent.tf;
+                res.fitness = agent.Fitness;
             }
         }
 

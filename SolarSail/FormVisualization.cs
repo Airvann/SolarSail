@@ -16,7 +16,7 @@ namespace SolarSail
             InitializeComponent();
             SourceCode.Result res = SourceCode.Result.getInstance();
 #if !DEBUG
-            if (res.resultTable.Count == 0)
+            if (res.GetR().Count == 0)
                 throw new MemberAccessException();
 #endif
             float width  = Size.Width;
@@ -50,9 +50,9 @@ namespace SolarSail
             e.Graphics.DrawLine(Pens.Red, centerX, 0, centerX, Height);
 #endif
             SourceCode.Result res = SourceCode.Result.getInstance();
-            List<double> t = res.resultTable["t"];
-            List<double> r = res.resultTable["r"];
-            List<double> theta = res.resultTable["thetta"];
+            List<double> t = res.GetT();
+            List<double> r = res.GetR();
+            List<double> theta = res.GetTheta();
 
             double x1 = 0;
             double y1 = 0;

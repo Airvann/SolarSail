@@ -7,9 +7,8 @@ using System.IO;
 
 namespace SolarSail
 {
-    public partial class FormMain : Form, ISubscriber
+    public partial class FormMain : Form
     {
-        Agent best;
         public FormMain()
         {
             InitializeComponent();
@@ -98,9 +97,9 @@ namespace SolarSail
                 MessageBox.Show("Были введены некорретные параметры", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            alg.AddSubs(this);
-            best = alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, param);
-            FillResultTable(best);
+
+            alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, param);
+            FillResultTable();
                 
             buttonVisual.Enabled = true;
         }
@@ -124,26 +123,32 @@ namespace SolarSail
             chartAlfat.Series[0].Points.Clear();
         }
 
-        private void FillResultTable(Agent best)
+        private void FillResultTable()
         {
             Result res = Result.getInstance();
+            List<double> r      = res.GetR();
+            List<double> theta  = res.GetTheta();
+            List<double> u      = res.GetU();
+            List<double> v      = res.GetV();
+            List<double> t      = res.GetT();
+            List<double> alpha  = res.GetAlpha();
             ClearAllGraphs();
 
-            dataGridViewResult.Rows[0].Cells[1].Value = ConvertFromSecToDays(best.tf);
-            dataGridViewResult.Rows[1].Cells[1].Value = best.Fitness;
+            dataGridViewResult.Rows[0].Cells[1].Value = ConvertFromSecToDays(res.tf);
+            dataGridViewResult.Rows[1].Cells[1].Value = res.fitness;
 
-            for (int i = 0; i < res.resultTable["r"].Count - 1; i++)
+            for (int i = 0; i < res.GetR().Count - 1; i++)
             {
-                chartAlfat.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["alpha"][i]);
+                chartAlfat.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), alpha[i]);
 
-                chartRt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["r"][i]);
-                chartTt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["thetta"][i]);
-                chartUt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["u"][i]);
-                chartVt.Series[0].Points.AddXY(ConvertFromSecToDays(res.resultTable["t"][i]), res.resultTable["v"][i]);
+                chartRt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), r[i]);
+                chartTt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), theta[i]);
+                chartUt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), u[i]);
+                chartVt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), v[i]);
             }
         }
 
-        private double ConvertFromSecToDays(double t) 
+        private double ConvertFromSecToDays(double t)
         {
             return (t / 60f / 60f / 24f);
         }
@@ -191,11 +196,6 @@ namespace SolarSail
             {
                 MessageBox.Show("Отсутствуют данные для визуализации", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        void ISubscriber.Update(string text)
-        {
-            richTextBox1.Text += text + '\n';
         }
     }
 }

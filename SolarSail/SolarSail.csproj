@@ -79,8 +79,7 @@
     </Compile>
     <Compile Include="SourceCode\Agent.cs" />
     <Compile Include="Metaheuristic\GWO.cs" />
-    <Compile Include="SourceCode\IMetaAlgorithm.cs" />
-    <Compile Include="SourceCode\ISubscriber.cs" />
+    <Compile Include="Metaheuristic\IMetaAlgorithm.cs" />
     <Compile Include="SourceCode\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceCode\Result.cs" />

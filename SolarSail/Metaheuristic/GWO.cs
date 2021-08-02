@@ -30,7 +30,7 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list) 
+        public override void CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list) 
         {
             bottomBorderSectionLength = bottomBSL * 1000;
             topBorderSectionLength = topBSL * 1000;
@@ -68,8 +68,6 @@ namespace SolarSail.SourceCode
             }
             Selection();
             solver.EulerMethod(alfa, Mode.SaveResults);
-            Notify(alfa);
-            return alfa;
         }
 
         private void FormingPopulation()

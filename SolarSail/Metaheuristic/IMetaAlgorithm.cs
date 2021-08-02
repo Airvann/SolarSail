@@ -10,25 +10,20 @@ namespace SolarSail
     }
     abstract public class IMetaAlgorithm
     {
-        protected List<ISubscriber> subs = new List<ISubscriber>();
-
-        public void AddSubs(ISubscriber sub) 
-        {
-            subs.Add(sub);
-        }
-
-        protected void Notify(Agent agent)
-        {
-            string text = "Точность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString("0.00")        + '\n';
-            text += "Точность попадания по u: "       + Math.Abs(agent.u_tf - Result.const_uf).ToString("0.00")        + '\n';
-            text += "Точность попадания по v: " + Math.Abs(agent.v_tf - Result.const_vf).ToString("0.00")        + '\n';
-            text += "-----------------------------\n";
-            text += "Коэффициенты управления: \n";
-            for (int i = P; i < 2 * agent.P + 1; i++) text += (agent.Coords[i].ToString() + '\n');
-            text += "-----------------------------\n";
-            foreach (var sub in subs) sub.Update(text);
-        }
-
+        //Реализовать в Result
+        //TODO: +++
+       // protected void Notify(Agent agent)
+       // {
+       //     string text = "Точность попадания по r: " + Math.Abs(agent.r_tf - Result.const_rf).ToString("0.00")        + '\n';
+       //     text += "Точность попадания по u: "       + Math.Abs(agent.u_tf - Result.const_uf).ToString("0.00")        + '\n';
+       //     text += "Точность попадания по v: " + Math.Abs(agent.v_tf - Result.const_vf).ToString("0.00")        + '\n';
+       //     text += "-----------------------------\n";
+       //     text += "Коэффициенты управления: \n";
+       //     for (int i = P; i < 2 * agent.P + 1; i++) text += (agent.Coords[i].ToString() + '\n');
+       //     text += "-----------------------------\n";
+       //     foreach (var sub in subs) sub.Update(text);
+       // }
+        //TODO: ---
         protected Random rand = new Random();
         protected SourceCode.ODESolver solver;
 
@@ -59,7 +54,7 @@ namespace SolarSail
 
         protected int populationNumber = 0;
 
-        public abstract Agent CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list);
+        public abstract void  CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list);
 
         public void CheckBorders(Agent agent) 
         {
