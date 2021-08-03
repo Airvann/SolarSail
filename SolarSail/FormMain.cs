@@ -62,6 +62,7 @@ namespace SolarSail
                 bottomBorderSection          = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
                 topBorderSection             = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
                 p                            = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
+
                 lambda1                      = Convert.ToInt64(dataGridViewMainParams.Rows[3].Cells[1].Value);
                 lambda2                      = Convert.ToInt64(dataGridViewMainParams.Rows[4].Cells[1].Value);
                 lambda3                      = Convert.ToInt64(dataGridViewMainParams.Rows[5].Cells[1].Value);
@@ -100,7 +101,8 @@ namespace SolarSail
 
             alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, param);
             FillResultTable();
-                
+
+            richTextBox1.Text += res.PrintResult();
             buttonVisual.Enabled = true;
         }
         private void FillParamTable(Dictionary<string, object> list)

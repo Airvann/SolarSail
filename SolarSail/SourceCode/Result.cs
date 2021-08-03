@@ -38,6 +38,7 @@ namespace SolarSail.SourceCode
         public List<double> GetU() { return resultTable["u"]; }
         public List<double> GetV() { return resultTable["v"]; }
         public List<double> GetAlpha() { return resultTable["alpha"]; }
+        public List<double> GetControl() { return resultTable["c"]; }
         public void Add(string id, List<double> data) { resultTable.Add(id, data); }
 
         public void Clear() 
@@ -48,6 +49,19 @@ namespace SolarSail.SourceCode
             vf = -1;
             rf = -1;
             fitness = -1;
+        }
+
+        public string Print() 
+        {
+            string text = "Точность попадания по r: "   + Math.Abs(rf - const_rf).ToString("0.00")        + '\n';
+            text += "Точность попадания по u: "         + Math.Abs(uf - const_uf).ToString("0.00")        + '\n';
+            text += "Точность попадания по v: "         + Math.Abs(vf - const_vf).ToString("0.00")        + '\n';
+            text += "-----------------------------\n";
+            text += "Коэффициенты управления: \n";
+
+            foreach(var item in GetControl()) text += (item.ToString() + '\n');
+            text += "-----------------------------\n";
+            return text;
         }
     }
 }

@@ -203,12 +203,14 @@ namespace SolarSail.SourceCode
                 res.Add("thetta", thetta);
                 res.Add("u",      u);
                 res.Add("v",      v);
+                res.Add("c",      c); 
 
                 res.rf      = agent.r_tf;
                 res.uf      = agent.u_tf;
                 res.vf      = agent.v_tf;
                 res.tf      = agent.tf;
                 res.fitness = agent.Fitness;
+
             }
         }
 
