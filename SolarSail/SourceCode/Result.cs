@@ -51,17 +51,24 @@ namespace SolarSail.SourceCode
             fitness = -1;
         }
 
-        public string Print() 
+        public string PrintResult() 
         {
-            string text = "Точность попадания по r: "   + Math.Abs(rf - const_rf).ToString("0.00")        + '\n';
+            string text = "";
+            text += "Время окончания движения: "        + ConvertFromSecToDays(tf) + '\n';
+            text += "Точность попадания по r: "         + Math.Abs(rf - const_rf).ToString("0.00")        + '\n';
             text += "Точность попадания по u: "         + Math.Abs(uf - const_uf).ToString("0.00")        + '\n';
             text += "Точность попадания по v: "         + Math.Abs(vf - const_vf).ToString("0.00")        + '\n';
             text += "-----------------------------\n";
             text += "Коэффициенты управления: \n";
 
             foreach(var item in GetControl()) text += (item.ToString() + '\n');
-            text += "-----------------------------\n";
+            text += "-----------------------------\n\n";
             return text;
+        }
+
+        public static double ConvertFromSecToDays(double t)
+        {
+            return (t / 60f / 60f / 24f);
         }
     }
 }

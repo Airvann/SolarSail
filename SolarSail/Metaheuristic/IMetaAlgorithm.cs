@@ -17,6 +17,7 @@ namespace SolarSail
         public int P = 0;
 
         protected int currentIteration;
+        protected int p;
 
         protected double lambda1 = Math.Pow(10, 5);
         protected double lambda2 = Math.Pow(10, 5);
@@ -40,7 +41,7 @@ namespace SolarSail
 
         protected int populationNumber = 0;
 
-        public abstract void  CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, params object[] list);
+        public abstract void CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list);
 
         public void CheckBorders(Agent agent) 
         {
@@ -64,6 +65,30 @@ namespace SolarSail
         protected void Report(string text) 
         {
             Console.WriteLine(DateTime.Now + ": " + text);
+        }
+
+        public virtual string PrintParams() 
+        {
+            string param = "";
+
+            param += "=============================\n";
+            param += DateTime.Now.ToString() + "\n";
+            param += "=============================\n";
+            param += "Размер популяции = " + populationNumber + "\n";
+            param += "Число разбиений = " + P + "\n";
+            param += "Параметр сплайна = " + p + "\n";
+
+            param += "λ1 = " + lambda1 + "\n";
+            param += "λ2 = " + lambda2 + "\n";
+            param += "λ3 = " + lambda3 + "\n";
+            param += "λ4 = " + lambda4 + "\n";
+
+            param += "Нижняя граница управления = "  + bottomBorderFuncCoeff + "\n";
+            param += "Верхняя граница управления = " + topBorderFuncCoeff + "\n";
+
+            param += "Нижняя граница отрезка времени = "  + bottomBorderSectionLength/1000f + "\n";
+            param += "Верхняя граница отрезка времени = " + topBorderSectionLength/1000f + "\n";
+            return param;
         }
     }
 }

@@ -71,24 +71,26 @@ namespace SolarSail
                 bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
                 topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[8].Cells[1].Value);
 
+                partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+
+                // partsCount = 
+
                 switch (comboBoxSelectAlg.SelectedIndex)
                 {
                     case 0:
                         alg = new GWO();
-                        partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                        object[] paramGWO = { maxIterationCount, partsCount };
+                        object[] paramGWO = { maxIterationCount };
                         param = paramGWO;
                         break;
                     case 1:
                         alg = new WOA();
-                        int b = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
-                        partsCount = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
-                        object[] paramWOA = { maxIterationCount, partsCount, b };
+                        int b = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
+                        object[] paramWOA = { maxIterationCount, b };
                         param = paramWOA;
                         break;
                     default:
                         alg = new GWO();
-                        object[] paramDefault = { maxIterationCount, 0 };
+                        object[] paramDefault = { maxIterationCount };
                         param = paramDefault;
                         break;
                 }
@@ -99,11 +101,22 @@ namespace SolarSail
                 return;
             }
 
-            alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, param);
+            alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param);
             FillResultTable();
 
             richTextBox1.Text += res.PrintResult();
+            LoadInFile(alg);
             buttonVisual.Enabled = true;
+        }
+
+        private void LoadInFile(IMetaAlgorithm alg) 
+        {
+            FileStream fs = new FileStream("log.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write(alg.PrintParams());
+            sw.Write(Result.getInstance().PrintResult());
+            sw.Close();
+            fs.Close();
         }
         private void FillParamTable(Dictionary<string, object> list)
         {
@@ -136,23 +149,18 @@ namespace SolarSail
             List<double> alpha  = res.GetAlpha();
             ClearAllGraphs();
 
-            dataGridViewResult.Rows[0].Cells[1].Value = ConvertFromSecToDays(res.tf);
+            dataGridViewResult.Rows[0].Cells[1].Value = Result.ConvertFromSecToDays(res.tf);
             dataGridViewResult.Rows[1].Cells[1].Value = res.fitness;
 
             for (int i = 0; i < res.GetR().Count - 1; i++)
             {
-                chartAlfat.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), alpha[i]);
+                chartAlfat.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), alpha[i]);
 
-                chartRt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), r[i]);
-                chartTt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), theta[i]);
-                chartUt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), u[i]);
-                chartVt.Series[0].Points.AddXY(ConvertFromSecToDays(t[i]), v[i]);
+                chartRt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), r[i]);
+                chartTt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), theta[i]);
+                chartUt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), u[i]);
+                chartVt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), v[i]);
             }
-        }
-
-        private double ConvertFromSecToDays(double t)
-        {
-            return (t / 60f / 60f / 24f);
         }
 
         private void comboBoxSelectAlg_SelectedIndexChanged(object sender, EventArgs e)

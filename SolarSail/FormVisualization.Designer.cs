@@ -40,7 +40,7 @@ namespace SolarSail
             this.ClientSize = new System.Drawing.Size(1016, 840);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormVisualization";
-            this.Text = "W";
+            this.Text = "Визуализация результата работы алгоритма";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormVisualization_Paint);
             this.ResumeLayout(false);
 
