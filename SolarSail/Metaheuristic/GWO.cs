@@ -165,6 +165,7 @@ namespace SolarSail.SourceCode
         {
             string param = "";
             param += base.PrintParams();
+            param += "Число итераций = " + maxIterationCount + '\n';
             return param + "\n";
         }
     }

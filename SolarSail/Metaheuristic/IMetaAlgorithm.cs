@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using SolarSail.SourceCode;
 namespace SolarSail
 {
     public enum Mode 
@@ -8,6 +6,7 @@ namespace SolarSail
         SkipParams,
         SaveResults
     }
+
     abstract public class IMetaAlgorithm
     {
         protected Random rand = new Random();
