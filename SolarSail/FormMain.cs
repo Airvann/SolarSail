@@ -1,5 +1,6 @@
 ﻿using SolarSail.SourceCode;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -33,7 +34,7 @@ namespace SolarSail
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
             dataGridViewResult.Rows[1].Cells[0].Value = "Значение качества управления решения: ";
         }
-        private void buttonResult_Click(object sender, EventArgs e)
+        private async void buttonResult_Click(object sender, EventArgs e)
         {
             IMetaAlgorithm alg;
             Result res = Result.getInstance();
@@ -73,8 +74,6 @@ namespace SolarSail
 
                 partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
 
-                // partsCount = 
-
                 switch (comboBoxSelectAlg.SelectedIndex)
                 {
                     case 0:
@@ -101,11 +100,13 @@ namespace SolarSail
                 return;
             }
 
-            alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param);
+            buttonResult.Enabled = false;
+            await Task.Run(() => alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
             FillResultTable();
 
             richTextBox1.Text += res.PrintResult();
             LoadInFile(alg);
+            buttonResult.Enabled = true;
             buttonVisual.Enabled = true;
         }
 
@@ -206,6 +207,11 @@ namespace SolarSail
             {
                 MessageBox.Show("Отсутствуют данные для визуализации", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

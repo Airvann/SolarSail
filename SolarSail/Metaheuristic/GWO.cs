@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-//TODO: !!!! 1. Объединить вывод на консоль и вывод в файл и поместить их в richtextbox справа от программы в одном окне.
+
 namespace SolarSail.SourceCode
 {
     public class GWO : IMetaAlgorithm

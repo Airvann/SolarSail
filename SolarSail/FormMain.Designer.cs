@@ -561,6 +561,7 @@ namespace SolarSail
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.Text = "Задача солнечного паруса";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartRt)).EndInit();
