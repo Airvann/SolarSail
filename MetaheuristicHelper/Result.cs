@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace SolarSail.SourceCode
+namespace MetaheuristicHelper
 {
     //Singletone class
     public class Result
@@ -16,6 +16,8 @@ namespace SolarSail.SourceCode
         public double rf;
         public double uf;
         public double vf;
+        public int sectionsCount;
+        public int splineCoeff;
 
         public double fitness;
 
@@ -39,6 +41,8 @@ namespace SolarSail.SourceCode
         public List<double> GetV() { return resultTable["v"]; }
         public List<double> GetAlpha() { return resultTable["alpha"]; }
         public List<double> GetControl() { return resultTable["c"]; }
+        public List<double> GetH() { return resultTable["h"]; }
+
         public void Add(string id, List<double> data) { resultTable.Add(id, data); }
 
         public void Clear() 

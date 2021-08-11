@@ -1,16 +1,12 @@
 ﻿using System;
+using MetaheuristicHelper;
+using OdeSolver;
 namespace SolarSail
 {
-    public enum Mode 
-    {
-        SkipParams,
-        SaveResults
-    }
-
     abstract public class IMetaAlgorithm
     {
         protected Random rand = new Random();
-        protected SourceCode.ODESolver solver;
+        protected OdeSolver.OdeSolver solver;
 
         public int Dim = 0;
         public int P = 0;
@@ -25,9 +21,9 @@ namespace SolarSail
 
         protected void I(Agent agent)
         {
-            double r_tf_Error = agent.r_tf - SourceCode.Result.const_rf;
-            double u_tf_Error = agent.u_tf - SourceCode.Result.const_uf;
-            double v_tf_Error = agent.v_tf - SourceCode.Result.const_vf;
+            double r_tf_Error = agent.r_tf - Result.const_rf;
+            double u_tf_Error = agent.u_tf - Result.const_uf;
+            double v_tf_Error = agent.v_tf - Result.const_vf;
 
             agent.Fitness = lambda1 * ((agent.tf) / 86400f) + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
         }

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SolarSail
+namespace MetaheuristicHelper
 {
     public class Vector
     {
@@ -13,9 +17,9 @@ namespace SolarSail
             this.dim = dim;
         }
 
-        public Vector() {}
+        public Vector() { }
 
-        public static Vector operator*(Vector vector, double value)
+        public static Vector operator *(Vector vector, double value)
         {
             Vector tmp = new Vector(vector.dim);
             for (int i = 0; i < vector.dim; i++)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SolarSail
+namespace MetaheuristicHelper
 {
     public class Agent
     {

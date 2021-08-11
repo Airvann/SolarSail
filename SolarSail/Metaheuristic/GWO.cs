@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using MetaheuristicHelper;
+using OdeSolver;
 
 namespace SolarSail.SourceCode
 {
@@ -50,7 +52,7 @@ namespace SolarSail.SourceCode
             Report("Начало работы алгоритма");
             Console.WriteLine("-------------------------------------");
 #endif
-            solver = new ODESolver(p, P);
+            solver = new OdeSolver.OdeSolver(p, P);
             alfa  = new Agent(Dim);
             beta  = new Agent(Dim);
             delta = new Agent(Dim);

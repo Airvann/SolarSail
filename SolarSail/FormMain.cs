@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
+using MetaheuristicHelper;
+using Visualization;
 
 namespace SolarSail
 {
@@ -21,14 +23,14 @@ namespace SolarSail
         {
             dataGridViewMainParams.RowCount = 9;
             dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 0);
-            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 15000);
-            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 2);
-            dataGridViewMainParams.Rows[3].SetValues("λ1", 1000000000000000000);
-            dataGridViewMainParams.Rows[4].SetValues("λ2", 1);
-            dataGridViewMainParams.Rows[5].SetValues("λ3", 100000000000000);
-            dataGridViewMainParams.Rows[6].SetValues("λ4", 100000000000000);
+            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 18000);
+            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 3);
+            dataGridViewMainParams.Rows[3].SetValues("λ1", 10000000000000000);
+            dataGridViewMainParams.Rows[4].SetValues("λ2", 25);
+            dataGridViewMainParams.Rows[5].SetValues("λ3", 4000000000000);
+            dataGridViewMainParams.Rows[6].SetValues("λ4", 5500000000000);
             dataGridViewMainParams.Rows[7].SetValues("Нижняя грань коэффициентов", -1.56);
-            dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 1.56);
+            dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 0);
 
             dataGridViewResult.RowCount = 2;
             dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
@@ -101,6 +103,7 @@ namespace SolarSail
             }
 
             buttonResult.Enabled = false;
+            buttonVisual.Enabled = false;
             await Task.Run(() => alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
             FillResultTable();
 
@@ -108,9 +111,12 @@ namespace SolarSail
             LoadInFile(alg);
             buttonResult.Enabled = true;
             buttonVisual.Enabled = true;
+
+            FileHandler.Write();
         }
 
-        private void LoadInFile(IMetaAlgorithm alg) 
+
+        private void LoadInFile(IMetaAlgorithm alg)
         {
             FileStream fs = new FileStream("log.txt", FileMode.Append, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
@@ -119,6 +125,7 @@ namespace SolarSail
             sw.Close();
             fs.Close();
         }
+
         private void FillParamTable(Dictionary<string, object> list)
         {
             if (dataGridViewParam.Rows.Count != 0)
@@ -198,15 +205,9 @@ namespace SolarSail
 
         private void buttonVisual_Click(object sender, EventArgs e)
         {
-            try
-            {
-                FormVisualization visualization = new FormVisualization();
-                visualization.Show();
-            }
-            catch (MemberAccessException)
-            {
-                MessageBox.Show("Отсутствуют данные для визуализации", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Visualization.FormMain visualization = new Visualization.FormMain();
+            visualization.DataVisualization();
+            visualization.Show();
         }
 
         private void FormMain_Load(object sender, EventArgs e)

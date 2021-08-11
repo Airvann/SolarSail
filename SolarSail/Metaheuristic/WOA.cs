@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaheuristicHelper;
+using OdeSolver;
 
 namespace SolarSail.SourceCode
 {
@@ -47,7 +49,7 @@ namespace SolarSail.SourceCode
 
             this.populationNumber = populationNumber;
 
-            solver = new ODESolver(p, P);
+            solver = new OdeSolver.OdeSolver(p, P);
             best = new Agent(Dim);
 
 #if DEBUG

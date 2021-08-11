@@ -1,89 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
+using MetaheuristicHelper;
 
-namespace SolarSail.SourceCode
+namespace OdeSolver
 {
-    public class ODESolver
+    public enum Mode
     {
-        public ODESolver(int p, int P) 
+        SkipParams,
+        SaveResults
+    }
+
+    public class OdeSolver
+    {
+        public OdeSolver(int p, int P)
         {
             this.p = p;
             this.P = P;
         }
 
-        List<double> t =      new List<double>();
-        List<double> r =      new List<double>();
-        List<double> thetta = new List<double>();
-        List<double> u =      new List<double>();
-        List<double> v =      new List<double>();
-        List<double> alfa =   new List<double>();
-
-        List<double> tau =    new List<double>();
-        List<double> tauPart = new List<double>();
-
-        List<double> r_tmp =        new List<double>();
-        List<double> thetta_tmp =   new List<double>();
-        List<double> u_tmp =        new List<double>();
-        List<double> v_tmp =        new List<double>();
+        private readonly List<double> t = new List<double>();
+        private readonly List<double> r = new List<double>();
+        private readonly List<double> thetta = new List<double>();
+        private readonly List<double> u = new List<double>();
+        private readonly List<double> v = new List<double>();
+        private readonly List<double> alfa = new List<double>();
+        
+        private readonly List<double> tau = new List<double>();
+        private readonly List<double> tauPart = new List<double>();
+        
+        private readonly List<double> r_tmp = new List<double>();
+        private readonly List<double> thetta_tmp = new List<double>();
+        private readonly List<double> u_tmp = new List<double>();
+        private readonly List<double> v_tmp = new List<double>();
 
         //Параметр базисной функции
-        int p = 0;
+        private readonly int p = 0;
         //Число разбиений отрезка времени
-        int P = 0;
+        private readonly int P = 0;
         //Начальное условие
-        double r_0 = 1.49597870691 * Math.Pow(10, 11);
-        double thetta_0 = 0;
-        double u_0 = 0;
-        double v_0 = 2.98 * Math.Pow(10,4);
-        
-        double mu = 1.327474512 * Math.Pow(10, 20);
-        double beta = 0.042;
-      
-       double F1(double u) 
-       {
-          return u;
-       }
-       
-       double F2(double r, double v)
-       {
-          return v / r;
-       }
-       
-       double F3(double r, double v, double alfa)
-       {
-            double tmp = Math.Cos(alfa);
-            return ((v * v) / r) - (mu / (r * r)) + (beta * tmp * tmp * tmp) / (r * r);
-       }
-       
-       double F4(double r, double u, double v, double alfa)
-       {
-            double tmp = Math.Cos(alfa);
-            return (-u * v / r) + (mu * beta * ((Math.Sin(alfa) * tmp * tmp))/ (r * r));
-       }
+        private readonly double r_0 = 1.49597870691 * Math.Pow(10, 11);
+        private readonly double thetta_0 = 0;
+        private readonly double u_0 = 0;
+        private readonly double v_0 = 2.98 * Math.Pow(10, 4);
 
-       double BasisFunction(double t)
-       {
-           if ((t >= -1) && (t <= -0.5))
-               return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
-           else if ((t >= -0.5) && (t <= 0.5))
-               return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
-           else if ((t >= 0.5) && (t <= 1))
-               return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
-           else
-               return 0;
+        private readonly double mu = 1.327474512 * Math.Pow(10, 20);
+        private readonly double beta = 0.042;
+
+        double F1(double u)
+        {
+            return u;
         }
 
-        double Alfa(double t, List<double> c) 
+        double F2(double r, double v)
         {
-           int P = c.Count - 1;
-           double res = 0;
-           for (int i = 0; i <= P; i++)
-               res += c[i] * BasisFunction(t * P - i);
-           if (res < -Math.PI/2)
-               res = -Math.PI/2;
-           else if (res > Math.PI / 2)
-               res = Math.PI/2;
-           return res;
+            return v / r;
+        }
+
+        double F3(double r, double v, double alfa)
+        {
+            double tmp = Math.Cos(alfa);
+            return ((v * v) / r) - (mu / (r * r)) + (beta * tmp * tmp * tmp) / (r * r);
+        }
+
+        double F4(double r, double u, double v, double alfa)
+        {
+            double tmp = Math.Cos(alfa);
+            return (-u * v / r) + (mu * beta * ((Math.Sin(alfa) * tmp * tmp)) / (r * r));
+        }
+
+        double BasisFunction(double t)
+        {
+            if ((t >= -1) && (t <= -0.5))
+                return Math.Pow(2, p - 1) * Math.Pow(1 + t, p);
+            else if ((t >= -0.5) && (t <= 0.5))
+                return 1 - Math.Pow(2, p - 1) * Math.Pow(Math.Abs(t), p);
+            else if ((t >= 0.5) && (t <= 1))
+                return Math.Pow(2, p - 1) * Math.Pow(1 - t, p);
+            else
+                return 0;
+        }
+
+        double Alfa(double t, List<double> c)
+        {
+            int P = c.Count - 1;
+            double res = 0;
+            for (int i = 0; i <= P; i++)
+                res += c[i] * BasisFunction(t * P - i);
+            if (res < -Math.PI / 2)
+                res = -Math.PI / 2;
+            else if (res > Math.PI / 2)
+                res = Math.PI / 2;
+            return res;
         }
 
         /// <summary>
@@ -102,7 +109,7 @@ namespace SolarSail.SourceCode
             y.Add(x0);                          //Начальное условие X(0)=X0
             double h = 0.01;                    //Шаг разбиения в методе Рунге-Кутта
             double tfin = 10;                   //Момент окончания работы алгоритма
-            for (double a = 0; a < tfin; a+=h)
+            for (double a = 0; a < tfin; a += h)
                 x.Add(a);
 
             //Метод Рунге-Кутта решения ДУ
@@ -128,13 +135,13 @@ namespace SolarSail.SourceCode
 
             List<double> c = agent.GetC();
             List<double> h = agent.GetH();
-            
+
             double step = 1f / P;
             for (double m = 0; m <= 1 + 0.00001f; m += step)
                 tau.Add(m);
-            double currStart_r_0 = r_0;         double currStart_thetta_0 = thetta_0;
-            double currStart_u_0 = u_0;         double currStart_v_0 = v_0;
-            double h_step = (tau[1] - tau[0])/1000;
+            double currStart_r_0 = r_0; double currStart_thetta_0 = thetta_0;
+            double currStart_u_0 = u_0; double currStart_v_0 = v_0;
+            double h_step = (tau[1] - tau[0]) / 1000;
             double start; double stop;
 
             for (int k = 0; k < P; k++)
@@ -155,13 +162,13 @@ namespace SolarSail.SourceCode
 
                 for (double gap = start; gap <= stop + 0.00001f; gap += h_step)
                     tauPart.Add(gap);
-                
+
                 for (int i = 0; i < tauPart.Count; ++i)
                 {
-                    double next_r      = r_tmp[i]            + F1(u_tmp[i])                                                  * h_step  * P * h[k];
-                    double next_thetta = thetta_tmp[i]       + F2(r_tmp[i], v_tmp[i])                                        * h_step  * P * h[k];
-                    double next_u      = u_tmp[i]            + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))                   * h_step  * P * h[k];
-                    double next_v      = v_tmp[i]            + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c))         * h_step  * P * h[k];
+                    double next_r = r_tmp[i] + F1(u_tmp[i]) * h_step * P * h[k];
+                    double next_thetta = thetta_tmp[i] + F2(r_tmp[i], v_tmp[i]) * h_step * P * h[k];
+                    double next_u = u_tmp[i] + F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step * P * h[k];
+                    double next_v = v_tmp[i] + F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h_step * P * h[k];
 
                     thetta_tmp.Add(next_thetta);
                     r_tmp.Add(next_r);
@@ -194,40 +201,42 @@ namespace SolarSail.SourceCode
             agent.u_tf = u[u.Count - 1];
             agent.v_tf = v[v.Count - 1];
 
-            if (mode == Mode.SaveResults) 
+            if (mode == Mode.SaveResults)
             {
                 Result res = Result.getInstance();
-                res.Add("t",      t);
-                res.Add("alpha",  alfa);
-                res.Add("r",      r);
+                res.Add("t", t);
+                res.Add("alpha", alfa);
+                res.Add("r", r);
                 res.Add("thetta", thetta);
-                res.Add("u",      u);
-                res.Add("v",      v);
-                res.Add("c",      c); 
+                res.Add("u", u);
+                res.Add("v", v);
+                res.Add("c", c);
+                res.Add("h", h);
 
-                res.rf      = agent.r_tf;
-                res.uf      = agent.u_tf;
-                res.vf      = agent.v_tf;
-                res.tf      = agent.tf;
+                res.sectionsCount = P;
+                res.splineCoeff = p;
+                res.rf = agent.r_tf;
+                res.uf = agent.u_tf;
+                res.vf = agent.v_tf;
+                res.tf = agent.tf;
                 res.fitness = agent.Fitness;
-
             }
         }
 
-        private double T_tau(double sum, double tau, double H_k_1, int k) 
+        private double T_tau(double sum, double tau, double H_k_1, int k)
         {
             return sum + H_k_1 * P * (tau - (double)(k) / P);
         }
 
-        private void ResetToDefault() 
+        private void ResetToDefault()
         {
-            t.Clear();          t.Add(0);
-            r.Clear();          r.Add(r_0);
-            thetta.Clear();     thetta.Add(thetta_0);
-            u.Clear();          u.Add(u_0);
-            v.Clear();          v.Add(v_0);
+            t.Clear(); t.Add(0);
+            r.Clear(); r.Add(r_0);
+            thetta.Clear(); thetta.Add(thetta_0);
+            u.Clear(); u.Add(u_0);
+            v.Clear(); v.Add(v_0);
             alfa.Clear();
             tau.Clear();
         }
-    } 
+    }
 }
