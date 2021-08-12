@@ -7,10 +7,10 @@ namespace Visualization
 {
     public static class FileHandler
     {
-        public static void Write(string path = @"../../../file.txt") 
+        public static void Write(string path = @"file.txt") 
         {
             Result res = Result.getInstance();
-            FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
 
             List<double> c = res.GetControl();
@@ -35,15 +35,15 @@ namespace Visualization
             sw.Close();
             fs.Close();
         }
-        public static AgentFrame Read(string path = @"../../../file.txt") 
+        public static AgentFrame Read(string path = @"file.txt") 
         {
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);
 
             List<double> c = new List<double>();
             List<double> h = new List<double>();
-            int sectionsCount = 0;
-            int splineCoeff = 0;
+            int sectionsCount = -1;
+            int splineCoeff = -1;
 
             while (!sr.EndOfStream)
             {
@@ -82,10 +82,10 @@ namespace Visualization
                     } while (nextLine != "</c>");
                 }
             }
-            if (c.Count == 0 || h.Count == 0)
-                throw new FileLoadException();
             fs.Close();
             sr.Close();
+            if (c.Count == 0 || h.Count == 0 || sectionsCount == -1 || splineCoeff == -1)
+                throw new FileLoadException();
             return new AgentFrame(sectionsCount, splineCoeff, c, h);
         }
     }

@@ -112,7 +112,8 @@ namespace SolarSail
             buttonResult.Enabled = true;
             buttonVisual.Enabled = true;
 
-            FileHandler.Write();
+            string file = DateTime.Now.ToString("d_MM_y HH_mm_ss") + ".txt";
+            FileHandler.Write(file);
         }
 
 

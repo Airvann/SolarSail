@@ -12,8 +12,8 @@ namespace Visualization
     }
     public class Draw
     {
-        private const float r_mercury = 5.8344f * 50;
-        private const float r_earth = 14.96f * 50;
+        private const float r_mercury = 5.8344f * 45;
+        private const float r_earth = 14.96f * 45;
 
         private static readonly Pen p1 = new Pen(Color.Orange, 4)  { DashStyle = DashStyle.Dash };
         private static readonly Pen p2 = new Pen(Color.Blue, 4)    { DashStyle = DashStyle.Dash };
@@ -54,11 +54,11 @@ namespace Visualization
 
             for (int i = 5; i < T.Count; i += 5)
             {
-                x1 = (r[i] / Math.Pow(10, 11)) * 500 * Math.Cos(theta[i]);
-                y1 = (r[i] / Math.Pow(10, 11)) * 500 * Math.Sin(theta[i]);
+                x1 = (r[i] / Math.Pow(10, 11)) * 450 * Math.Cos(theta[i]);
+                y1 = (r[i] / Math.Pow(10, 11)) * 450 * Math.Sin(theta[i]);
 
-                x2 = (r[i - 5] / Math.Pow(10, 11)) * 500 * Math.Cos(theta[i - 5]);
-                y2 = (r[i - 5] / Math.Pow(10, 11)) * 500 * Math.Sin(theta[i - 5]);
+                x2 = (r[i - 5] / Math.Pow(10, 11)) * 450 * Math.Cos(theta[i - 5]);
+                y2 = (r[i - 5] / Math.Pow(10, 11)) * 450 * Math.Sin(theta[i - 5]);
 
                 e.Graphics.DrawLine(Pens.Gray, centerX - (float)x1 / 2, centerY - (float)y1 / 2, centerX - (float)x2 / 2, centerY - (float)y2 / 2);
                 if (i == 5) e.Graphics.FillEllipse(b2, centerX - (float)x1 / 2 - 12.5f, centerY - (float)y1 / 2 - 12.5f, 25, 25);

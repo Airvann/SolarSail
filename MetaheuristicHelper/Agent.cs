@@ -5,7 +5,7 @@ namespace MetaheuristicHelper
     public class Agent
     {
         public int P = 0;
-        public Agent(int dim) 
+        public Agent(int dim)
         {
             P = dim / 2;
             Fitness = 0;
