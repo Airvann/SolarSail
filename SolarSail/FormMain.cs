@@ -104,16 +104,14 @@ namespace SolarSail
 
             buttonResult.Enabled = false;
             buttonVisual.Enabled = false;
+            buttonSaveResult.Enabled = false;
             await Task.Run(() => alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
             FillResultTable();
-
             richTextBox1.Text += res.PrintResult();
             LoadInFile(alg);
             buttonResult.Enabled = true;
             buttonVisual.Enabled = true;
-
-            string file = DateTime.Now.ToString("d_MM_y HH_mm_ss") + ".txt";
-            FileHandler.Write(file);
+            buttonSaveResult.Enabled = true;
         }
 
 
@@ -214,6 +212,15 @@ namespace SolarSail
         private void FormMain_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonSaveResult_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) 
+            {
+                string file = saveFileDialog1.FileName;
+                FileHandler.Write(file);
+            }
         }
     }
 }

@@ -95,5 +95,10 @@ namespace Visualization
                 DataVisualization();
             }
         }
+
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            panel1.Refresh();
+        }
     }
 }

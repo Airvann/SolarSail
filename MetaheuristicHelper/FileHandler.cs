@@ -10,7 +10,7 @@ namespace Visualization
         public static void Write(string path = @"file.txt") 
         {
             Result res = Result.getInstance();
-            FileStream fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write);
+            FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
 
             List<double> c = res.GetControl();
