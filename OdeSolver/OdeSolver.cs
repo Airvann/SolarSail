@@ -59,7 +59,7 @@ namespace OdeSolver
         double F3(double r, double v, double alfa)
         {
             double tmp = Math.Cos(alfa);
-            return ((v * v) / r) - (mu / (r * r)) + (beta * tmp * tmp * tmp) / (r * r);
+            return ((v * v) / r) + (beta * tmp * tmp * tmp - mu) / (r * r);
         }
 
         double F4(double r, double u, double v, double alfa)
