@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{42A40A26-4D34-408F-B953-A1129561A96A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>SolarSail</RootNamespace>
     <AssemblyName>SolarSail</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
