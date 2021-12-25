@@ -162,7 +162,6 @@ namespace SolarSail.SourceCode
                 I(individuals[k]);
             }
         }
-
         public override string PrintParams() 
         {
             string param = "";

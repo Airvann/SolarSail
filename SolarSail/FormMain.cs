@@ -89,6 +89,19 @@ namespace SolarSail
                         object[] paramWOA = { maxIterationCount, b };
                         param = paramWOA;
                         break;
+                    case 2:
+                        alg = new GA();
+                        object[] paramGA = { maxIterationCount};
+                        param = paramGA;
+                        break;
+                    case 3:
+                        alg = new SA();
+                        double Temp = Convert.ToDouble(dataGridViewParam.Rows[3].Cells[1].Value);
+                        double C = Convert.ToDouble(dataGridViewParam.Rows[4].Cells[1].Value);
+                        double beta = Convert.ToDouble(dataGridViewParam.Rows[5].Cells[1].Value);
+                        object[] paramSA = { maxIterationCount, Temp, C, beta };
+                        param = paramSA;
+                        break;
                     default:
                         alg = new GWO();
                         object[] paramDefault = { maxIterationCount };
@@ -112,6 +125,8 @@ namespace SolarSail
             buttonResult.Enabled = true;
             buttonVisual.Enabled = true;
             buttonSaveResult.Enabled = true;
+
+            Console.Beep(600, 1000);
         }
 
 
@@ -181,6 +196,12 @@ namespace SolarSail
                         break;
                     case 1:
                         FillParamTable(WOA.AlgParams());
+                        break;
+                    case 2:
+                        FillParamTable(GA.AlgParams());
+                        break;
+                    case 3:
+                        FillParamTable(SA.AlgParams());
                         break;
                     default:
                         throw new Exception();
