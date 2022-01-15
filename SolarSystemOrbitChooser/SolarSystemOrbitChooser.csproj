@@ -97,5 +97,14 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaheuristicHelper\MetaheuristicHelper.csproj">
+      <Project>{5bf88deb-b6a1-4ae8-8b60-a38adcc16ffb}</Project>
+      <Name>MetaheuristicHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

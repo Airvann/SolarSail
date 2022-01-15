@@ -20,6 +20,7 @@ namespace SolarSail
             InitilizeTableValues();
             comboBoxSelectAlg.SelectedIndex = 0;
             comboBoxODESolverChooser.SelectedIndex = 0;
+            Result.getInstance().targetOrbit = TargetOrbit.Mars;
         }
 
         private void InitilizeTableValues()
@@ -81,8 +82,8 @@ namespace SolarSail
 
                 ODESolvingStep               = Convert.ToDouble(textBoxODESolvingStep.Text);
                 brightness                   = Convert.ToDouble(textBoxBrightnessSolarSail.Text);
-                ode_solver                   = ODE_Solver.Unknown;
-                orbit                        = Result.SetTargetOrbit(textBoxTarget.Text);
+                ode_solver                   = ODE_Solver.Euler;
+                orbit                        = res.targetOrbit;
 
                 switch (comboBoxODESolverChooser.SelectedIndex)
                 {
@@ -241,6 +242,12 @@ namespace SolarSail
             MainWindow selectionWindow = new MainWindow();
             ElementHost.EnableModelessKeyboardInterop(selectionWindow);
             selectionWindow.ShowDialog();
+            UpdateTargetOrbit();
+        }
+
+        private void UpdateTargetOrbit()
+        {
+            textBoxTarget.Text = Result.ReturnTargetOrbit(Result.getInstance().targetOrbit);
         }
     }
 }

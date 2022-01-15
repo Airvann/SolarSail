@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Visualization
 {
-    public enum Planet 
+    public enum Planet
     {
         Earth,
         Mercury

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,16 +6,17 @@ using System.Windows.Shapes;
 
 namespace SolarSystemOrbitChooser
 {
-
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        MetaheuristicHelper.TargetOrbit targetOrbit = MetaheuristicHelper.TargetOrbit.Unknown;
         public MainWindow()
         {
             InitializeComponent();
         }
+
         private void MouseEnterPlanet(object sender, MouseButtonEventArgs e)
         {
             double top = Canvas.GetTop(sender as Ellipse);
@@ -31,6 +27,7 @@ namespace SolarSystemOrbitChooser
 
             if ((sender as Ellipse) == Mercury)
             {
+                targetOrbit = MetaheuristicHelper.TargetOrbit.Mercury;
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 77, 71, 71));
                 LabelName.Content = "Название: Меркурий";
                 LabelRad.Content = "Радиус орбиты: 57 909 227 км";
@@ -40,6 +37,7 @@ namespace SolarSystemOrbitChooser
             }
             else if ((sender as Ellipse) == Venus)
             {
+                targetOrbit = MetaheuristicHelper.TargetOrbit.Venus;
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 178, 106, 0));
                 LabelName.Content = "Название: Венера";
                 LabelRad.Content = "Радиус орбиты: 108 209 184 км";
@@ -58,6 +56,7 @@ namespace SolarSystemOrbitChooser
             }
             else if ((sender as Ellipse) == Mars)
             {
+                targetOrbit = MetaheuristicHelper.TargetOrbit.Mars;
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 205, 38, 38));
                 LabelName.Content = "Название: Марс";
                 LabelRad.Content = "Радиус орбиты: 227 943 500 км";
@@ -69,6 +68,7 @@ namespace SolarSystemOrbitChooser
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
+            MetaheuristicHelper.Result.getInstance().targetOrbit = targetOrbit;
             Close();
         }
     }

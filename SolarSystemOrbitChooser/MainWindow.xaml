@@ -46,7 +46,7 @@
                 Height="60" Canvas.Left="678" Canvas.Top="-109" Stroke="#FFB26A00" StrokeThickness="6"
              />
         </Canvas>
-        <Button x:Name="Accept" Content="Подтвердить" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,-211,513" VerticalAlignment="Bottom" Width="245" IsEnabled="False" UseLayoutRounding="False" SnapsToDevicePixels="True" AutomationProperties.IsRequiredForForm="True" Click="Accept_Click"/>
+        <Button x:Name="Accept" Content="Подтвердить" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,-211,508" VerticalAlignment="Bottom" Width="245" IsEnabled="False" UseLayoutRounding="False" SnapsToDevicePixels="True" AutomationProperties.IsRequiredForForm="True" Click="Accept_Click" Height="25"/>
         <GroupBox Grid.Column="1" Header="Информация" HorizontalAlignment="Right" Height="170" Margin="0,10,-215,0" VerticalAlignment="Top" Width="251" FontSize="14" FontWeight="Bold" Background="#FFF7F7F7">
         </GroupBox>
 
