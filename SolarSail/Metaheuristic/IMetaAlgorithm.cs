@@ -19,6 +19,11 @@ namespace SolarSail
         protected double lambda3 = Math.Pow(10, 5);
         protected double lambda4 = Math.Pow(10, 5);
 
+        protected double brightness;
+        protected TargetOrbit targetOrbit = TargetOrbit.Unknown;
+        protected double stepSolver;
+        protected ODE_Solver odeSolver = ODE_Solver.Unknown;
+
         protected void I(Agent agent)
         {
             double r_tf_Error = agent.r_tf - Result.const_rf;
@@ -36,7 +41,8 @@ namespace SolarSail
 
         protected int populationNumber = 0;
 
-        public abstract void CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list);
+        public abstract void CalculateResult(TargetOrbit orbit, double brightness, double odeStep, ODE_Solver odeSolver, int populationNumber,
+            double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list);
 
         public void CheckBorders(Agent agent) 
         {

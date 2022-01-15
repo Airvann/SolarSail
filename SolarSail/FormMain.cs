@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using System.IO;
 using MetaheuristicHelper;
 using Visualization;
+using SolarSystemOrbitChooser;
 
 namespace SolarSail
 {
@@ -17,9 +19,10 @@ namespace SolarSail
             InitializeComponent();
             InitilizeTableValues();
             comboBoxSelectAlg.SelectedIndex = 0;
+            comboBoxODESolverChooser.SelectedIndex = 0;
         }
 
-        private void InitilizeTableValues() 
+        private void InitilizeTableValues()
         {
             dataGridViewMainParams.RowCount = 9;
             dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 0);
@@ -31,10 +34,6 @@ namespace SolarSail
             dataGridViewMainParams.Rows[6].SetValues("λ4", 5500000000000);
             dataGridViewMainParams.Rows[7].SetValues("Нижняя грань коэффициентов", -1.56);
             dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 0);
-
-            dataGridViewResult.RowCount = 2;
-            dataGridViewResult.Rows[0].Cells[0].Value = "Время окончания движения: ";
-            dataGridViewResult.Rows[1].Cells[0].Value = "Значение качества управления решения: ";
         }
         private async void buttonResult_Click(object sender, EventArgs e)
         {
@@ -56,6 +55,11 @@ namespace SolarSail
             double topBorderFunc;
             double bottomBorderFunc;
 
+            double ODESolvingStep;
+            double brightness;
+            ODE_Solver ode_solver;
+            TargetOrbit orbit;
+
             int populationCount;
             try
             {
@@ -73,8 +77,25 @@ namespace SolarSail
 
                 bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
                 topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[8].Cells[1].Value);
+                partsCount                   = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
 
-                partsCount = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                ODESolvingStep               = Convert.ToDouble(textBoxODESolvingStep.Text);
+                brightness                   = Convert.ToDouble(textBoxBrightnessSolarSail.Text);
+                ode_solver                   = ODE_Solver.Unknown;
+                orbit                        = Result.SetTargetOrbit(textBoxTarget.Text);
+
+                switch (comboBoxODESolverChooser.SelectedIndex)
+                {
+                    case 0:
+                        ode_solver = ODE_Solver.Euler;
+                        break;
+                    case 1:
+                        ode_solver = ODE_Solver.RungeKutta;
+                        break;
+                    default:
+                        ode_solver = ODE_Solver.Unknown;
+                        break;
+                }
 
                 switch (comboBoxSelectAlg.SelectedIndex)
                 {
@@ -105,7 +126,7 @@ namespace SolarSail
             buttonResult.Enabled = false;
             buttonVisual.Enabled = false;
             buttonSaveResult.Enabled = false;
-            await Task.Run(() => alg.CalculateResult(populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
+            await Task.Run(() => alg.CalculateResult(orbit, brightness, ODESolvingStep, ode_solver, populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
             FillResultTable();
             richTextBox1.Text += res.PrintResult();
             LoadInFile(alg);
@@ -155,9 +176,6 @@ namespace SolarSail
             List<double> t      = res.GetT();
             List<double> alpha  = res.GetAlpha();
             ClearAllGraphs();
-
-            dataGridViewResult.Rows[0].Cells[1].Value = Result.ConvertFromSecToDays(res.tf);
-            dataGridViewResult.Rows[1].Cells[1].Value = res.fitness;
 
             for (int i = 0; i < res.GetR().Count - 1; i++)
             {
@@ -209,11 +227,6 @@ namespace SolarSail
             visualization.Show();
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonSaveResult_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK) 
@@ -221,6 +234,13 @@ namespace SolarSail
                 string file = saveFileDialog1.FileName;
                 FileHandler.Write(file);
             }
+        }
+
+        private void buttonChooseTarget_Click(object sender, EventArgs e)
+        {
+            MainWindow selectionWindow = new MainWindow();
+            ElementHost.EnableModelessKeyboardInterop(selectionWindow);
+            selectionWindow.ShowDialog();
         }
     }
 }

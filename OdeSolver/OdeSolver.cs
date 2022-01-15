@@ -12,10 +12,15 @@ namespace OdeSolver
 
     public class OdeSolver
     {
-        public OdeSolver(int p, int P)
+        public OdeSolver(int p, int P, double brightness, double odeStep, TargetOrbit targetOrbit, ODE_Solver odeSolver)
         {
             this.p = p;
             this.P = P;
+
+            this.odeSolver = odeSolver;
+            this.odeStep = odeStep;
+            beta = brightness;
+            this.targetOrbit = targetOrbit;
         }
 
         private readonly List<double> t = new List<double>();
@@ -33,6 +38,10 @@ namespace OdeSolver
         private readonly List<double> u_tmp = new List<double>();
         private readonly List<double> v_tmp = new List<double>();
 
+        private readonly double odeStep = -1;
+        private readonly ODE_Solver odeSolver = ODE_Solver.Unknown;
+        private readonly TargetOrbit targetOrbit = TargetOrbit.Unknown;
+
         //Параметр базисной функции
         private readonly int p = 0;
         //Число разбиений отрезка времени
@@ -44,7 +53,7 @@ namespace OdeSolver
         private readonly double v_0 = 2.98 * Math.Pow(10, 4);
 
         private readonly double mu = 1.327474512 * Math.Pow(10, 20);
-        private readonly double beta = 0.042;
+        private readonly double beta = 0.16892;   //beta = 0.042
 
         double F1(double u)
         {
@@ -141,7 +150,7 @@ namespace OdeSolver
                 tau.Add(m);
             double currStart_r_0 = r_0; double currStart_thetta_0 = thetta_0;
             double currStart_u_0 = u_0; double currStart_v_0 = v_0;
-            double h_step = (tau[1] - tau[0]) / 1000;
+            double h_step = (tau[1] - tau[0]) / odeStep;
             double start; double stop;
 
             for (int k = 0; k < P; k++)
@@ -212,6 +221,11 @@ namespace OdeSolver
                 res.Add("v", v);
                 res.Add("c", c);
                 res.Add("h", h);
+
+                res.brightnessSolarSail = beta;
+                res.oDE_Solver_Step = odeStep;
+                res.oDE_Solver = odeSolver;
+                res.targetOrbit = targetOrbit;
 
                 res.sectionsCount = P;
                 res.splineCoeff = p;

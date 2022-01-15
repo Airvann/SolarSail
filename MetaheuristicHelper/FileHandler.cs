@@ -7,7 +7,7 @@ namespace Visualization
 {
     public static class FileHandler
     {
-        public static void Write(string path = @"file.txt") 
+        public static void Write(string path = @"file.txt")
         {
             Result res = Result.getInstance();
             FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
@@ -16,6 +16,20 @@ namespace Visualization
             List<double> c = res.GetControl();
             List<double> h = res.GetH();
 
+            sw.WriteLine("<date>");
+            sw.WriteLine(DateTime.Now.ToString());
+
+            sw.WriteLine("<targetOrbit>");
+            sw.WriteLine(Result.ReturnTargetOrbit(res.targetOrbit));
+
+            sw.WriteLine("<brightness>");
+            sw.WriteLine(res.brightnessSolarSail);
+
+            sw.WriteLine("<ODESolver>");
+            sw.WriteLine(Result.ReturnODESolver(res.oDE_Solver));
+
+            sw.WriteLine("<step>");
+            sw.WriteLine(res.brightnessSolarSail);
             sw.WriteLine("<sectionsCount>");
             sw.WriteLine(res.sectionsCount);;
 
@@ -40,6 +54,11 @@ namespace Visualization
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);
 
+            TargetOrbit orbit = TargetOrbit.Unknown;
+            ODE_Solver ode_solver = ODE_Solver.Unknown;
+            double brightness = -1;
+            double step = -1;
+
             List<double> c = new List<double>();
             List<double> h = new List<double>();
             int sectionsCount = -1;
@@ -60,6 +79,34 @@ namespace Visualization
                 {
                     nextLine = sr.ReadLine();
                     splineCoeff = Convert.ToInt32(nextLine);
+                    continue;
+                }
+
+                if (nextLine == "<targetOrbit>")
+                {
+                    nextLine = sr.ReadLine();
+                    orbit = Result.SetTargetOrbit(nextLine);
+                    continue;
+                }
+
+                if (nextLine == "<ODESolver>")
+                {
+                    nextLine = sr.ReadLine();
+                    ode_solver = Result.SetODESolver(nextLine);
+                    continue;
+                }
+
+                if (nextLine == "<brightness>") 
+                {
+                    nextLine = sr.ReadLine();
+                    brightness = Convert.ToDouble(nextLine);
+                    continue;
+                }
+
+                if (nextLine == "<step>")
+                {
+                    nextLine = sr.ReadLine();
+                    step = Convert.ToDouble(nextLine);
                     continue;
                 }
 
@@ -86,7 +133,7 @@ namespace Visualization
             sr.Close();
             if (c.Count == 0 || h.Count == 0 || sectionsCount == -1 || splineCoeff == -1)
                 throw new FileLoadException();
-            return new AgentFrame(sectionsCount, splineCoeff, c, h);
+            return new AgentFrame(orbit, ode_solver, step, brightness, sectionsCount, splineCoeff, c, h);
         }
     }
 }

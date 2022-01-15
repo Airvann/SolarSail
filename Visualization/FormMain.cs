@@ -58,7 +58,7 @@ namespace Visualization
                 MessageBox.Show("Не удалось загрузить данные из файла", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            OdeSolver.OdeSolver solver = new OdeSolver.OdeSolver(agentFrame.splineCoeff, agentFrame.sectionsCount);
+            OdeSolver.OdeSolver solver = new OdeSolver.OdeSolver(agentFrame.splineCoeff, agentFrame.sectionsCount, agentFrame.brightnessSolarSail, agentFrame.oDE_Solver_Step, agentFrame.targetOrbit, agentFrame.oDE_Solver);
             solver.EulerMethod(agentFrame.agent, Mode.SaveResults);
         }
 
@@ -99,6 +99,11 @@ namespace Visualization
         private void FormMain_Resize(object sender, EventArgs e)
         {
             panel1.Refresh();
+        }
+
+        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

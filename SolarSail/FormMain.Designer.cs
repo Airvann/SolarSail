@@ -32,8 +32,6 @@ namespace SolarSail
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -46,9 +44,9 @@ namespace SolarSail
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -58,13 +56,9 @@ namespace SolarSail
             this.dataGridViewParam = new System.Windows.Forms.DataGridView();
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewResult = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.buttonVisual = new System.Windows.Forms.Button();
             this.chartRt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -82,8 +76,18 @@ namespace SolarSail
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.buttonSaveResult = new System.Windows.Forms.Button();
+            this.buttonChooseTarget = new System.Windows.Forms.Button();
+            this.textBoxTarget = new System.Windows.Forms.TextBox();
+            this.labelBrightnessSolarSail = new System.Windows.Forms.Label();
+            this.textBoxBrightnessSolarSail = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBoxODESolverChooser = new System.Windows.Forms.ComboBox();
+            this.textBoxODESolvingStep = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartRt)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -100,9 +104,9 @@ namespace SolarSail
             // buttonResult
             // 
             this.buttonResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonResult.Location = new System.Drawing.Point(329, 12);
+            this.buttonResult.Location = new System.Drawing.Point(6, 244);
             this.buttonResult.Name = "buttonResult";
-            this.buttonResult.Size = new System.Drawing.Size(133, 29);
+            this.buttonResult.Size = new System.Drawing.Size(446, 40);
             this.buttonResult.TabIndex = 2;
             this.buttonResult.Text = "Расчет";
             this.buttonResult.UseVisualStyleBackColor = true;
@@ -116,9 +120,9 @@ namespace SolarSail
             this.comboBoxSelectAlg.Items.AddRange(new object[] {
             "Метод серых волков",
             "Метод горбатых китов"});
-            this.comboBoxSelectAlg.Location = new System.Drawing.Point(12, 12);
+            this.comboBoxSelectAlg.Location = new System.Drawing.Point(457, 34);
             this.comboBoxSelectAlg.Name = "comboBoxSelectAlg";
-            this.comboBoxSelectAlg.Size = new System.Drawing.Size(311, 28);
+            this.comboBoxSelectAlg.Size = new System.Drawing.Size(449, 28);
             this.comboBoxSelectAlg.TabIndex = 3;
             this.comboBoxSelectAlg.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelectAlg_SelectedIndexChanged);
             // 
@@ -137,12 +141,12 @@ namespace SolarSail
             this.dataGridViewParam.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnValue});
-            this.dataGridViewParam.Location = new System.Drawing.Point(12, 46);
+            this.dataGridViewParam.Location = new System.Drawing.Point(457, 68);
             this.dataGridViewParam.MultiSelect = false;
             this.dataGridViewParam.Name = "dataGridViewParam";
             this.dataGridViewParam.RowHeadersVisible = false;
             this.dataGridViewParam.RowHeadersWidth = 51;
-            this.dataGridViewParam.Size = new System.Drawing.Size(450, 240);
+            this.dataGridViewParam.Size = new System.Drawing.Size(449, 171);
             this.dataGridViewParam.TabIndex = 7;
             // 
             // ColumnName
@@ -171,55 +175,13 @@ namespace SolarSail
             this.ColumnValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColumnValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // dataGridViewResult
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dataGridViewResult.Location = new System.Drawing.Point(922, 46);
-            this.dataGridViewResult.Name = "dataGridViewResult";
-            this.dataGridViewResult.RowHeadersVisible = false;
-            this.dataGridViewResult.RowHeadersWidth = 51;
-            this.dataGridViewResult.Size = new System.Drawing.Size(436, 240);
-            this.dataGridViewResult.TabIndex = 8;
-            // 
-            // Column1
-            // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column1.HeaderText = "Параметр";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 88;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "Значение";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(1523, 779);
+            this.button2.Location = new System.Drawing.Point(1569, 763);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(146, 40);
+            this.button2.Size = new System.Drawing.Size(196, 40);
             this.button2.TabIndex = 11;
             this.button2.Text = "Выход";
             this.button2.UseVisualStyleBackColor = true;
@@ -228,10 +190,10 @@ namespace SolarSail
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(1364, 779);
+            this.button3.Location = new System.Drawing.Point(1364, 763);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(155, 40);
+            this.button3.Size = new System.Drawing.Size(196, 40);
             this.button3.TabIndex = 13;
             this.button3.Text = "Справка";
             this.button3.UseVisualStyleBackColor = true;
@@ -241,29 +203,20 @@ namespace SolarSail
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(1362, 20);
+            this.label4.Location = new System.Drawing.Point(1364, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(235, 20);
             this.label4.TabIndex = 14;
             this.label4.Text = "Результат работы алгоритма";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 807);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "V 3.0";
-            // 
             // buttonVisual
             // 
             this.buttonVisual.Enabled = false;
             this.buttonVisual.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonVisual.Location = new System.Drawing.Point(686, 779);
+            this.buttonVisual.Location = new System.Drawing.Point(457, 244);
             this.buttonVisual.Margin = new System.Windows.Forms.Padding(2);
             this.buttonVisual.Name = "buttonVisual";
-            this.buttonVisual.Size = new System.Drawing.Size(335, 40);
+            this.buttonVisual.Size = new System.Drawing.Size(449, 40);
             this.buttonVisual.TabIndex = 18;
             this.buttonVisual.Text = "Визуализация";
             this.buttonVisual.UseVisualStyleBackColor = true;
@@ -293,7 +246,7 @@ namespace SolarSail
             series1.MarkerSize = 12;
             series1.Name = "Series1";
             this.chartRt.Series.Add(series1);
-            this.chartRt.Size = new System.Drawing.Size(663, 465);
+            this.chartRt.Size = new System.Drawing.Size(663, 503);
             this.chartRt.TabIndex = 1;
             this.chartRt.Text = "chart2";
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -309,11 +262,11 @@ namespace SolarSail
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl1.Location = new System.Drawing.Point(11, 292);
+            this.tabControl1.Location = new System.Drawing.Point(6, 290);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(674, 507);
+            this.tabControl1.Size = new System.Drawing.Size(674, 537);
             this.tabControl1.TabIndex = 22;
             // 
             // tabPage3
@@ -322,7 +275,7 @@ namespace SolarSail
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(666, 479);
+            this.tabPage3.Size = new System.Drawing.Size(666, 509);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "r(t)";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -333,7 +286,7 @@ namespace SolarSail
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(666, 479);
+            this.tabPage4.Size = new System.Drawing.Size(666, 509);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Θ(t)";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -362,7 +315,7 @@ namespace SolarSail
             series2.MarkerSize = 12;
             series2.Name = "Series1";
             this.chartTt.Series.Add(series2);
-            this.chartTt.Size = new System.Drawing.Size(663, 461);
+            this.chartTt.Size = new System.Drawing.Size(663, 499);
             this.chartTt.TabIndex = 2;
             this.chartTt.Text = "chart2";
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -375,7 +328,7 @@ namespace SolarSail
             this.tabPage5.Controls.Add(this.chartUt);
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(666, 479);
+            this.tabPage5.Size = new System.Drawing.Size(666, 509);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "u(t)";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -404,7 +357,7 @@ namespace SolarSail
             series3.MarkerSize = 12;
             series3.Name = "Series1";
             this.chartUt.Series.Add(series3);
-            this.chartUt.Size = new System.Drawing.Size(663, 461);
+            this.chartUt.Size = new System.Drawing.Size(663, 502);
             this.chartUt.TabIndex = 2;
             this.chartUt.Text = "chart2";
             title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -417,7 +370,7 @@ namespace SolarSail
             this.tabPage6.Controls.Add(this.chartVt);
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(666, 479);
+            this.tabPage6.Size = new System.Drawing.Size(666, 509);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "v(t)";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -446,7 +399,7 @@ namespace SolarSail
             series4.MarkerSize = 12;
             series4.Name = "Series1";
             this.chartVt.Series.Add(series4);
-            this.chartVt.Size = new System.Drawing.Size(663, 461);
+            this.chartVt.Size = new System.Drawing.Size(663, 502);
             this.chartVt.TabIndex = 2;
             this.chartVt.Text = "chart2";
             title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -458,30 +411,30 @@ namespace SolarSail
             // 
             this.dataGridViewMainParams.AllowUserToAddRows = false;
             this.dataGridViewMainParams.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGridViewMainParams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataGridViewMainParams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewMainParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewMainParams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            this.dataGridViewMainParams.Location = new System.Drawing.Point(468, 46);
+            this.dataGridViewMainParams.Location = new System.Drawing.Point(912, 12);
             this.dataGridViewMainParams.MultiSelect = false;
             this.dataGridViewMainParams.Name = "dataGridViewMainParams";
             this.dataGridViewMainParams.RowHeadersVisible = false;
             this.dataGridViewMainParams.RowHeadersWidth = 51;
-            this.dataGridViewMainParams.Size = new System.Drawing.Size(450, 240);
+            this.dataGridViewMainParams.Size = new System.Drawing.Size(446, 227);
             this.dataGridViewMainParams.TabIndex = 23;
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn1.HeaderText = "Название параметра";
             this.dataGridViewTextBoxColumn1.MaxInputLength = 10;
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -493,8 +446,8 @@ namespace SolarSail
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn2.HeaderText = "Значение параметра";
             this.dataGridViewTextBoxColumn2.MaxInputLength = 20;
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -518,7 +471,7 @@ namespace SolarSail
             chartArea5.AxisY.TitleFont = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea5.Name = "ChartArea1";
             this.chartAlfat.ChartAreas.Add(chartArea5);
-            this.chartAlfat.Location = new System.Drawing.Point(686, 292);
+            this.chartAlfat.Location = new System.Drawing.Point(687, 290);
             this.chartAlfat.Name = "chartAlfat";
             series5.BorderWidth = 3;
             series5.ChartArea = "ChartArea1";
@@ -526,7 +479,7 @@ namespace SolarSail
             series5.MarkerSize = 12;
             series5.Name = "Series1";
             this.chartAlfat.Series.Add(series5);
-            this.chartAlfat.Size = new System.Drawing.Size(672, 482);
+            this.chartAlfat.Size = new System.Drawing.Size(672, 513);
             this.chartAlfat.TabIndex = 24;
             this.chartAlfat.Text = "chart2";
             title5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -537,10 +490,10 @@ namespace SolarSail
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(1364, 46);
+            this.richTextBox1.Location = new System.Drawing.Point(1364, 35);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(303, 728);
+            this.richTextBox1.Size = new System.Drawing.Size(400, 722);
             this.richTextBox1.TabIndex = 25;
             this.richTextBox1.Text = "";
             // 
@@ -548,20 +501,149 @@ namespace SolarSail
             // 
             this.buttonSaveResult.Enabled = false;
             this.buttonSaveResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonSaveResult.Location = new System.Drawing.Point(1025, 779);
+            this.buttonSaveResult.Location = new System.Drawing.Point(910, 244);
             this.buttonSaveResult.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveResult.Name = "buttonSaveResult";
-            this.buttonSaveResult.Size = new System.Drawing.Size(333, 40);
+            this.buttonSaveResult.Size = new System.Drawing.Size(449, 40);
             this.buttonSaveResult.TabIndex = 26;
             this.buttonSaveResult.Text = "Сохранить результат";
             this.buttonSaveResult.UseVisualStyleBackColor = true;
             this.buttonSaveResult.Click += new System.EventHandler(this.buttonSaveResult_Click);
             // 
+            // buttonChooseTarget
+            // 
+            this.buttonChooseTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonChooseTarget.Location = new System.Drawing.Point(188, 143);
+            this.buttonChooseTarget.Name = "buttonChooseTarget";
+            this.buttonChooseTarget.Size = new System.Drawing.Size(94, 28);
+            this.buttonChooseTarget.TabIndex = 27;
+            this.buttonChooseTarget.Text = "Изменить";
+            this.buttonChooseTarget.UseVisualStyleBackColor = true;
+            this.buttonChooseTarget.Click += new System.EventHandler(this.buttonChooseTarget_Click);
+            // 
+            // textBoxTarget
+            // 
+            this.textBoxTarget.BackColor = System.Drawing.Color.White;
+            this.textBoxTarget.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxTarget.Enabled = false;
+            this.textBoxTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxTarget.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.textBoxTarget.Location = new System.Drawing.Point(12, 143);
+            this.textBoxTarget.Multiline = true;
+            this.textBoxTarget.Name = "textBoxTarget";
+            this.textBoxTarget.ReadOnly = true;
+            this.textBoxTarget.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.textBoxTarget.Size = new System.Drawing.Size(170, 28);
+            this.textBoxTarget.TabIndex = 28;
+            this.textBoxTarget.Text = "Марс";
+            // 
+            // labelBrightnessSolarSail
+            // 
+            this.labelBrightnessSolarSail.AutoSize = true;
+            this.labelBrightnessSolarSail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelBrightnessSolarSail.Location = new System.Drawing.Point(12, 174);
+            this.labelBrightnessSolarSail.Name = "labelBrightnessSolarSail";
+            this.labelBrightnessSolarSail.Size = new System.Drawing.Size(220, 20);
+            this.labelBrightnessSolarSail.TabIndex = 29;
+            this.labelBrightnessSolarSail.Text = "Яркость солнечного паруса";
+            // 
+            // textBoxBrightnessSolarSail
+            // 
+            this.textBoxBrightnessSolarSail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxBrightnessSolarSail.Location = new System.Drawing.Point(12, 200);
+            this.textBoxBrightnessSolarSail.Name = "textBoxBrightnessSolarSail";
+            this.textBoxBrightnessSolarSail.Size = new System.Drawing.Size(170, 26);
+            this.textBoxBrightnessSolarSail.TabIndex = 30;
+            this.textBoxBrightnessSolarSail.Text = "0,256";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(453, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(188, 20);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Алгортим оптимизации";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(12, 120);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 20);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "Целевая орбита";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(12, 12);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(262, 20);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "Алгортим решения системы ОДУ";
+            // 
+            // comboBoxODESolverChooser
+            // 
+            this.comboBoxODESolverChooser.AllowDrop = true;
+            this.comboBoxODESolverChooser.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxODESolverChooser.FormattingEnabled = true;
+            this.comboBoxODESolverChooser.Items.AddRange(new object[] {
+            "Метод Эйлера",
+            "Метод Рунге-Кутта 4-го порядка"});
+            this.comboBoxODESolverChooser.Location = new System.Drawing.Point(12, 35);
+            this.comboBoxODESolverChooser.Name = "comboBoxODESolverChooser";
+            this.comboBoxODESolverChooser.Size = new System.Drawing.Size(274, 28);
+            this.comboBoxODESolverChooser.TabIndex = 34;
+            // 
+            // textBoxODESolvingStep
+            // 
+            this.textBoxODESolvingStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxODESolvingStep.Location = new System.Drawing.Point(12, 91);
+            this.textBoxODESolvingStep.Name = "textBoxODESolvingStep";
+            this.textBoxODESolvingStep.Size = new System.Drawing.Size(174, 26);
+            this.textBoxODESolvingStep.TabIndex = 35;
+            this.textBoxODESolvingStep.Text = "500";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(12, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(166, 20);
+            this.label5.TabIndex = 36;
+            this.label5.Text = "Шаг интегрирования";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(188, 203);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 20);
+            this.label6.TabIndex = 37;
+            this.label6.Text = "м / сек²";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1678, 839);
+            this.ClientSize = new System.Drawing.Size(1776, 831);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxODESolvingStep);
+            this.Controls.Add(this.comboBoxODESolverChooser);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxBrightnessSolarSail);
+            this.Controls.Add(this.labelBrightnessSolarSail);
+            this.Controls.Add(this.textBoxTarget);
+            this.Controls.Add(this.buttonChooseTarget);
             this.Controls.Add(this.buttonSaveResult);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -570,18 +652,14 @@ namespace SolarSail
             this.Controls.Add(this.dataGridViewMainParams);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.buttonVisual);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dataGridViewResult);
             this.Controls.Add(this.dataGridViewParam);
             this.Controls.Add(this.comboBoxSelectAlg);
             this.Controls.Add(this.buttonResult);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
-            this.Text = "Задача солнечного паруса";
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Text = "Программный комплекс \"Задача солнечного паруса\"";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartRt)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -602,15 +680,11 @@ namespace SolarSail
         private System.Windows.Forms.Button buttonResult;
         private System.Windows.Forms.ComboBox comboBoxSelectAlg;
         private System.Windows.Forms.DataGridView dataGridViewParam;
-        private System.Windows.Forms.DataGridView dataGridViewResult;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonVisual;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRt;
         private System.Windows.Forms.TabControl tabControl1;
@@ -628,6 +702,17 @@ namespace SolarSail
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button buttonSaveResult;
+        private System.Windows.Forms.Button buttonChooseTarget;
+        private System.Windows.Forms.TextBox textBoxTarget;
+        private System.Windows.Forms.Label labelBrightnessSolarSail;
+        private System.Windows.Forms.TextBox textBoxBrightnessSolarSail;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBoxODESolverChooser;
+        private System.Windows.Forms.TextBox textBoxODESolvingStep;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
 

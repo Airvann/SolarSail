@@ -31,7 +31,8 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override void CalculateResult(int populationNumber, double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list)
+        public override void CalculateResult(TargetOrbit orbit, double brightness, double odeStep, ODE_Solver odeSolver, int populationNumber,
+            double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list)
         {
             bottomBorderSectionLength = bottomBSL * 1000;
             topBorderSectionLength = topBSL * 1000;
@@ -47,9 +48,14 @@ namespace SolarSail.SourceCode
             b = (int)list[1];
             Dim = 2 * P + 1;
 
+            targetOrbit = orbit;
+            this.brightness = brightness;
+            stepSolver = odeStep;
+            this.odeSolver = odeSolver;
+
             this.populationNumber = populationNumber;
 
-            solver = new OdeSolver.OdeSolver(p, P);
+            solver = new OdeSolver.OdeSolver(p, P, brightness, odeStep, targetOrbit, odeSolver);
             best = new Agent(Dim);
 
 #if DEBUG
