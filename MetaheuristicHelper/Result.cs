@@ -70,7 +70,7 @@ namespace MetaheuristicHelper
 
             string text = "";
 
-            text += "Целевая орбита перелета солнечного паруса: орбита " + selectedTargetOrbit                             + '\n'; 
+            text += "Целевая орбита: орбита " + selectedTargetOrbit                             + '\n'; 
             text += "Метод решения системы ОДУ: "                        + selectedODESolver                               + '\n';
             text += "Параметр яркости солнечного паруса: "               + brightnessSolarSail.ToString()                  + '\n';
             text += "Время окончания движения: "                         + ConvertFromSecToDays(tf)                        + '\n';

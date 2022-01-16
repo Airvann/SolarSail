@@ -54,10 +54,10 @@ namespace Visualization
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);
 
-            TargetOrbit orbit = TargetOrbit.Unknown;
-            ODE_Solver ode_solver = ODE_Solver.Unknown;
-            double brightness = -1;
-            double step = -1;
+            TargetOrbit orbit = TargetOrbit.Mercury;
+            ODE_Solver ode_solver = ODE_Solver.Euler;
+            double brightness = 0.042;
+            double step = 500;
 
             List<double> c = new List<double>();
             List<double> h = new List<double>();
