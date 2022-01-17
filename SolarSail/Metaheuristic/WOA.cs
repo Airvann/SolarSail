@@ -31,7 +31,7 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override void CalculateResult(TargetOrbit orbit, double brightness, double odeStep, ODE_Solver odeSolver, int populationNumber,
+        public override void CalculateResult(Orbit orbit, double brightness, double odeStep, OdeSolver.OdeSolver odeSolver, int populationNumber,
             double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list)
         {
             bottomBorderSectionLength = bottomBSL * 1000;
@@ -55,7 +55,6 @@ namespace SolarSail.SourceCode
 
             this.populationNumber = populationNumber;
 
-            solver = new OdeSolver.OdeSolver(p, P, brightness, odeStep, targetOrbit, odeSolver);
             best = new Agent(Dim);
 
 #if DEBUG
@@ -75,7 +74,7 @@ namespace SolarSail.SourceCode
 #endif
             }
             Selection();
-            solver.EulerMethod(best, Mode.SaveResults);
+            odeSolver.Solve(best, Mode.SaveResults);
         }
 
         private void FormingPopulation()
@@ -97,7 +96,7 @@ namespace SolarSail.SourceCode
                     agent.Coords[j] = nextRandomFuncCoeff;
                 }
 
-                solver.EulerMethod(agent);
+                odeSolver.Solve(agent);
 
                 I(agent);
                 individuals.Add(agent);
@@ -174,7 +173,7 @@ namespace SolarSail.SourceCode
                 }
 
                 CheckBorders(individuals[k]);
-                solver.EulerMethod(individuals[k]);
+                odeSolver.Solve(individuals[k]);
                 I(individuals[k]);
             }
         }

@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Drawing;
+using MetaheuristicHelper;
 
 namespace Visualization
 {
-    public enum Planet
-    {
-        Earth,
-        Mercury
-    }
     public class Draw
     {
-        private const float r_mercury = 5.8344f * 45;
-        private const float r_earth = 14.96f * 45;
-
         private static readonly Pen p1 = new Pen(Color.Orange, 4)  { DashStyle = DashStyle.Dash };
         private static readonly Pen p2 = new Pen(Color.Blue, 4)    { DashStyle = DashStyle.Dash };
         private static readonly Pen p3 = new Pen(Color.Orange, 3);
@@ -23,19 +16,10 @@ namespace Visualization
         private static readonly Brush b2 = Brushes.Blue;
         private static readonly Brush b3 = Brushes.Orange;
 
-        public static void DrawOrbit(Planet planet, float centerX, float centerY, System.Windows.Forms.PaintEventArgs e) 
+        public static void DrawOrbit(Orbit orbit, float centerX, float centerY, System.Windows.Forms.PaintEventArgs e) 
         {
-            switch(planet)
-            {
-                case Planet.Earth:
-                    e.Graphics.DrawEllipse(p2, centerX - r_earth / 2, centerY - r_earth / 2, r_earth, r_earth);
-                    break;
-                case Planet.Mercury:
-                    e.Graphics.DrawEllipse(p1, centerX - r_mercury / 2, centerY - r_mercury / 2, r_mercury, r_mercury);
-                    break;
-                default:
-                    break;
-            }
+            float orbit_r = (float)orbit.GetR();
+            e.Graphics.DrawEllipse(p2, centerX - orbit_r / 2, centerY - orbit_r / 2, orbit_r, orbit_r);
         }
 
         public static void DrawSun(float centerX, float centerY, System.Windows.Forms.PaintEventArgs e)

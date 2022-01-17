@@ -604,7 +604,7 @@ namespace SolarSail
             this.textBoxODESolvingStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxODESolvingStep.Location = new System.Drawing.Point(12, 91);
             this.textBoxODESolvingStep.Name = "textBoxODESolvingStep";
-            this.textBoxODESolvingStep.Size = new System.Drawing.Size(174, 26);
+            this.textBoxODESolvingStep.Size = new System.Drawing.Size(170, 26);
             this.textBoxODESolvingStep.TabIndex = 35;
             this.textBoxODESolvingStep.Text = "500";
             // 
@@ -622,7 +622,7 @@ namespace SolarSail
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(188, 203);
+            this.label6.Location = new System.Drawing.Point(184, 203);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(62, 20);
             this.label6.TabIndex = 37;

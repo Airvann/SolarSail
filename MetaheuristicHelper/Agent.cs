@@ -2,21 +2,6 @@
 
 namespace MetaheuristicHelper
 {
-    public enum TargetOrbit 
-    {
-        Unknown,
-        Mars,
-        Venus,
-        Mercury
-    };
-
-    public enum ODE_Solver
-    {
-        Unknown,
-        RungeKutta,
-        Euler
-    };
-
     public class Agent
     {
         public int P = 0;

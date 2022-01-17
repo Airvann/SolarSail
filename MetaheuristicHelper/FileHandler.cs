@@ -20,13 +20,13 @@ namespace Visualization
             sw.WriteLine(DateTime.Now.ToString());
 
             sw.WriteLine("<targetOrbit>");
-            sw.WriteLine(Result.ReturnTargetOrbit(res.targetOrbit));
+            sw.WriteLine(res.orbit.GetName());
 
             sw.WriteLine("<brightness>");
             sw.WriteLine(res.brightnessSolarSail);
 
             sw.WriteLine("<ODESolver>");
-            sw.WriteLine(Result.ReturnODESolver(res.oDE_Solver));
+            sw.WriteLine(res.OdeSolver.GetName());
 
             sw.WriteLine("<step>");
             sw.WriteLine(res.brightnessSolarSail);
@@ -54,10 +54,10 @@ namespace Visualization
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);
 
-            TargetOrbit orbit = TargetOrbit.Mercury;
-            ODE_Solver ode_solver = ODE_Solver.Euler;
+            Orbit orbit = MetaheuristicHelper.Orbits.Mercury.Get();
+            OdeSolver.OdeSolver odeSolver = new OdeSolver.EulerMethod(2,5,0.06,500, MetaheuristicHelper.Orbits.Mercury.Get());
             double brightness = 0.042;
-            double step = 500;
+            double step = -1;   //TODO: !!!!!!!!
 
             List<double> c = new List<double>();
             List<double> h = new List<double>();
@@ -85,14 +85,14 @@ namespace Visualization
                 if (nextLine == "<targetOrbit>")
                 {
                     nextLine = sr.ReadLine();
-                    orbit = Result.SetTargetOrbit(nextLine);
+                    orbit = Orbit.ReturnOrbit(nextLine);
                     continue;
                 }
 
                 if (nextLine == "<ODESolver>")
                 {
                     nextLine = sr.ReadLine();
-                    ode_solver = Result.SetODESolver(nextLine);
+                    odeSolver = OdeSolver.OdeSolver.ReturnOdeSolver(nextLine, splineCoeff, sectionsCount, brightness, step, orbit);
                     continue;
                 }
 
@@ -133,7 +133,7 @@ namespace Visualization
             sr.Close();
             if (c.Count == 0 || h.Count == 0 || sectionsCount == -1 || splineCoeff == -1)
                 throw new FileLoadException();
-            return new AgentFrame(orbit, ode_solver, step, brightness, sectionsCount, splineCoeff, c, h);
+            return new AgentFrame(orbit, odeSolver, step, brightness, sectionsCount, splineCoeff, c, h);
         }
     }
 }

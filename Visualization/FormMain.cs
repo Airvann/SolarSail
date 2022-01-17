@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using MetaheuristicHelper;
 using OdeSolver;
 using System.IO;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Visualization
@@ -18,17 +17,18 @@ namespace Visualization
         private List<double> r;
         private List<double> theta;
         private List<double> alpha;
+        private Orbit orbit;
 
         public FormMain()
         {
             InitializeComponent();
         }
 
-        public void DataVisualization() 
+        public void DataVisualization()
         {
             Result res = Result.getInstance();
             chartAlphat.Series[0].Points.Clear();
-            try 
+            try
             {
                 t = res.GetT();
                 r = res.GetR();
@@ -40,16 +40,16 @@ namespace Visualization
 
                 panel1.Refresh();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 MessageBox.Show("Ошибка чтения данных", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void LoadData(string path) 
+        private void LoadData(string path)
         {
             AgentFrame agentFrame;
-            try 
+            try
             {
                 agentFrame = FileHandler.Read(path);
             }
@@ -58,8 +58,7 @@ namespace Visualization
                 MessageBox.Show("Не удалось загрузить данные из файла", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            OdeSolver.OdeSolver solver = new OdeSolver.OdeSolver(agentFrame.splineCoeff, agentFrame.sectionsCount, agentFrame.brightnessSolarSail, agentFrame.oDE_Solver_Step, agentFrame.targetOrbit, agentFrame.oDE_Solver);
-            solver.EulerMethod(agentFrame.agent, Mode.SaveResults);
+            agentFrame.odeSolver.Solve(agentFrame.agent, Mode.SaveResults);
         }
 
         private void panelMain_Paint(object sender, PaintEventArgs e)
@@ -74,8 +73,8 @@ namespace Visualization
 
                 Draw.DrawSun(centerX, centerY, e);
 
-                Draw.DrawOrbit(Planet.Mercury, centerX, centerY, e);
-                Draw.DrawOrbit(Planet.Earth, centerX, centerY, e);
+                Draw.DrawOrbit(orbit, centerX, centerY, e);
+                Draw.DrawOrbit(MetaheuristicHelper.Orbits.Earth.Get(), centerX, centerY, e);
 #if DEBUG
                 e.Graphics.DrawLine(Pens.Red, 0, centerY, Width, centerY);
                 e.Graphics.DrawLine(Pens.Red, centerX, 0, centerX, Height);
@@ -87,7 +86,7 @@ namespace Visualization
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialogMain.ShowDialog();
-            if (result == DialogResult.OK) 
+            if (result == DialogResult.OK)
             {
                 Result res = Result.getInstance();
                 res.Clear();
@@ -99,11 +98,6 @@ namespace Visualization
         private void FormMain_Resize(object sender, EventArgs e)
         {
             panel1.Refresh();
-        }
-
-        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

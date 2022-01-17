@@ -87,10 +87,6 @@
       <Project>{5bf88deb-b6a1-4ae8-8b60-a38adcc16ffb}</Project>
       <Name>MetaheuristicHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OdeSolver\OdeSolver.csproj">
-      <Project>{41d4390f-b350-4cd4-8c4b-2e3050714768}</Project>
-      <Name>OdeSolver</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\loadicon.png" />

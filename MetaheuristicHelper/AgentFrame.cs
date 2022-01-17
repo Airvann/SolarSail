@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MetaheuristicHelper;
+
 
 namespace MetaheuristicHelper
 {
@@ -9,14 +11,14 @@ namespace MetaheuristicHelper
         public readonly int sectionsCount;
         public readonly int splineCoeff;
         public readonly double brightnessSolarSail;
-        public readonly TargetOrbit targetOrbit = TargetOrbit.Unknown;
-        public readonly ODE_Solver oDE_Solver = ODE_Solver.Unknown;
+        public readonly Orbit targetOrbit;
+        public readonly OdeSolver.OdeSolver odeSolver;
         public readonly double oDE_Solver_Step;
-        public AgentFrame(TargetOrbit targetOrbit, ODE_Solver oDE_Solver, double oDE_Solver_Step,
+        public AgentFrame(Orbit targetOrbit, OdeSolver.OdeSolver odeSolver, double oDE_Solver_Step,
                           double brightnessSolarSail, int sectionsCount, int splineCoeff, List<double> c, List<double> h) 
         {
             this.targetOrbit = targetOrbit;
-            this.oDE_Solver = oDE_Solver;
+            this.odeSolver = odeSolver;
             this.oDE_Solver_Step = oDE_Solver_Step;
             this.brightnessSolarSail = brightnessSolarSail;
 

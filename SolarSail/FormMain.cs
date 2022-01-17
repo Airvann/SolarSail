@@ -20,7 +20,7 @@ namespace SolarSail
             InitilizeTableValues();
             comboBoxSelectAlg.SelectedIndex = 0;
             comboBoxODESolverChooser.SelectedIndex = 0;
-            Result.getInstance().targetOrbit = TargetOrbit.Mars;
+            Result.getInstance().orbit = MetaheuristicHelper.Orbits.Mercury.Get();
         }
 
         private void InitilizeTableValues()
@@ -58,8 +58,8 @@ namespace SolarSail
 
             double ODESolvingStep;
             double brightness;
-            ODE_Solver ode_solver;
-            TargetOrbit orbit;
+            OdeSolver.OdeSolver odeSolver;
+            Orbit orbit;
 
             int populationCount;
             try
@@ -82,19 +82,18 @@ namespace SolarSail
 
                 ODESolvingStep               = Convert.ToDouble(textBoxODESolvingStep.Text);
                 brightness                   = Convert.ToDouble(textBoxBrightnessSolarSail.Text);
-                ode_solver                   = ODE_Solver.Euler;
-                orbit                        = res.targetOrbit;
+                orbit                        = res.orbit;
 
                 switch (comboBoxODESolverChooser.SelectedIndex)
                 {
                     case 0:
-                        ode_solver = ODE_Solver.Euler;
+                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
                         break;
                     case 1:
-                        ode_solver = ODE_Solver.RungeKutta;
+                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
                         break;
                     default:
-                        ode_solver = ODE_Solver.Unknown;
+                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
                         break;
                 }
 
@@ -127,7 +126,7 @@ namespace SolarSail
             buttonResult.Enabled = false;
             buttonVisual.Enabled = false;
             buttonSaveResult.Enabled = false;
-            await Task.Run(() => alg.CalculateResult(orbit, brightness, ODESolvingStep, ode_solver, populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
+            await Task.Run(() => alg.CalculateResult(orbit, brightness, ODESolvingStep, odeSolver, populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
             FillResultTable();
             richTextBox1.Text += res.PrintResult();
             LoadInFile(alg);
@@ -247,7 +246,7 @@ namespace SolarSail
 
         private void UpdateTargetOrbit()
         {
-            textBoxTarget.Text = Result.ReturnTargetOrbit(Result.getInstance().targetOrbit);
+            textBoxTarget.Text = Result.getInstance().orbit.GetName();
         }
     }
 }

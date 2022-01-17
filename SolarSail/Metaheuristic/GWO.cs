@@ -32,7 +32,7 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override void CalculateResult(TargetOrbit orbit, double brightness, double odeStep, ODE_Solver odeSolver, int populationNumber,
+        public override void CalculateResult(Orbit orbit, double brightness, double odeStep, OdeSolver.OdeSolver odeSolver, int populationNumber,
             double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list)
         {
             bottomBorderSectionLength = bottomBSL * 1000;
@@ -58,7 +58,6 @@ namespace SolarSail.SourceCode
             Report("Начало работы алгоритма");
             Console.WriteLine("-------------------------------------");
 #endif
-            solver = new OdeSolver.OdeSolver(p, P, brightness, odeStep, targetOrbit, odeSolver);
             alfa  = new Agent(Dim);
             beta  = new Agent(Dim);
             delta = new Agent(Dim);
@@ -75,7 +74,7 @@ namespace SolarSail.SourceCode
 #endif
             }
             Selection();
-            solver.EulerMethod(alfa, Mode.SaveResults);
+            odeSolver.Solve(alfa, Mode.SaveResults);
         }
 
         private void FormingPopulation()
@@ -97,7 +96,7 @@ namespace SolarSail.SourceCode
                     agent.Coords[j] = nextRandomFuncCoeff;
                 }
 
-                solver.EulerMethod(agent);
+                odeSolver.Solve(agent);
                 I(agent);
                 individuals.Add(agent);
             }
@@ -115,8 +114,8 @@ namespace SolarSail.SourceCode
                 delta.Coords[i] = individuals[2].Coords[i];
             }
 
-            alfa.Fitness  = individuals[0].Fitness;     
-            beta.Fitness  = individuals[1].Fitness;   
+            alfa.Fitness  = individuals[0].Fitness;
+            beta.Fitness  = individuals[1].Fitness;
             delta.Fitness = individuals[2].Fitness;
 
             alfa.r_tf = individuals[0].r_tf;        
@@ -164,7 +163,7 @@ namespace SolarSail.SourceCode
                                          (beta.Coords - (D_beta * A_beta)) +
                                          (delta.Coords - (D_delta * A_delta))) / 3.0;
                 CheckBorders(individuals[k]);
-                solver.EulerMethod(individuals[k]);
+                odeSolver.Solve(individuals[k]);
                 I(individuals[k]);
             }
         }

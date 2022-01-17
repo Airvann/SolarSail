@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using MetaheuristicHelper;
 
 namespace SolarSystemOrbitChooser
 {
@@ -11,7 +12,7 @@ namespace SolarSystemOrbitChooser
     /// </summary>
     public partial class MainWindow : Window
     {
-        MetaheuristicHelper.TargetOrbit targetOrbit = MetaheuristicHelper.TargetOrbit.Unknown;
+        Orbit targetOrbit;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace SolarSystemOrbitChooser
 
             if ((sender as Ellipse) == Mercury)
             {
-                targetOrbit = MetaheuristicHelper.TargetOrbit.Mercury;
+                targetOrbit = MetaheuristicHelper.Orbits.Mercury.Get();
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 77, 71, 71));
                 LabelName.Content = "Название: Меркурий";
                 LabelRad.Content = "Радиус орбиты: 57 909 227 км";
@@ -37,7 +38,7 @@ namespace SolarSystemOrbitChooser
             }
             else if ((sender as Ellipse) == Venus)
             {
-                targetOrbit = MetaheuristicHelper.TargetOrbit.Venus;
+                targetOrbit = MetaheuristicHelper.Orbits.Venus.Get();
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 178, 106, 0));
                 LabelName.Content = "Название: Венера";
                 LabelRad.Content = "Радиус орбиты: 108 209 184 км";
@@ -56,7 +57,7 @@ namespace SolarSystemOrbitChooser
             }
             else if ((sender as Ellipse) == Mars)
             {
-                targetOrbit = MetaheuristicHelper.TargetOrbit.Mars;
+                targetOrbit = MetaheuristicHelper.Orbits.Mars.Get();
                 Selection.Stroke = new SolidColorBrush(Color.FromArgb(255, 205, 38, 38));
                 LabelName.Content = "Название: Марс";
                 LabelRad.Content = "Радиус орбиты: 227 943 500 км";
@@ -68,7 +69,7 @@ namespace SolarSystemOrbitChooser
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            MetaheuristicHelper.Result.getInstance().targetOrbit = targetOrbit;
+            Result.getInstance().orbit = targetOrbit;
             Close();
         }
     }

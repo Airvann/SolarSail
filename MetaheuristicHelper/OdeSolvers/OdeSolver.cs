@@ -71,8 +71,25 @@ namespace OdeSolver
             return (-u * v / r) + (mu * beta * ((Math.Sin(alfa) * tmp * tmp)) / (r * r));
         }
 
-        public abstract string Name();
+        public abstract string GetName();
 
+        public static OdeSolver ReturnOdeSolver(string name, int p, int P, double brightness, double odeStep, Orbit targetOrbit)
+        {
+            OdeSolver solver;
+            switch (name)
+            {
+                case "Метод Эйлера":
+                    solver = new EulerMethod(p, P, brightness, odeStep, targetOrbit);
+                    break;
+                case "Метод Рунге-Кутта 4-го порядка":
+                    solver = new EulerMethod(p, P, brightness, odeStep, targetOrbit);
+                    break;
+                default:
+                    solver = new EulerMethod(p, P, brightness, odeStep, targetOrbit);
+                    break;
+            }
+            return solver;
+        }
         protected double BasisFunction(double t)
         {
             if ((t >= -1) && (t <= -0.5))

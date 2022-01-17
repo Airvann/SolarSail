@@ -6,7 +6,6 @@ namespace SolarSail
     abstract public class IMetaAlgorithm
     {
         protected Random rand = new Random();
-        protected OdeSolver.OdeSolver solver;
 
         public int Dim = 0;
         public int P = 0;
@@ -20,15 +19,15 @@ namespace SolarSail
         protected double lambda4 = Math.Pow(10, 5);
 
         protected double brightness;
-        protected TargetOrbit targetOrbit = TargetOrbit.Unknown;
+        protected Orbit targetOrbit;
         protected double stepSolver;
-        protected ODE_Solver odeSolver = ODE_Solver.Unknown;
+        protected OdeSolver.OdeSolver odeSolver;
 
         protected void I(Agent agent)
         {
-            double r_tf_Error = agent.r_tf - Result.const_rf;
-            double u_tf_Error = agent.u_tf - Result.const_uf;
-            double v_tf_Error = agent.v_tf - Result.const_vf;
+            double r_tf_Error = agent.r_tf - targetOrbit.GetR();
+            double u_tf_Error = agent.u_tf - targetOrbit.GetU();
+            double v_tf_Error = agent.v_tf - targetOrbit.GetV();
 
             agent.Fitness = lambda1 * ((agent.tf) / 86400f) + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
         }
@@ -41,7 +40,7 @@ namespace SolarSail
 
         protected int populationNumber = 0;
 
-        public abstract void CalculateResult(TargetOrbit orbit, double brightness, double odeStep, ODE_Solver odeSolver, int populationNumber,
+        public abstract void CalculateResult(Orbit orbit, double brightness, double odeStep, OdeSolver.OdeSolver odeSolver, int populationNumber,
             double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list);
 
         public void CheckBorders(Agent agent) 
