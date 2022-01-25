@@ -29,7 +29,8 @@ namespace SolarSail
             double u_tf_Error = agent.u_tf - targetOrbit.GetU();
             double v_tf_Error = agent.v_tf - targetOrbit.GetV();
 
-            agent.Fitness = lambda1 * agent.tf + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
+            double fitness = lambda1 * agent.tf + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
+            agent.Fitness = (double.IsNaN(fitness) || double.IsPositiveInfinity(fitness) || double.IsNegativeInfinity(fitness)) ? double.MaxValue : fitness;
         }
 
         protected double bottomBorderSectionLength  = 0;

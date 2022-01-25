@@ -44,9 +44,9 @@ namespace OdeSolver
 
                 for (int i = 0; i < tauPart.Count; ++i)
                 {
-                    double K1 = F1(u_tmp[i]) * h[k] * P;
-                    double L1 = F2(r_tmp[i], v_tmp[i]) * h[k] * P;
-                    double M1 = F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h[k] * P;
+                    double K1 = F1(u_tmp[i])                                          * h[k] * P;
+                    double L1 = F2(r_tmp[i], v_tmp[i])                                * h[k] * P;
+                    double M1 = F3(r_tmp[i], v_tmp[i], Alfa(tauPart[i], c))           * h[k] * P;
                     double N1 = F4(r_tmp[i], u_tmp[i], v_tmp[i], Alfa(tauPart[i], c)) * h[k] * P;
 
                     double K2 = F1(u_tmp[i] + 0.5 * h_step * M1) * h[k] * P;
@@ -64,10 +64,10 @@ namespace OdeSolver
                     double M4 = F3(r_tmp[i] + h_step * K3, v_tmp[i] + h_step * N3, Alfa(tauPart[i], c)) * h[k] * P;
                     double N4 = F4(r_tmp[i] + h_step * K3, u_tmp[i] + h_step * M3, v_tmp[i] + h_step * N3, Alfa(tauPart[i], c)) * h[k] * P;
 
-                    double next_r        = r_tmp[i] + (h_step / 6f) * (K1 + 2 * K2 + 2 * K3 + K4);
-                    double next_thetta   = thetta_tmp[i] + (h_step / 6f) * (L1 + 2 * L2 + 2 * L3 + L4);
-                    double next_u        = u_tmp[i] + (h_step / 6f) * (M1 + 2 * M2 + 2 * M3 + M4);
-                    double next_v        = v_tmp[i] + (h_step / 6f) * (N1 + 2 * N2 + 2 * N3 + N4);
+                    double next_r        = r_tmp[i]         + (h_step / 6f) * (K1 + 2 * K2 + 2 * K3 + K4);
+                    double next_thetta   = thetta_tmp[i]    + (h_step / 6f) * (L1 + 2 * L2 + 2 * L3 + L4);
+                    double next_u        = u_tmp[i]         + (h_step / 6f) * (M1 + 2 * M2 + 2 * M3 + M4);
+                    double next_v        = v_tmp[i]         + (h_step / 6f) * (N1 + 2 * N2 + 2 * N3 + N4);
 
                     thetta_tmp.Add(next_thetta);
                     r_tmp.Add(next_r);

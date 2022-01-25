@@ -49,18 +49,18 @@ namespace MetaheuristicHelper
         {
             string text = "Результаты: \n\n";
 
-            text += "Время окончания движения: "           + tf.ToString("0.00")                                            + '\n';
-            text += "Точность попадания по r:  "            + Math.Abs(rf - Settings.Get().orbit.GetR()).ToString("0.000")    + '\n';
+            text += "Время окончания движения: "           + ((365.25*tf)/(2*Math.PI)).ToString("0.00")                                            + '\n';
+            text += "Точность попадания по r:  "           + Math.Abs(rf - Settings.Get().orbit.GetR()).ToString("0.000")    + '\n';
             text += "Точность попадания по u:  "           + Math.Abs(uf - Settings.Get().orbit.GetU()).ToString("0.000")    + '\n';
             text += "Точность попадания по v:  "           + Math.Abs(vf - Settings.Get().orbit.GetV()).ToString("0.000")    + '\n';
-            text += "-------------------------------\n";
+            text += "------------------------------\n";
             text += "Коэффициенты управления: \n";
 
             foreach(var item in GetControl()) text += (item.ToString("0.000") + '\n');
-            text += "-------------------------------\n";
+            text += "------------------------------\n";
             text += "Отрезки разбиения времени: \n";
             foreach (var item in GetH())      text += (item.ToString() + '\n');
-            text += "-------------------------------\n";
+            text += "------------------------------\n";
             return text;
         }
     }

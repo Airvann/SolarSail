@@ -33,33 +33,34 @@ namespace SolarSail.SourceCode
         /// <returns></returns>
         public override void CalculateResult(params object[] list)
         {
-            //topBorderSectionLength = topBSL;
-            //bottomBorderSectionLength = ;
-            //bottomBorderFuncCoeff = bottomBFC;
-            //topBorderFuncCoeff = topBFC;
-            //this.lambda1 = lambda1;
-            //this.lambda2 = lambda2;
-            //this.lambda3 = lambda3;
-            //this.lambda4 = lambda4;
-            //this.p = p;
-            //this.P = P;
-            //maxIterationCount = (int)list[0];
-            //b = (int)list[1];
-            //Dim = 2 * P + 1;
-            //
-            //targetOrbit = orbit;
-            //this.brightness = brightness;
-            //stepSolver = odeStep;
-            //this.odeSolver = odeSolver;
-            //
-            //this.populationNumber = populationNumber;
-            //
-            //best = new Agent(Dim);
+            Settings set = Settings.Get();
+
+            bottomBorderSectionLength = set.bottomBorderSection;
+            topBorderSectionLength = set.topBorderSection;
+            bottomBorderFuncCoeff = set.bottomBorderFunc;
+            topBorderFuncCoeff = set.topBorderFunc;
+            lambda1 = set.lambda1;
+            lambda2 = set.lambda2;
+            lambda3 = set.lambda3;
+            lambda4 = set.lambda4;
+            p = set.splineCoeff;
+            P = set.sectionsCount;
+            maxIterationCount = (int)list[0];
+            Dim = 2 * P + 1;
+
+            targetOrbit = set.orbit;
+            brightness = set.brightness;
+            stepSolver = set.odeSolverStep;
+            odeSolver = set.odeSolver;
+
+            populationNumber = (int)list[1];
+            b                = (double)list[2];
 
 #if DEBUG
             Report("Начало работы алгоритма");
             Console.WriteLine("-------------------------------------");
 #endif
+            best = new Agent(Dim);
 
             FormingPopulation();
 
