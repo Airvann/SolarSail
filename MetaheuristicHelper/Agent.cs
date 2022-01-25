@@ -35,7 +35,8 @@ namespace MetaheuristicHelper
                 res += Coords[i];
             tf = res;
         }
-        public double tf = 0;
+
+        public double tf   = 0;
         public double r_tf = 0;
         public double u_tf = 0;
         public double v_tf = 0;

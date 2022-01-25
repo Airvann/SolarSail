@@ -12,7 +12,8 @@ namespace SolarSystemOrbitChooser
     /// </summary>
     public partial class MainWindow : Window
     {
-        Orbit targetOrbit;
+        public Orbit targetOrbit = MetaheuristicHelper.Orbits.Mercury.Get();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -69,7 +70,7 @@ namespace SolarSystemOrbitChooser
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            Result.getInstance().orbit = targetOrbit;
+            Settings.Get().orbit = targetOrbit;
             Close();
         }
     }

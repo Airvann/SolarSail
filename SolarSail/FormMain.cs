@@ -14,86 +14,72 @@ namespace SolarSail
 {
     public partial class FormMain : Form
     {
+        public Orbit orbit = MetaheuristicHelper.Orbits.Mercury.Get();
+
         public FormMain()
         {
             InitializeComponent();
             InitilizeTableValues();
             comboBoxSelectAlg.SelectedIndex = 0;
             comboBoxODESolverChooser.SelectedIndex = 0;
-            Result.getInstance().orbit = MetaheuristicHelper.Orbits.Mercury.Get();
         }
-
+        
         private void InitilizeTableValues()
         {
             dataGridViewMainParams.RowCount = 9;
-            dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка", 0);
-            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка", 18000);
-            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна", 3);
-            dataGridViewMainParams.Rows[3].SetValues("λ1", 10000000000000000);
-            dataGridViewMainParams.Rows[4].SetValues("λ2", 25);
-            dataGridViewMainParams.Rows[5].SetValues("λ3", 4000000000000);
-            dataGridViewMainParams.Rows[6].SetValues("λ4", 5500000000000);
+            dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка",           0);
+            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка",          1);
+            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна",               3);
+            dataGridViewMainParams.Rows[3].SetValues("λ₁",                             1);
+            dataGridViewMainParams.Rows[4].SetValues("λ₂",                             1);
+            dataGridViewMainParams.Rows[5].SetValues("λ₃",                             1);
+            dataGridViewMainParams.Rows[6].SetValues("λ₄",                             1);
             dataGridViewMainParams.Rows[7].SetValues("Нижняя грань коэффициентов", -1.56);
-            dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 0);
+            dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 1.56);
         }
         private async void buttonResult_Click(object sender, EventArgs e)
         {
             IMetaAlgorithm alg;
-            Result res = Result.getInstance();
+            Result res = Result.Get();
+            Settings set = Settings.Get();
+
             res.Clear();
-            richTextBox1.Clear();
-            int partsCount;
+            set.Clear();
+            richTextBoxInfo.Clear();
+
             object[] param;
-            long lambda4;
-            long lambda3;
-            long lambda2;
-            long lambda1;
-            int p;
-
-            int topBorderSection;
-            int bottomBorderSection;
-
-            double topBorderFunc;
-            double bottomBorderFunc;
-
-            double ODESolvingStep;
-            double brightness;
-            OdeSolver.OdeSolver odeSolver;
-            Orbit orbit;
-
-            int populationCount;
             try
             {
-                int maxIterationCount        = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
-                populationCount              = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
+                int maxIterationCount            = Convert.ToInt32(dataGridViewParam.Rows[0].Cells[1].Value);
+                int populationCount              = Convert.ToInt32(dataGridViewParam.Rows[1].Cells[1].Value);
 
-                bottomBorderSection          = Convert.ToInt32(dataGridViewMainParams.Rows[0].Cells[1].Value);
-                topBorderSection             = Convert.ToInt32(dataGridViewMainParams.Rows[1].Cells[1].Value);
-                p                            = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
+                set.bottomBorderSection          = Convert.ToDouble(dataGridViewMainParams.Rows[0].Cells[1].Value);
+                set.topBorderSection             = Convert.ToDouble(dataGridViewMainParams.Rows[1].Cells[1].Value);
+                set.splineCoeff                  = Convert.ToInt32(dataGridViewMainParams.Rows[2].Cells[1].Value);
 
-                lambda1                      = Convert.ToInt64(dataGridViewMainParams.Rows[3].Cells[1].Value);
-                lambda2                      = Convert.ToInt64(dataGridViewMainParams.Rows[4].Cells[1].Value);
-                lambda3                      = Convert.ToInt64(dataGridViewMainParams.Rows[5].Cells[1].Value);
-                lambda4                      = Convert.ToInt64(dataGridViewMainParams.Rows[6].Cells[1].Value);
+                set.lambda1                      = Convert.ToInt64(dataGridViewMainParams.Rows[3].Cells[1].Value);
+                set.lambda2                      = Convert.ToInt64(dataGridViewMainParams.Rows[4].Cells[1].Value);
+                set.lambda3                      = Convert.ToInt64(dataGridViewMainParams.Rows[5].Cells[1].Value);
+                set.lambda4                      = Convert.ToInt64(dataGridViewMainParams.Rows[6].Cells[1].Value);
 
-                bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
-                topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[8].Cells[1].Value);
-                partsCount                   = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
+                set.bottomBorderFunc             = Convert.ToDouble(dataGridViewMainParams.Rows[7].Cells[1].Value);
+                set.topBorderFunc                = Convert.ToDouble(dataGridViewMainParams.Rows[8].Cells[1].Value);
+                set.sectionsCount                = Convert.ToInt32(dataGridViewParam.Rows[2].Cells[1].Value);
 
-                ODESolvingStep               = Convert.ToDouble(textBoxODESolvingStep.Text);
-                brightness                   = Convert.ToDouble(textBoxBrightnessSolarSail.Text);
-                orbit                        = res.orbit;
+                set.orbit                        = orbit;
+                set.odeSolverStep                = Convert.ToDouble(textBoxODESolvingStep.Text);
+                set.brightness                   = Convert.ToDouble(textBoxBrightnessSolarSail.Text);
 
                 switch (comboBoxODESolverChooser.SelectedIndex)
                 {
                     case 0:
-                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
+                        set.odeSolver = new OdeSolver.EulerMethod(set.splineCoeff, set.sectionsCount, set.brightness, set.odeSolverStep);
                         break;
                     case 1:
-                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
+                        set.odeSolver = new OdeSolver.RungeKutta4Method(set.splineCoeff, set.sectionsCount, set.brightness, set.odeSolverStep);
                         break;
                     default:
-                        odeSolver = new OdeSolver.EulerMethod(p, partsCount, brightness, ODESolvingStep, orbit);
+                        set.odeSolver = new OdeSolver.EulerMethod(set.splineCoeff, set.sectionsCount, set.brightness, set.odeSolverStep);
                         break;
                 }
 
@@ -101,7 +87,7 @@ namespace SolarSail
                 {
                     case 0:
                         alg = new GWO();
-                        object[] paramGWO = { maxIterationCount };
+                        object[] paramGWO = { maxIterationCount, populationCount };
                         param = paramGWO;
                         break;
                     case 1:
@@ -112,7 +98,7 @@ namespace SolarSail
                         break;
                     default:
                         alg = new GWO();
-                        object[] paramDefault = { maxIterationCount };
+                        object[] paramDefault = { maxIterationCount, populationCount };
                         param = paramDefault;
                         break;
                 }
@@ -123,25 +109,27 @@ namespace SolarSail
                 return;
             }
 
-            buttonResult.Enabled = false;
-            buttonVisual.Enabled = false;
-            buttonSaveResult.Enabled = false;
-            await Task.Run(() => alg.CalculateResult(orbit, brightness, ODESolvingStep, odeSolver, populationCount, bottomBorderSection, topBorderSection, bottomBorderFunc, topBorderFunc, lambda1, lambda2, lambda3, lambda4, p, partsCount, param));
+            buttonResult.Enabled        = false;
+            buttonVisual.Enabled        = false;
+            buttonSaveResult.Enabled    = false;
+            await Task.Run(() => alg.CalculateResult(param));
             FillResultTable();
-            richTextBox1.Text += res.PrintResult();
-            LoadInFile(alg);
-            buttonResult.Enabled = true;
-            buttonVisual.Enabled = true;
-            buttonSaveResult.Enabled = true;
+
+            richTextBoxInfo.Text += res.PrintResult();
+
+            LoadInFile();
+            buttonResult.Enabled        = true;
+            buttonVisual.Enabled        = true;
+            buttonSaveResult.Enabled    = true;
         }
 
-
-        private void LoadInFile(IMetaAlgorithm alg)
+        private void LoadInFile()
         {
             FileStream fs = new FileStream("log.txt", FileMode.Append, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
-            sw.Write(alg.PrintParams());
-            sw.Write(Result.getInstance().PrintResult());
+
+            sw.Write(Settings.Get().PrintSettings());
+            sw.Write(Result.Get().PrintResult());
             sw.Close();
             fs.Close();
         }
@@ -168,7 +156,7 @@ namespace SolarSail
 
         private void FillResultTable()
         {
-            Result res = Result.getInstance();
+            Result res = Result.Get();
             List<double> r      = res.GetR();
             List<double> theta  = res.GetTheta();
             List<double> u      = res.GetU();
@@ -179,12 +167,12 @@ namespace SolarSail
 
             for (int i = 0; i < res.GetR().Count - 1; i++)
             {
-                chartAlfat.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), alpha[i]);
+                chartAlfat.Series[0].Points.AddXY(t[i], alpha[i]);
 
-                chartRt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), r[i]);
-                chartTt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), theta[i]);
-                chartUt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), u[i]);
-                chartVt.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), v[i]);
+                chartRt.Series[0].Points.AddXY(t[i], r[i]);
+                chartTt.Series[0].Points.AddXY(t[i], theta[i]);
+                chartUt.Series[0].Points.AddXY(t[i], u[i]);
+                chartVt.Series[0].Points.AddXY(t[i], v[i]);
             }
         }
 
@@ -229,10 +217,10 @@ namespace SolarSail
 
         private void buttonSaveResult_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) 
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = saveFileDialog1.FileName;
-                FileHandler.Write(file);
+                FileHandler.Write(file + ".txt");
             }
         }
 
@@ -241,12 +229,13 @@ namespace SolarSail
             MainWindow selectionWindow = new MainWindow();
             ElementHost.EnableModelessKeyboardInterop(selectionWindow);
             selectionWindow.ShowDialog();
+            orbit = selectionWindow.targetOrbit;
             UpdateTargetOrbit();
         }
 
         private void UpdateTargetOrbit()
         {
-            textBoxTarget.Text = Result.getInstance().orbit.GetName();
+            labelOrbit.Text = orbit.GetName();
         }
     }
 }

@@ -9,32 +9,29 @@ namespace Visualization
     {
         public static void Write(string path = @"file.txt")
         {
-            Result res = Result.getInstance();
+            Result res = Result.Get();
+            Settings set = Settings.Get();
+
             FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
 
             List<double> c = res.GetControl();
             List<double> h = res.GetH();
 
-            sw.WriteLine("<date>");
-            sw.WriteLine(DateTime.Now.ToString());
-
             sw.WriteLine("<targetOrbit>");
-            sw.WriteLine(res.orbit.GetName());
+            sw.WriteLine(set.orbit.GetName());
 
             sw.WriteLine("<brightness>");
-            sw.WriteLine(res.brightnessSolarSail);
+            sw.WriteLine(set.brightness);
 
             sw.WriteLine("<ODESolver>");
-            sw.WriteLine(res.OdeSolver.GetName());
+            sw.WriteLine(set.odeSolver.GetName());
 
             sw.WriteLine("<step>");
-            sw.WriteLine(res.brightnessSolarSail);
-            sw.WriteLine("<sectionsCount>");
-            sw.WriteLine(res.sectionsCount);;
+            sw.WriteLine(set.odeSolverStep);
 
             sw.WriteLine("<splineCoeff>");
-            sw.WriteLine(res.splineCoeff);
+            sw.WriteLine(set.splineCoeff);
 
             sw.WriteLine("<c>");
             for (int i = 0; i < c.Count; ++i)
@@ -49,64 +46,59 @@ namespace Visualization
             sw.Close();
             fs.Close();
         }
-        public static AgentFrame Read(string path = @"file.txt") 
+
+        public static void Read(string path = @"file.txt")
         {
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);
 
-            Orbit orbit = MetaheuristicHelper.Orbits.Mercury.Get();
-            OdeSolver.OdeSolver odeSolver = new OdeSolver.EulerMethod(2,5,0.06,500, MetaheuristicHelper.Orbits.Mercury.Get());
-            double brightness = 0.042;
-            double step = -1;   //TODO: !!!!!!!!
+            Settings set = Settings.Get();
+            Result res = Result.Get();
+
+            res.Clear();
+            set.Clear();
+
+            string odeName = "Метод Эйлера";
 
             List<double> c = new List<double>();
             List<double> h = new List<double>();
-            int sectionsCount = -1;
-            int splineCoeff = -1;
 
             while (!sr.EndOfStream)
             {
                 string nextLine = sr.ReadLine();
 
-                if (nextLine == "<sectionsCount>")
-                {
-                    nextLine = sr.ReadLine();
-                    sectionsCount = Convert.ToInt32(nextLine);
-                    continue;
-                }
-
                 if (nextLine == "<splineCoeff>")
                 {
                     nextLine = sr.ReadLine();
-                    splineCoeff = Convert.ToInt32(nextLine);
+                    set.splineCoeff = Convert.ToInt32(nextLine);
                     continue;
                 }
 
                 if (nextLine == "<targetOrbit>")
                 {
                     nextLine = sr.ReadLine();
-                    orbit = Orbit.ReturnOrbit(nextLine);
+                    set.orbit = Orbit.ReturnOrbit(nextLine);
                     continue;
                 }
 
                 if (nextLine == "<ODESolver>")
                 {
                     nextLine = sr.ReadLine();
-                    odeSolver = OdeSolver.OdeSolver.ReturnOdeSolver(nextLine, splineCoeff, sectionsCount, brightness, step, orbit);
+                    odeName = nextLine;
                     continue;
                 }
 
                 if (nextLine == "<brightness>") 
                 {
                     nextLine = sr.ReadLine();
-                    brightness = Convert.ToDouble(nextLine);
+                    set.brightness = Convert.ToDouble(nextLine);
                     continue;
                 }
 
                 if (nextLine == "<step>")
                 {
                     nextLine = sr.ReadLine();
-                    step = Convert.ToDouble(nextLine);
+                    set.odeSolverStep = Convert.ToDouble(nextLine);
                     continue;
                 }
 
@@ -118,6 +110,8 @@ namespace Visualization
                         h.Add(Convert.ToDouble(nextLine));
                         nextLine = sr.ReadLine();
                     } while (nextLine != "</h>");
+                    res.Add("h", h);
+                    set.sectionsCount = h.Count;
                 }
                 if (nextLine == "<c>")
                 {
@@ -127,13 +121,15 @@ namespace Visualization
                         c.Add(Convert.ToDouble(nextLine));
                         nextLine = sr.ReadLine();
                     } while (nextLine != "</c>");
+                    res.Add("c", c);
                 }
             }
+
+            set.odeSolver = OdeSolver.OdeSolver.ReturnOdeSolver(odeName, set.splineCoeff, set.sectionsCount, set.brightness, set.odeSolverStep);
             fs.Close();
             sr.Close();
-            if (c.Count == 0 || h.Count == 0 || sectionsCount == -1 || splineCoeff == -1)
+            if (res.GetControl().Count == 0 || res.GetH().Count == 0 || set.splineCoeff == 0)
                 throw new FileLoadException();
-            return new AgentFrame(orbit, odeSolver, step, brightness, sectionsCount, splineCoeff, c, h);
         }
     }
 }

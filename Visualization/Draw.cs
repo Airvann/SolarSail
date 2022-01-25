@@ -18,7 +18,7 @@ namespace Visualization
 
         public static void DrawOrbit(Orbit orbit, float centerX, float centerY, System.Windows.Forms.PaintEventArgs e) 
         {
-            float orbit_r = (float)orbit.GetR();
+            float orbit_r = (float)orbit.GetR() * 500;
             e.Graphics.DrawEllipse(p2, centerX - orbit_r / 2, centerY - orbit_r / 2, orbit_r, orbit_r);
         }
 
@@ -36,13 +36,13 @@ namespace Visualization
             double x2 = 0;
             double y2 = 0;
 
-            for (int i = 5; i < T.Count; i += 5)
+            for (int i = 5; i < T.Count - 1; i += 5)
             {
-                x1 = (r[i] / Math.Pow(10, 11)) * 450 * Math.Cos(theta[i]);
-                y1 = (r[i] / Math.Pow(10, 11)) * 450 * Math.Sin(theta[i]);
+                x1 = r[i] * 500 * Math.Cos(theta[i]);
+                y1 = r[i] * 500 * Math.Sin(theta[i]);
 
-                x2 = (r[i - 5] / Math.Pow(10, 11)) * 450 * Math.Cos(theta[i - 5]);
-                y2 = (r[i - 5] / Math.Pow(10, 11)) * 450 * Math.Sin(theta[i - 5]);
+                x2 = r[i - 5] * 500 * Math.Cos(theta[i - 5]);
+                y2 = r[i - 5] * 500 * Math.Sin(theta[i - 5]);
 
                 e.Graphics.DrawLine(Pens.Gray, centerX - (float)x1 / 2, centerY - (float)y1 / 2, centerX - (float)x2 / 2, centerY - (float)y2 / 2);
                 if (i == 5) e.Graphics.FillEllipse(b2, centerX - (float)x1 / 2 - 12.5f, centerY - (float)y1 / 2 - 12.5f, 25, 25);

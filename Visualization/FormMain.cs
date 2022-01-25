@@ -26,17 +26,18 @@ namespace Visualization
 
         public void DataVisualization()
         {
-            Result res = Result.getInstance();
+            Result res = Result.Get();
+            Settings set = Settings.Get();
             chartAlphat.Series[0].Points.Clear();
             try
             {
-                t = res.GetT();
-                r = res.GetR();
+                t     = res.GetT();
+                r     = res.GetR();
                 theta = res.GetTheta();
                 alpha = res.GetAlpha();
 
                 for (int i = 0; i < res.GetR().Count - 1; i++)
-                    chartAlphat.Series[0].Points.AddXY(Result.ConvertFromSecToDays(t[i]), alpha[i]);
+                    chartAlphat.Series[0].Points.AddXY(t[i], alpha[i]);
 
                 panel1.Refresh();
             }
@@ -48,21 +49,36 @@ namespace Visualization
 
         private void LoadData(string path)
         {
-            AgentFrame agentFrame;
+            Result res = Result.Get();
+            Settings set = Settings.Get();
             try
             {
-                agentFrame = FileHandler.Read(path);
+                FileHandler.Read(path);
             }
             catch (FileLoadException)
             {
                 MessageBox.Show("Не удалось загрузить данные из файла", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            agentFrame.odeSolver.Solve(agentFrame.agent, Mode.SaveResults);
+            orbit = set.orbit;
+            int dim = res.GetH().Count + res.GetControl().Count;
+
+            Agent agent = new Agent(dim);
+
+            for (int i = 0; i < agent.P; i++)
+                agent.Coords[i] = res.GetH()[i];
+            
+            for (int i = agent.P; i < dim; i++)
+                agent.Coords[i] = res.GetControl()[i-agent.P];
+
+            res.Clear();
+            set.odeSolver.Solve(agent, Mode.SaveResults);
         }
 
         private void panelMain_Paint(object sender, PaintEventArgs e)
         {
+            Settings set = Settings.Get();
+
             if (t != null)
             {
                 float width = panel1.Size.Width;
@@ -73,7 +89,7 @@ namespace Visualization
 
                 Draw.DrawSun(centerX, centerY, e);
 
-                Draw.DrawOrbit(orbit, centerX, centerY, e);
+                Draw.DrawOrbit(set.orbit, centerX, centerY, e);
                 Draw.DrawOrbit(MetaheuristicHelper.Orbits.Earth.Get(), centerX, centerY, e);
 #if DEBUG
                 e.Graphics.DrawLine(Pens.Red, 0, centerY, Width, centerY);
@@ -88,8 +104,6 @@ namespace Visualization
             DialogResult result = openFileDialogMain.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Result res = Result.getInstance();
-                res.Clear();
                 LoadData(openFileDialogMain.FileName);
                 DataVisualization();
             }

@@ -55,7 +55,7 @@ namespace Visualization
             this.panel1.Location = new System.Drawing.Point(0, 26);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(924, 704);
+            this.panel1.Size = new System.Drawing.Size(924, 761);
             this.panel1.TabIndex = 1;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
@@ -73,7 +73,7 @@ namespace Visualization
             chartArea1.AxisY.TitleFont = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea1.Name = "ChartArea1";
             this.chartAlphat.ChartAreas.Add(chartArea1);
-            this.chartAlphat.Location = new System.Drawing.Point(0, 734);
+            this.chartAlphat.Location = new System.Drawing.Point(0, 791);
             this.chartAlphat.Margin = new System.Windows.Forms.Padding(2);
             this.chartAlphat.Name = "chartAlphat";
             series1.BorderWidth = 3;
@@ -120,7 +120,7 @@ namespace Visualization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 941);
+            this.ClientSize = new System.Drawing.Size(924, 998);
             this.Controls.Add(this.chartAlphat);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);

@@ -20,7 +20,7 @@ namespace SolarSail.SourceCode
             Dictionary<string, object> par = new Dictionary<string, object>();
             par.Add("Максимальное число итераций",           100);
             par.Add("Размер популяции",                      100);
-            par.Add("Число разбиений",                       10);
+            par.Add("Число разбиений",                       3);
             par.Add("Параметр логарифмической спирали b",    2);
             return par;
         }
@@ -31,31 +31,30 @@ namespace SolarSail.SourceCode
         /// <param name="populationNumber">Размер популяции</param>
         /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
         /// <returns></returns>
-        public override void CalculateResult(Orbit orbit, double brightness, double odeStep, OdeSolver.OdeSolver odeSolver, int populationNumber,
-            double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list)
+        public override void CalculateResult(params object[] list)
         {
-            bottomBorderSectionLength = bottomBSL * 1000;
-            topBorderSectionLength = topBSL * 1000;
-            bottomBorderFuncCoeff = bottomBFC;
-            topBorderFuncCoeff = topBFC;
-            this.lambda1 = lambda1;
-            this.lambda2 = lambda2;
-            this.lambda3 = lambda3;
-            this.lambda4 = lambda4;
-            this.p = p;
-            this.P = P;
-            maxIterationCount = (int)list[0];
-            b = (int)list[1];
-            Dim = 2 * P + 1;
-
-            targetOrbit = orbit;
-            this.brightness = brightness;
-            stepSolver = odeStep;
-            this.odeSolver = odeSolver;
-
-            this.populationNumber = populationNumber;
-
-            best = new Agent(Dim);
+            //topBorderSectionLength = topBSL;
+            //bottomBorderSectionLength = ;
+            //bottomBorderFuncCoeff = bottomBFC;
+            //topBorderFuncCoeff = topBFC;
+            //this.lambda1 = lambda1;
+            //this.lambda2 = lambda2;
+            //this.lambda3 = lambda3;
+            //this.lambda4 = lambda4;
+            //this.p = p;
+            //this.P = P;
+            //maxIterationCount = (int)list[0];
+            //b = (int)list[1];
+            //Dim = 2 * P + 1;
+            //
+            //targetOrbit = orbit;
+            //this.brightness = brightness;
+            //stepSolver = odeStep;
+            //this.odeSolver = odeSolver;
+            //
+            //this.populationNumber = populationNumber;
+            //
+            //best = new Agent(Dim);
 
 #if DEBUG
             Report("Начало работы алгоритма");

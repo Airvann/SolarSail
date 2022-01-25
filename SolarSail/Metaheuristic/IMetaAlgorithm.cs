@@ -13,10 +13,10 @@ namespace SolarSail
         protected int currentIteration;
         protected int p;
 
-        protected double lambda1 = Math.Pow(10, 5);
-        protected double lambda2 = Math.Pow(10, 5);
-        protected double lambda3 = Math.Pow(10, 5);
-        protected double lambda4 = Math.Pow(10, 5);
+        protected double lambda1 = 1;
+        protected double lambda2 = 1;
+        protected double lambda4 = 1;
+        protected double lambda3 = 1;
 
         protected double brightness;
         protected Orbit targetOrbit;
@@ -29,19 +29,18 @@ namespace SolarSail
             double u_tf_Error = agent.u_tf - targetOrbit.GetU();
             double v_tf_Error = agent.v_tf - targetOrbit.GetV();
 
-            agent.Fitness = lambda1 * ((agent.tf) / 86400f) + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
+            agent.Fitness = lambda1 * agent.tf + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
         }
 
-        protected double bottomBorderSectionLength = 0;
-        protected double topBorderSectionLength = 0;
+        protected double bottomBorderSectionLength  = 0;
+        protected double topBorderSectionLength     = 0;
 
-        protected double bottomBorderFuncCoeff = 0;
-        protected double topBorderFuncCoeff = 0;
+        protected double bottomBorderFuncCoeff      = 0;
+        protected double topBorderFuncCoeff         = 0;
 
-        protected int populationNumber = 0;
+        protected int populationNumber              = 0;
 
-        public abstract void CalculateResult(Orbit orbit, double brightness, double odeStep, OdeSolver.OdeSolver odeSolver, int populationNumber,
-            double bottomBSL, double topBSL, double bottomBFC, double topBFC, long lambda1, long lambda2, long lambda3, long lambda4, int p, int P, params object[] list);
+        public abstract void CalculateResult(params object[] list);
 
         public void CheckBorders(Agent agent) 
         {

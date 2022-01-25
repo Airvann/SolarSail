@@ -5,8 +5,8 @@ namespace MetaheuristicHelper
     public abstract class Orbit
     {
         public abstract double GetR();
-        public double GetU() { return 1 / Math.Sqrt(GetR()); }
-        public double GetV() { return 0; }
+        public double GetU() { return 0; }
+        public double GetV() { return 1 / Math.Sqrt(GetR()); }
         public abstract string GetName();
 
         public static Orbit ReturnOrbit(string name)

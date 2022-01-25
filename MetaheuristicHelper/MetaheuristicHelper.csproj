@@ -42,16 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
-    <Compile Include="AgentFrame.cs" />
     <Compile Include="OdeSolvers\EulerMethod.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="OdeSolvers\OdeSolver.cs" />
+    <Compile Include="OdeSolvers\RungeKutta4Method.cs" />
     <Compile Include="Orbits\Earth.cs" />
     <Compile Include="Orbits\Venus.cs" />
     <Compile Include="Orbits\Mars.cs" />
     <Compile Include="Orbits\Mercury.cs" />
     <Compile Include="Orbits\Orbit.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
