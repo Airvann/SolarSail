@@ -47,7 +47,7 @@ namespace MetaheuristicHelper
 
         public string PrintResult()
         {
-            string text = "Результаты: \n";
+            string text = "Результаты: \n\n";
 
             text += "Время окончания движения: "           + tf.ToString("0.00")                                            + '\n';
             text += "Точность попадания по r:  "            + Math.Abs(rf - Settings.Get().orbit.GetR()).ToString("0.000")    + '\n';
