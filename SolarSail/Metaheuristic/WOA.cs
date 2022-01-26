@@ -29,7 +29,7 @@ namespace SolarSail.SourceCode
         /// Выполнение алгоритма
         /// </summary>
         /// <param name="populationNumber">Размер популяции</param>
-        /// <param name="list">PARAMS: MaxIteration, A_Param, K, P</param>
+        /// <param name="list"></param>
         /// <returns></returns>
         public override void CalculateResult(params object[] list)
         {
@@ -53,8 +53,8 @@ namespace SolarSail.SourceCode
             stepSolver = set.odeSolverStep;
             odeSolver = set.odeSolver;
 
-            populationNumber = (int)list[1];
-            b                = (double)list[2];
+            populationNumber = (int)list[0];
+            b                = (double)list[1];
 
 #if DEBUG
             Report("Начало работы алгоритма");

@@ -30,11 +30,13 @@ namespace Visualization
 
         public static void DrawPath(IReadOnlyList<double> r, IReadOnlyList<double> theta, IReadOnlyList<double> T, System.Windows.Forms.PaintEventArgs e, float centerX, float centerY)
         {
-            double x1 = 0;
-            double y1 = 0;
+            double x1 = MetaheuristicHelper.Orbits.Earth.Get().GetR() * 500 * Math.Cos(0);
+            double y1 = MetaheuristicHelper.Orbits.Earth.Get().GetR() * 500 * Math.Sin(0);
 
             double x2 = 0;
             double y2 = 0;
+
+            e.Graphics.FillEllipse(b2, centerX - (float)x1 / 2 - 12.5f, centerY - (float)y1 / 2 - 12.5f, 25, 25);
 
             for (int i = 5; i < T.Count - 1; i += 5)
             {
@@ -45,7 +47,6 @@ namespace Visualization
                 y2 = r[i - 5] * 500 * Math.Sin(theta[i - 5]);
 
                 e.Graphics.DrawLine(Pens.Gray, centerX - (float)x1 / 2, centerY - (float)y1 / 2, centerX - (float)x2 / 2, centerY - (float)y2 / 2);
-                if (i == 5) e.Graphics.FillEllipse(b2, centerX - (float)x1 / 2 - 12.5f, centerY - (float)y1 / 2 - 12.5f, 25, 25);
             }
             e.Graphics.FillEllipse(b3, centerX - (float)x1 / 2 - 12.5f, centerY - (float)y1 / 2 - 12.5f, 25, 25);
         }

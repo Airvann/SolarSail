@@ -92,7 +92,7 @@ namespace SolarSail
                         break;
                     case 1:
                         alg = new WOA();
-                        int b = Convert.ToInt32(dataGridViewParam.Rows[3].Cells[1].Value);
+                        double b = Convert.ToDouble(dataGridViewParam.Rows[3].Cells[1].Value);
                         object[] paramWOA = { maxIterationCount, b };
                         param = paramWOA;
                         break;
@@ -112,6 +112,7 @@ namespace SolarSail
             buttonResult.Enabled        = false;
             buttonVisual.Enabled        = false;
             buttonSaveResult.Enabled    = false;
+            buttonChooseTarget.Enabled  = false;
             await Task.Run(() => alg.CalculateResult(param));
             FillResultTable();
 
@@ -121,6 +122,7 @@ namespace SolarSail
             buttonResult.Enabled        = true;
             buttonVisual.Enabled        = true;
             buttonSaveResult.Enabled    = true;
+            buttonChooseTarget.Enabled  = true;
         }
 
         private void LoadInFile()
