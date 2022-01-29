@@ -13,7 +13,6 @@ namespace SolarSail.SourceCode
         private Agent alfa;
         private Agent beta;
         private Agent delta;
-        private List<Agent> individuals = new List<Agent>();
 
         public GWO() {}
 
@@ -78,30 +77,7 @@ namespace SolarSail.SourceCode
             odeSolver.Solve(alfa, Mode.SaveResults);
         }
 
-        private void FormingPopulation()
-        {
-            double nextRandomSectionLength;
-            double nextRandomFuncCoeff;
-
-            for (int i = 0; i < populationNumber; i++)
-            {
-                Agent agent = new Agent(Dim);
-                for (int j = 0; j < P; j++)
-                {
-                    nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
-                    agent.Coords[j] = nextRandomSectionLength;
-                }
-                for (int j = P; j < Dim; j++)
-                {
-                    nextRandomFuncCoeff = bottomBorderFuncCoeff + (topBorderFuncCoeff - bottomBorderFuncCoeff) * rand.NextDouble();
-                    agent.Coords[j] = nextRandomFuncCoeff;
-                }
-
-                odeSolver.Solve(agent);
-                I(agent);
-                individuals.Add(agent);
-            }
-        }
+        
 
         private void Selection()
         {

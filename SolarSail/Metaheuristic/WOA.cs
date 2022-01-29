@@ -12,7 +12,7 @@ namespace SolarSail.SourceCode
 
         private double b;
         private Agent best;
-        private List<Agent> individuals = new List<Agent>();
+
 
         public WOA() {}
         public static Dictionary<string, object> AlgParams()
@@ -75,32 +75,6 @@ namespace SolarSail.SourceCode
             }
             Selection();
             odeSolver.Solve(best, Mode.SaveResults);
-        }
-
-        private void FormingPopulation()
-        {
-            double nextRandomSectionLength;
-            double nextRandomFuncCoeff;
-
-            for (int i = 0; i < populationNumber; i++)
-            {
-                Agent agent = new Agent(Dim);
-                for (int j = 0; j < P; j++)
-                {
-                    nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
-                    agent.Coords[j] = nextRandomSectionLength;
-                }
-                for (int j = P; j < Dim; j++)
-                {
-                    nextRandomFuncCoeff = bottomBorderFuncCoeff + (topBorderFuncCoeff - bottomBorderFuncCoeff) * rand.NextDouble();
-                    agent.Coords[j] = nextRandomFuncCoeff;
-                }
-
-                odeSolver.Solve(agent);
-
-                I(agent);
-                individuals.Add(agent);
-            }
         }
 
         private void Selection() 

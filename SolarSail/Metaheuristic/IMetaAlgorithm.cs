@@ -1,11 +1,14 @@
 ﻿using System;
 using MetaheuristicHelper;
+using System.Collections.Generic;
 using OdeSolver;
 namespace SolarSail
 {
     abstract public class IMetaAlgorithm
     {
         protected Random rand = new Random();
+
+        protected List<Agent> individuals = new List<Agent>();
 
         public int Dim = 0;
         public int P = 0;
@@ -30,7 +33,6 @@ namespace SolarSail
             double v_tf_Error = agent.v_tf - targetOrbit.GetV();
 
             double fitness = lambda1 * agent.tf + lambda2 * Math.Pow(r_tf_Error, 2) + lambda3 * Math.Pow(u_tf_Error, 2) + lambda4 * Math.Pow(v_tf_Error, 2);
-            //agent.Fitness = (double.IsNaN(fitness) || double.IsPositiveInfinity(fitness) || double.IsNegativeInfinity(fitness)) ? double.MaxValue : fitness;
 
             if ((double.IsNaN(fitness) || double.IsPositiveInfinity(fitness) || double.IsNegativeInfinity(fitness))) 
                 agent.Fitness = double.MaxValue;
@@ -47,6 +49,31 @@ namespace SolarSail
         protected int populationNumber              = 0;
 
         public abstract void CalculateResult(params object[] list);
+
+        protected void FormingPopulation()
+        {
+            double nextRandomSectionLength;
+            double nextRandomFuncCoeff;
+
+            for (int i = 0; i < populationNumber; i++)
+            {
+                Agent agent = new Agent(Dim);
+                for (int j = 0; j < P; j++)
+                {
+                    nextRandomSectionLength = bottomBorderSectionLength + (topBorderSectionLength - bottomBorderSectionLength) * rand.NextDouble();
+                    agent.Coords[j] = nextRandomSectionLength;
+                }
+                for (int j = P; j < Dim; j++)
+                {
+                    nextRandomFuncCoeff = bottomBorderFuncCoeff + (topBorderFuncCoeff - bottomBorderFuncCoeff) * rand.NextDouble();
+                    agent.Coords[j] = nextRandomFuncCoeff;
+                }
+
+                odeSolver.Solve(agent);
+                I(agent);
+                individuals.Add(agent);
+            }
+        }
 
         public void CheckBorders(Agent agent) 
         {
