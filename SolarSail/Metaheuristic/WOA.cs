@@ -53,8 +53,8 @@ namespace SolarSail.SourceCode
             stepSolver = set.odeSolverStep;
             odeSolver = set.odeSolver;
 
-            populationNumber = (int)list[0];
-            b                = (double)list[1];
+            populationNumber = (int)list[1];
+            b                = (double)list[2];
 
 #if DEBUG
             Report("Начало работы алгоритма");

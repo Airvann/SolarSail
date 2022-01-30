@@ -121,7 +121,8 @@ namespace SolarSail
             this.comboBoxSelectAlg.FormattingEnabled = true;
             this.comboBoxSelectAlg.Items.AddRange(new object[] {
             "Метод серых волков",
-            "Метод горбатых китов"});
+            "Метод горбатых китов",
+            "Метод стаи стрекоз"});
             this.comboBoxSelectAlg.Location = new System.Drawing.Point(439, 34);
             this.comboBoxSelectAlg.Name = "comboBoxSelectAlg";
             this.comboBoxSelectAlg.Size = new System.Drawing.Size(449, 28);

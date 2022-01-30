@@ -52,6 +52,14 @@ namespace MetaheuristicHelper
             return vec1 + (vec2 * -1);
         }
 
+        public static Vector operator -(Vector vector)
+        {
+            Vector tmp = new Vector(vector.dim);
+            for (int i = 0; i < vector.dim; i++)
+                tmp[i] = -vector[i];
+            return tmp;
+        }
+
         public static Vector operator +(Vector vec1, Vector vec2)
         {
             Vector tmp = new Vector(vec1.dim);

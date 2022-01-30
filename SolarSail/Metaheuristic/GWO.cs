@@ -75,9 +75,7 @@ namespace SolarSail.SourceCode
             }
             Selection();
             odeSolver.Solve(alfa, Mode.SaveResults);
-        }
-
-        
+        }     
 
         private void Selection()
         {

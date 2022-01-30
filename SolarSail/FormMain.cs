@@ -93,8 +93,13 @@ namespace SolarSail
                     case 1:
                         alg = new WOA();
                         double b = Convert.ToDouble(dataGridViewParam.Rows[3].Cells[1].Value);
-                        object[] paramWOA = { maxIterationCount, b };
+                        object[] paramWOA = { maxIterationCount, populationCount, b };
                         param = paramWOA;
+                        break;
+                    case 2:
+                        alg = new DA();
+                        object[] paramDA = { maxIterationCount, populationCount };
+                        param = paramDA;
                         break;
                     default:
                         alg = new GWO();
@@ -189,6 +194,9 @@ namespace SolarSail
                         break;
                     case 1:
                         FillParamTable(WOA.AlgParams());
+                        break;
+                    case 2:
+                        FillParamTable(DA.AlgParams());
                         break;
                     default:
                         throw new Exception();
