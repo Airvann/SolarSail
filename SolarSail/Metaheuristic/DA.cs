@@ -229,16 +229,16 @@ namespace SolarSail.SourceCode
 
         private void PopulationOrder()
         {
+            best = new Agent(Dim);
+            worst = new Agent(Dim);
+
             individuals = individuals.OrderBy(s => s.Fitness).ToList();
-            
+
             for (int i = 0; i < Dim; i++)
             {
                 best.Coords[i] = individuals[0].Coords[i];
                 worst.Coords[i] = individuals[populationNumber-1].Coords[i];
             }
-
-            best  = new Agent(Dim);
-            worst = new Agent(Dim);
 
             best.Fitness   = individuals[0].Fitness;
             worst.Fitness  = individuals[populationNumber - 1].Fitness;
