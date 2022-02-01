@@ -91,6 +91,10 @@ namespace SolarSail.SourceCode
             best.u_tf = individuals[0].u_tf;
             best.v_tf = individuals[0].v_tf;
             best.tf   = individuals[0].tf;
+
+#if DEBUG
+            Console.WriteLine(best.Fitness.ToString() + '\n');
+#endif
         }
 
         private bool IsLowerThan1(Vector vec) 

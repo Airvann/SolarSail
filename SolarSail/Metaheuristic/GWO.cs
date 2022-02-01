@@ -107,6 +107,10 @@ namespace SolarSail.SourceCode
             delta.u_tf = individuals[2].u_tf;
             delta.v_tf = individuals[2].v_tf;
             delta.tf   = individuals[2].tf;
+
+#if DEBUG
+            Console.WriteLine(alfa.Fitness.ToString() + '\n');
+#endif
         }
         private void NewPackGeneration()
         {

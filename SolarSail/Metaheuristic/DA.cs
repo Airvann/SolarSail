@@ -25,6 +25,7 @@ namespace SolarSail.SourceCode
         private double e;
         //память о предыстории
         private double w;
+
         private Vector R         = new Vector();
         private Vector lb;
         private Vector ub;
@@ -78,6 +79,7 @@ namespace SolarSail.SourceCode
 #endif
             best = new Agent(Dim);
             worst = new Agent(Dim);
+
             lb = new Vector(Dim);
             ub = new Vector(Dim);
 
@@ -96,7 +98,8 @@ namespace SolarSail.SourceCode
 
             FormingPopulation();
             SetZeros();
-            for (int k = 1; k <= maxIterationCount; k++)
+            currentIteration = 0;
+            for (int k = 0; k <= maxIterationCount; k++)
             {
                 UpdateParams(currentIteration);
                 PopulationOrder();
@@ -112,7 +115,7 @@ namespace SolarSail.SourceCode
 
         private void NewPackGeneration()
         {
-            R = ((ub - lb) / 4) + ((ub - lb) * (currentIteration / maxIterationCount) * 2);
+            R = ((ub - lb) / 4) + ((ub - lb) * ((double)currentIteration / maxIterationCount) * 2);
 
             for (int i = 0; i < populationNumber; i++)
             {
@@ -120,6 +123,8 @@ namespace SolarSail.SourceCode
 
                 for (int j = 0; j < populationNumber; j++)
                 {
+                    if (i == j)
+                        continue;
                     Vector dist = new Vector(Dim);
 
                     for (int k = 0; k < Dim; k++)
@@ -135,7 +140,7 @@ namespace SolarSail.SourceCode
                     if (ok == true)
                         neighbourhood.Add(individuals[j]);
                 }
-                if (neighbourhood.Count > 2)
+                if (neighbourhood.Count > 1)
                 {
                     //Разделение
                     Vector S = new Vector(Dim);
@@ -174,11 +179,10 @@ namespace SolarSail.SourceCode
                 {
                     double beta = 1.5f;
                     double sigma = Math.Pow(SpecialFunctions.Gamma(1 + beta) * Math.Sin(Math.PI * beta / 2f) / (SpecialFunctions.Gamma((1 + beta) / 2f) * beta * Math.Pow(2, (beta - 1) / 2f)), 1 / beta);
-                    int dim = 2;
                     Vector Levy = new Vector(Dim);
 
                     for (int k = 0; k < Dim; k++)
-                        Levy.vector[k] = 0.01 * rand.NextDouble() * dim * sigma / Math.Pow(Math.Abs(rand.NextDouble() * dim), 1 / beta);
+                        Levy.vector[k] = 0.01 * rand.NextDouble() * 2 * sigma / Math.Pow(Math.Abs(rand.NextDouble() * 2), 1 / beta);
 
                     individuals[i].Coords = individuals[i].Coords + Levy * individuals[i].Coords;
                     SetZeros();
@@ -254,6 +258,9 @@ namespace SolarSail.SourceCode
             worst.tf   = individuals[populationNumber - 1].tf;
 
             pool.Add(best);
+#if DEBUG
+           Console.WriteLine(best.Fitness.ToString() + '\n');
+#endif
         }
     }
 }
