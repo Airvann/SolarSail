@@ -16,6 +16,8 @@ namespace Visualization
         private List<double> t;
         private List<double> r;
         private List<double> theta;
+        private List<double> u;
+        private List<double> v;
         private List<double> alpha;
         private Orbit orbit;
 
@@ -29,15 +31,29 @@ namespace Visualization
             Result res = Result.Get();
             Settings set = Settings.Get();
             chartAlphat.Series[0].Points.Clear();
+            chartRt.Series[0].Points.Clear();
+            chartTt.Series[0].Points.Clear();
+            chartUt.Series[0].Points.Clear();
+            chartVt.Series[0].Points.Clear();
+
             try
             {
                 t     = res.GetT();
                 r     = res.GetR();
                 theta = res.GetTheta();
+                u     = res.GetU();
+                v     = res.GetV();
                 alpha = res.GetAlpha();
 
-                for (int i = 0; i < res.GetR().Count - 1; i++)
+                for (int i = 0; i < res.GetR().Count - 1; i++) 
+                {
+                    chartRt.Series[0].Points.AddXY(t[i], r[i]);
+                    chartTt.Series[0].Points.AddXY(t[i], theta[i]);
+                    chartUt.Series[0].Points.AddXY(t[i], u[i]);
+                    chartVt.Series[0].Points.AddXY(t[i], v[i]);
                     chartAlphat.Series[0].Points.AddXY(t[i], alpha[i]);
+                }
+                
 
                 panel1.Refresh();
             }

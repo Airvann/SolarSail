@@ -125,9 +125,9 @@ namespace OdeSolver
 
         protected void ResetToDefault()
         {
-            t.Clear();               //t.Add(0);
+            t.Clear();               t.Add(0);
             r.Clear();
-            thetta.Clear();          //thetta.Add(0);
+            thetta.Clear();          thetta.Add(0);
             u.Clear();
             v.Clear();
             alfa.Clear();
