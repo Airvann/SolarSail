@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using MetaheuristicHelper;
 using OdeSolver;
 using System.IO;
-using System.Drawing;
 
 namespace Visualization
 {
@@ -53,7 +52,6 @@ namespace Visualization
                     chartVt.Series[0].Points.AddXY(t[i], v[i]);
                     chartAlphat.Series[0].Points.AddXY(t[i], alpha[i]);
                 }
-                
 
                 panel1.Refresh();
             }

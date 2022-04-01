@@ -15,6 +15,6 @@
 
         public override string GetName() { return "Марс"; }
 
-        public override double GetR() { return 1.52; }
+        public override double GetR() { return 1.5235; }
     }
 }
