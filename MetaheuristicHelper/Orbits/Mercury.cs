@@ -16,6 +16,6 @@ namespace MetaheuristicHelper.Orbits
 
         public override string GetName() { return "Меркурий"; }
 
-        public override double GetR() { return 0.39; }
+        public override double GetR() { return 0.38710015; }
     }
 }

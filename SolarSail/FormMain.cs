@@ -15,6 +15,7 @@ namespace SolarSail
     public partial class FormMain : Form
     {
         public Orbit orbit = MetaheuristicHelper.Orbits.Mercury.Get();
+        private System.Media.SoundPlayer player = new System.Media.SoundPlayer(Properties.Resources.FFXV_Victory_Fanfare);
 
         public FormMain()
         {
@@ -128,6 +129,8 @@ namespace SolarSail
             buttonVisual.Enabled        = true;
             buttonSaveResult.Enabled    = true;
             buttonChooseTarget.Enabled  = true;
+
+            player.Play();
         }
 
         private void LoadInFile()
