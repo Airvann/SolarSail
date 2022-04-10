@@ -19,7 +19,7 @@ namespace MetaheuristicHelper
         public double              odeSolverStep;
         public OdeSolver.OdeSolver odeSolver;
         public int                 sectionsCount;
-        public int                 splineCoeff;
+        public int                 splineCoeff = -1;    //По умолчанию 0 - кусочно-постоянная функция
         public double              bottomBorderSection;
         public double              topBorderSection;
 

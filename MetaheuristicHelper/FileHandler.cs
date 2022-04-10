@@ -128,7 +128,7 @@ namespace Visualization
             set.odeSolver = OdeSolver.OdeSolver.ReturnOdeSolver(odeName, set.splineCoeff, set.sectionsCount, set.brightness, set.odeSolverStep);
             fs.Close();
             sr.Close();
-            if (res.GetControl().Count == 0 || res.GetH().Count == 0 || set.splineCoeff == 0)
+            if (res.GetControl().Count == 0 || res.GetH().Count == 0 || set.splineCoeff == -1)
                 throw new FileLoadException();
         }
     }

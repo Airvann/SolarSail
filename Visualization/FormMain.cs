@@ -105,10 +105,7 @@ namespace Visualization
 
                 Draw.DrawOrbit(set.orbit, centerX, centerY, e);
                 Draw.DrawOrbit(MetaheuristicHelper.Orbits.Earth.Get(), centerX, centerY, e);
-#if DEBUG
-                e.Graphics.DrawLine(Pens.Red, 0, centerY, Width, centerY);
-                e.Graphics.DrawLine(Pens.Red, centerX, 0, centerX, Height);
-#endif
+
                 Draw.DrawPath(r, theta, t, e, centerX, centerY);
             }
         }
