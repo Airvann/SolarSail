@@ -130,7 +130,7 @@ namespace SolarSail
             buttonSaveResult.Enabled    = true;
             buttonChooseTarget.Enabled  = true;
 
-            player.Play();
+           // player.Play();
         }
 
         private void LoadInFile()
