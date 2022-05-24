@@ -541,7 +541,7 @@ namespace SolarSail
             this.textBoxBrightnessSolarSail.Name = "textBoxBrightnessSolarSail";
             this.textBoxBrightnessSolarSail.Size = new System.Drawing.Size(97, 26);
             this.textBoxBrightnessSolarSail.TabIndex = 30;
-            this.textBoxBrightnessSolarSail.Text = "0,256";
+            this.textBoxBrightnessSolarSail.Text = "0,16";
             // 
             // label1
             // 
@@ -593,7 +593,7 @@ namespace SolarSail
             this.textBoxODESolvingStep.Name = "textBoxODESolvingStep";
             this.textBoxODESolvingStep.Size = new System.Drawing.Size(97, 26);
             this.textBoxODESolvingStep.TabIndex = 35;
-            this.textBoxODESolvingStep.Text = "500";
+            this.textBoxODESolvingStep.Text = "250";
             // 
             // label5
             // 

@@ -29,12 +29,12 @@ namespace SolarSail
         {
             dataGridViewMainParams.RowCount = 9;
             dataGridViewMainParams.Rows[0].SetValues("Нижняя грань отрезка",           0);
-            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка",          1);
-            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна",               3);
+            dataGridViewMainParams.Rows[1].SetValues("Верхняя грань отрезка",          2);
+            dataGridViewMainParams.Rows[2].SetValues("Параметр сплайна",               2);
             dataGridViewMainParams.Rows[3].SetValues("λ₁",                             1);
-            dataGridViewMainParams.Rows[4].SetValues("λ₂",                             1);
-            dataGridViewMainParams.Rows[5].SetValues("λ₃",                             1);
-            dataGridViewMainParams.Rows[6].SetValues("λ₄",                             1);
+            dataGridViewMainParams.Rows[4].SetValues("λ₂",                             10000);
+            dataGridViewMainParams.Rows[5].SetValues("λ₃",                             10000);
+            dataGridViewMainParams.Rows[6].SetValues("λ₄",                             10000);
             dataGridViewMainParams.Rows[7].SetValues("Нижняя грань коэффициентов", -1.56);
             dataGridViewMainParams.Rows[8].SetValues("Верхняя грань коэффициентов", 1.56);
         }

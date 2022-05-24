@@ -40,7 +40,7 @@ namespace SolarSail.SourceCode
             Dictionary<string, object> par = new Dictionary<string, object>();
             par.Add("Максимальное число итераций", 100);
             par.Add("Размер популяции", 100);
-            par.Add("Число разбиений", 3);
+            par.Add("Число разбиений", 6);
             return par;
         }
 
