@@ -551,7 +551,7 @@ namespace SolarSail
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(188, 20);
             this.label1.TabIndex = 31;
-            this.label1.Text = "Алгортим оптимизации";
+            this.label1.Text = "Алгоритм оптимизации";
             // 
             // label2
             // 
@@ -571,7 +571,7 @@ namespace SolarSail
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(262, 20);
             this.label3.TabIndex = 33;
-            this.label3.Text = "Алгортим решения системы ОДУ";
+            this.label3.Text = "Алгоритм решения системы ОДУ";
             // 
             // comboBoxODESolverChooser
             // 
@@ -664,7 +664,7 @@ namespace SolarSail
             this.Controls.Add(this.buttonResult);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
-            this.Text = "Программный комплекс \"Задача солнечного паруса\"";
+            this.Text = "ПК оптимального программного управления моделью солнечного паруса";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartRt)).EndInit();
             this.tabControl1.ResumeLayout(false);
